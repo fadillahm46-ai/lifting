@@ -41,11 +41,14 @@ function doGet(e) {
   }
 }
 
+// ID DATABASE SPREADSHEET ANDA
+const SHEET_ID = "1C1Ec3hVGJxGxDpZfmUGXm8lWVvBD5-WxRAKFINakSvo";
+
 // ==========================================
 // FUNGSI AUTO-SETUP
 // ==========================================
 function ensureSheetsExist() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SHEET_ID);
   const headers = ["ID_Order", "Timestamp", "Nama_Pemohon", "No_WA", "Perusahaan", "Departemen", "Section", "Tgl_Pelaksanaan", "Shift", "Waktu_Request", "Durasi_Request", "Lokasi", "Tujuan", "Deskripsi", "Foto_Base64", "Status", "Unit_CT", "GL", "Operator", "Rigger", "Waktu_Start_Aktual", "Waktu_End_Aktual", "Durasi_Aktual", "Alasan_Delay"];
 
   let orderSheet = ss.getSheetByName("Orders");
@@ -94,7 +97,7 @@ function setupDatabase(ss, headers) {
 // ==========================================
 
 function getAppData() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SHEET_ID);
 
   const masterSheet = ss.getSheetByName("Master");
   // MENGABAIKAN BARIS KOSONG (FILTER ROW[0])
@@ -127,7 +130,7 @@ function getAppData() {
 }
 
 function saveOrder(payload) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SHEET_ID);
   const sheet = ss.getSheetByName("Orders");
   const now = new Date();
   const dateStr = Utilities.formatDate(now, "GMT+8", "yyyyMMdd");
@@ -146,7 +149,7 @@ function saveOrder(payload) {
 }
 
 function updateJobRecord(payload) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SHEET_ID);
   const sheet = ss.getSheetByName("Orders");
   const data = sheet.getDataRange().getValues();
 
@@ -197,7 +200,7 @@ function updateJobRecord(payload) {
 }
 
 function deleteJobRecord(id) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SHEET_ID);
   const sheet = ss.getSheetByName("Orders");
   const data = sheet.getDataRange().getValues();
   for (let i = 1; i < data.length; i++) {
@@ -207,13 +210,13 @@ function deleteJobRecord(id) {
 }
 
 function addMasterItem(category, value) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SHEET_ID);
   ss.getSheetByName("Master").appendRow([category, value]);
   return { success: true };
 }
 
 function deleteMasterItem(category, value) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SHEET_ID);
   const sheet = ss.getSheetByName("Master");
   const data = sheet.getDataRange().getValues();
   for (let i = 1; i < data.length; i++) {
@@ -223,7 +226,7 @@ function deleteMasterItem(category, value) {
 }
 
 function updatePasswords(adminPass, ctPass) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SHEET_ID);
   const sheet = ss.getSheetByName("Master");
   const data = sheet.getDataRange().getValues();
   for (let i = data.length - 1; i >= 1; i--) {
