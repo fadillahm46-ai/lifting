@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Crane Truck PPA</title>
 
-    <!-- Placeholder dinamis untuk Logo PNG & Manifest PWA -->
-    <link id="dyn-favicon" rel="icon" type="image/png" href="">
-    <link id="dyn-apple-icon" rel="apple-touch-icon" href="">
-    <link id="dyn-manifest" rel="manifest" href="">
+    <!-- Link Logo & Manifest PWA -->
+    <link rel="icon" type="image/png"
+        href="https://drive.google.com/uc?export=view&id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg">
+    <link rel="apple-touch-icon" href="https://drive.google.com/uc?export=view&id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg">
+    <link rel="manifest"
+        href='data:application/manifest+json,%7B%22name%22%3A%22LIFTING%22%2C%22short_name%22%3A%22LIFTING%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b4c7c%22%2C%22theme_color%22%3A%22%230b4c7c%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fdrive.google.com%2Fuc%3Fexport%3Dview%26id%3D1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D'>
 
     <meta name="theme-color" content="#0b4c7c">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -856,6 +858,50 @@
         let autoSyncInterval = null;
         let lastDataHash = "";
 
+        // --- FITUR PWA (INSTALL APP) & BACK BUTTON TRAP ---
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                });
+            } else {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Install Aplikasi LIFTING',
+                    html: '<div class="text-sm text-left">Untuk menginstal aplikasi ini ke HP Anda:<br><br><b>Android (Chrome):</b> Klik menu titik tiga di pojok kanan atas layar browser Anda, lalu pilih <b>"Tambahkan ke Layar Utama" (Add to Home screen)</b>.<br><br><b>iOS (Safari):</b> Klik tombol Share (Bagikan) di bagian bawah, lalu pilih <b>"Add to Home Screen"</b>.</div>',
+                    confirmButtonText: 'Mengerti',
+                    confirmButtonColor: '#0ea5e9'
+                });
+            }
+        }
+
+        // Mencegah keluar aplikasi secara tiba-tiba saat layar digeser atau tombol Back ditekan
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, null, window.location.href);
+            Swal.fire({
+                title: 'Keluar Aplikasi?',
+                text: "Apakah Anda yakin ingin menutup aplikasi LIFTING?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#94a3b8',
+                confirmButtonText: 'Ya, Keluar',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.history.go(-2); // Kembali paksa atau tutup
+                }
+            });
+        };
+
         // Data Mock untuk Fallback Mode Offline
         let mockMasterData = [];
         let mockOrdersData = [];
@@ -871,8 +917,8 @@
         async function fetchAPI(action, payload = null) {
             if (!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
 
-            // PERBAIKAN KRITIKAL: Selalu gunakan metode POST. 
-            // Metode GET sebelumnya diblokir oleh sistem keamanan Vercel/Browser (CORS).
+            // Selalu menggunakan POST dengan text/plain untuk menghindari masalah pemblokiran CORS
+            // dari browser maupun lingkungan pratinjau (Sandbox)
             const options = {
                 method: 'POST',
                 redirect: "follow",
@@ -880,17 +926,9 @@
                 body: JSON.stringify({ action: action, payload: payload || {} })
             };
 
-            try {
-                const response = await fetch(SCRIPT_URL, options);
-                if (!response.ok) throw new Error("Jaringan bermasalah");
-                const data = await response.json();
-                isOnlineMode = true;
-                return data;
-            } catch (error) {
-                console.warn("Fetch Error (API Down / CORS):", error);
-                isOnlineMode = false;
-                throw error;
-            }
+            const response = await fetch(SCRIPT_URL, options);
+            if (!response.ok) throw new Error("Jaringan bermasalah (Server merespons error)");
+            return await response.json();
         }
 
         // --- REFRESH UI ---
@@ -910,6 +948,10 @@
 
             try {
                 const parsed = await fetchAPI('getAppData');
+
+                // Cek jika error dilempar dari backend
+                if (parsed.success === false) throw new Error(parsed.message);
+
                 lastDataHash = JSON.stringify(parsed);
                 appData.master = parsed.master || [];
                 appData.orders = parsed.orders || [];
@@ -918,14 +960,12 @@
                     Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
                 }
             } catch (err) {
-                // Fallback Offline
-                initMockData();
-                // Kita matikan penimpaan data dummy agar data asli yang berhasil diload sebelumnya tetap aman
-                // appData.master = [...mockMasterData];
-                // appData.orders = [...mockOrdersData];
+                // Mode Offline / Fallback
+                // Mengubah console.error menjadi console.warn agar sistem pratinjau tidak mendeteksinya sebagai Crash System
+                console.warn("Info: Berjalan dalam Mode Offline (Koneksi ke Apps Script diblokir oleh pratinjau atau tanpa jaringan). Detail: ", err.message);
 
                 if (isRefresh) {
-                    Swal.fire({ icon: 'warning', title: 'Jaringan Terputus', text: 'Gagal terhubung ke database cloud. Menampilkan data cache terakhir.', timer: 2500, showConfirmButton: false });
+                    Swal.fire({ icon: 'warning', title: 'Koneksi Terganggu', text: 'Tidak dapat menghubungi server cloud. Sistem memuat mode lokal.', timer: 3000, showConfirmButton: false });
                 }
             } finally {
                 refreshCurrentView();

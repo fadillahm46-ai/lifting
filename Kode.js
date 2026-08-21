@@ -2,30 +2,22 @@
 // BACKEND API CRANE TRUCK MONITORING (VERCEL)
 // ==========================================
 
-// Fungsi utama untuk menangani semua request (POST) dari Frontend Vercel
 function doPost(e) {
   try {
-    // Pastikan database (sheet) sudah ada sebelum memproses apa pun
     ensureSheetsExist();
-
-    // Parse data yang dikirim dari aplikasi web
     const request = JSON.parse(e.postData.contents);
     const action = request.action;
     const payload = request.payload || {};
 
     let result;
-
-    // Routing (Pilih aksi berdasarkan permintaan dari frontend)
-    if (action === 'getAppData') result = getAppData();
-    else if (action === 'saveOrder') result = saveOrder(payload);
+    if (action === 'saveOrder') result = saveOrder(payload);
     else if (action === 'updateJobRecord') result = updateJobRecord(payload);
     else if (action === 'updatePasswords') result = updatePasswords(payload.adminPass, payload.ctPass);
     else if (action === 'addMasterItem') result = addMasterItem(payload.category, payload.value);
     else if (action === 'deleteMasterItem') result = deleteMasterItem(payload.category, payload.value);
     else if (action === 'deleteJobRecord') result = deleteJobRecord(payload.id);
-    else throw new Error("Aksi tidak ditemukan di Server");
+    else result = getAppData(); // Fallback
 
-    // Kembalikan respons dalam bentuk JSON
     return ContentService.createTextOutput(JSON.stringify(result))
       .setMimeType(ContentService.MimeType.JSON);
 
@@ -35,13 +27,26 @@ function doPost(e) {
   }
 }
 
-// Menangani akses URL secara langsung di browser (mencegah error 'doGet')
+// PERBAIKAN: doGet sekarang menangani penarikan data (getAppData)
 function doGet(e) {
-  ensureSheetsExist();
-  return ContentService.createTextOutput(JSON.stringify({
-    status: "success",
-    message: "Backend API Sistem Monitoring Crane Truck Aktif dan Berjalan Normal. Database siap digunakan!"
-  })).setMimeType(ContentService.MimeType.JSON);
+  try {
+    ensureSheetsExist();
+    const action = e.parameter.action;
+
+    if (action === 'getAppData') {
+      return ContentService.createTextOutput(JSON.stringify(getAppData()))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({
+      status: "success",
+      message: "API Aktif. Backend berjalan normal."
+    })).setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({ success: false, message: error.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
 
 // ==========================================
@@ -57,7 +62,6 @@ function ensureSheetsExist() {
 function setupDatabase() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
 
-  // Setup Sheet Orders
   let orderSheet = ss.getSheetByName("Orders");
   if (!orderSheet) {
     orderSheet = ss.insertSheet("Orders");
@@ -67,7 +71,6 @@ function setupDatabase() {
     orderSheet.setFrozenRows(1);
   }
 
-  // Setup Sheet Master
   let masterSheet = ss.getSheetByName("Master");
   if (!masterSheet) {
     masterSheet = ss.insertSheet("Master");
@@ -76,22 +79,15 @@ function setupDatabase() {
     masterSheet.getRange(1, 1, 1, masterHeaders.length).setFontWeight("bold").setBackground("#d2e3fc");
     masterSheet.setFrozenRows(1);
 
-    // Data Master Bawaan (Hanya struktur dasar, tidak ada order dummy)
     const defaultData = [
-      ["Perusahaan", "PT. PPA"], ["Perusahaan", "PT. BIB"], ["Perusahaan", "PT. BOSTON"],
-      ["Departemen", "PLANT"], ["Departemen", "PROD"], ["Departemen", "HCGA"], ["Departemen", "SHE"],
-      ["Section", "Mechanic"], ["Section", "Warehouse"], ["Section", "Hauling"], ["Section", "Welding"],
-      ["Unit CT", "MC7001"], ["Unit CT", "GR501"], ["Unit CT", "CT2514"], ["Unit CT", "CT2515"],
-      ["GL", "M. IQBAL H."], ["GL", "ACHMAD HARIYANTO"], ["GL", "RENO SEPTIADI P."], ["GL", "LUKMANNUL HAKIM"],
-      ["Operator", "ISKANDAR"], ["Operator", "ABDURAHMAN"], ["Operator", "AMIR MAHMUD"],
-      ["Rigger", "KHOLIK SYAIFUDIN"], ["Rigger", "GUSTI M.SYAHRUL RAMADHAN"], ["Rigger", "M.ADAM"],
+      ["Perusahaan", "PT. PPA"], ["Perusahaan", "PT. BIB"], ["Departemen", "PLANT"], ["Departemen", "PROD"],
+      ["Section", "Mechanic"], ["Section", "Warehouse"], ["Unit CT", "CT2514"], ["Unit CT", "CT2515"],
+      ["GL", "ACHMAD HARIYANTO"], ["Operator", "ISKANDAR"], ["Rigger", "KHOLIK SYAIFUDIN"],
       ["Password", "Admin|101010"], ["Password", "CT|191919"]
     ];
-
     masterSheet.getRange(2, 1, defaultData.length, 2).setValues(defaultData);
   }
 
-  // Hapus Sheet1 bawaan yang kosong jika ada
   let sheet1 = ss.getSheetByName("Sheet1");
   if (sheet1) ss.deleteSheet(sheet1);
 }
@@ -103,11 +99,9 @@ function setupDatabase() {
 function getAppData() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
 
-  // Baca Data Master
   const masterSheet = ss.getSheetByName("Master");
   const masterData = masterSheet ? masterSheet.getDataRange().getValues().slice(1) : [];
 
-  // Baca Data Orders
   const orderSheet = ss.getSheetByName("Orders");
   let orders = [];
   if (orderSheet) {
@@ -121,7 +115,6 @@ function getAppData() {
           obj[headers[j]] = row[j];
         }
 
-        // Format Tanggal dan Waktu agar kompatibel dengan JSON/Frontend
         if (obj.Timestamp && obj.Timestamp instanceof Date) {
           obj.Timestamp = Utilities.formatDate(obj.Timestamp, "GMT+8", "dd/MM/yyyy HH:mm");
         }
@@ -136,7 +129,7 @@ function getAppData() {
     }
   }
 
-  return { master: masterData, orders: orders.reverse() }; // Reverse agar job paling baru muncul di paling atas
+  return { master: masterData, orders: orders.reverse() };
 }
 
 function saveOrder(payload) {
@@ -146,7 +139,6 @@ function saveOrder(payload) {
   const now = new Date();
   const dateStr = Utilities.formatDate(now, "GMT+8", "yyyyMMdd");
 
-  // Generate ID Unik berdasarkan jumlah request hari ini
   const data = sheet.getDataRange().getValues();
   let countToday = 0;
   for (let i = 1; i < data.length; i++) {
@@ -157,23 +149,9 @@ function saveOrder(payload) {
   const idOrder = `LIFT-${dateStr}-${countToday + 1}_${now.getTime()}`;
 
   const newRow = [
-    idOrder,
-    now,
-    payload.nama,
-    payload.wa,
-    payload.perusahaan,
-    payload.departemen,
-    payload.section,
-    payload.tanggal,
-    payload.shift,
-    payload.waktu,
-    payload.durasi,
-    payload.lokasi,
-    payload.tujuan,
-    payload.deskripsi,
-    payload.foto,
-    "Menunggu Validasi",
-    "", "", "", "", "", "", "", ""
+    idOrder, now, payload.nama, payload.wa, payload.perusahaan, payload.departemen, payload.section,
+    payload.tanggal, payload.shift, payload.waktu, payload.durasi, payload.lokasi, payload.tujuan,
+    payload.deskripsi, payload.foto, "Menunggu Validasi", "", "", "", "", "", "", "", ""
   ];
 
   sheet.appendRow(newRow);
@@ -193,18 +171,12 @@ function updateJobRecord(payload) {
     }
   }
 
-  if (targetRow === -1) {
-    return { success: false, message: "ID Job tidak ditemukan di database" };
-  }
+  if (targetRow === -1) return { success: false, message: "ID Job tidak ditemukan di database" };
 
-  // Jika ini adalah job yang di-resume (dilanjutkan setelah pending), kita split job-nya
   if (payload.isResuming) {
     let oldData = data[targetRow - 1];
-
-    // Set status job yang lama menjadi Completed
     sheet.getRange(targetRow, 16).setValue('Completed');
 
-    // Buat ID baru (melanjutkan iterasi ID sebelumnya)
     let baseId = payload.id.split('_')[0];
     let maxSplit = 0;
     for (let i = 1; i < data.length; i++) {
@@ -216,33 +188,16 @@ function updateJobRecord(payload) {
     const newId = `${baseId}_${maxSplit + 1}`;
 
     const newRow = [
-      newId,
-      oldData[1], // Timestamp asli
-      oldData[2], // Nama_Pemohon
-      oldData[3], // No_WA
-      oldData[4], // Perusahaan
-      oldData[5], // Departemen
-      oldData[6], // Section
-      payload.tglReq || oldData[7],
-      payload.shift || oldData[8],
-      payload.waktuReq || oldData[9],
-      payload.durasiReq || oldData[10],
-      oldData[11], // Lokasi
-      oldData[12], // Tujuan
-      payload.deskripsiReq || oldData[13],
-      oldData[14], // Foto
-      payload.status,
-      payload.unit || "",
-      payload.gl || "",
-      payload.operator || "",
-      payload.rigger || "",
-      "", "", "", "" // Kolom waktu start/end dikosongkan untuk record baru
+      newId, oldData[1], oldData[2], oldData[3], oldData[4], oldData[5], oldData[6],
+      payload.tglReq || oldData[7], payload.shift || oldData[8], payload.waktuReq || oldData[9],
+      payload.durasiReq || oldData[10], oldData[11], oldData[12], payload.deskripsiReq || oldData[13],
+      oldData[14], payload.status, payload.unit || "", payload.gl || "", payload.operator || "",
+      payload.rigger || "", "", "", "", ""
     ];
     sheet.appendRow(newRow);
-    return { success: true, message: "Job berhasil divalidasi dan dilanjutkan (Split)." };
+    return { success: true, message: "Job berhasil divalidasi dan di-split." };
   }
 
-  // Update data baris yang bersangkutan jika tidak melalui proses split
   if (payload.status !== undefined) sheet.getRange(targetRow, 16).setValue(payload.status);
   if (payload.unit !== undefined) sheet.getRange(targetRow, 17).setValue(payload.unit);
   if (payload.gl !== undefined) sheet.getRange(targetRow, 18).setValue(payload.gl);
@@ -266,19 +221,13 @@ function deleteJobRecord(id) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName("Orders");
   const data = sheet.getDataRange().getValues();
-
   for (let i = 1; i < data.length; i++) {
     if (data[i][0] === id) {
-      sheet.deleteRow(i + 1);
-      return { success: true };
+      sheet.deleteRow(i + 1); return { success: true };
     }
   }
   return { success: false, message: "Data tidak ditemukan" };
 }
-
-// ==========================================
-// FUNGSI MASTER DATA & PENGATURAN
-// ==========================================
 
 function addMasterItem(category, value) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -291,11 +240,9 @@ function deleteMasterItem(category, value) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName("Master");
   const data = sheet.getDataRange().getValues();
-
   for (let i = 1; i < data.length; i++) {
     if (data[i][0] === category && data[i][1] === value) {
-      sheet.deleteRow(i + 1);
-      return { success: true };
+      sheet.deleteRow(i + 1); return { success: true };
     }
   }
   return { success: false, message: "Data master tidak ditemukan" };
@@ -305,15 +252,9 @@ function updatePasswords(adminPass, ctPass) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName("Master");
   const data = sheet.getDataRange().getValues();
-
-  // Hapus baris password lama
   for (let i = data.length - 1; i >= 1; i--) {
-    if (data[i][0] === 'Password') {
-      sheet.deleteRow(i + 1);
-    }
+    if (data[i][0] === 'Password') sheet.deleteRow(i + 1);
   }
-
-  // Masukkan password baru
   sheet.appendRow(['Password', 'Admin|' + adminPass]);
   sheet.appendRow(['Password', 'CT|' + ctPass]);
   return { success: true };
