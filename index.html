@@ -6,20 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Crane Truck PPA</title>
 
-    <!-- PWA Manifest & App Info -->
-    <meta name="theme-color" content="#0b4c7c">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="LIFTING">
-    <link rel="manifest"
-        href="data:application/manifest+json;base64,eyJuYW1lIjoiTW9uaXRvcmluZyBDcmFuZSBUcnVjayBQUEEiLCJzaG9ydF9uYW1lIjoiTElGVElORyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMGI0YzdjIiwidGhlbWVfY29sb3IiOiIjMGI0YzdjIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMmF5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWE5DYjNnMUlqQWdNQ0ExTVRJZ05URXlJajQ4Y21WamRDQjNhV1IwYUQwaU5URXlJaUJvWldsbmFIUTZJakUxTWlJZ1ptbHNiRDBpSXpCaU5HTTNZeUlnY25nOUlqRXdNQ0lnY25rOUlqRXdNQ0l2UGp4d1lYUm9JR1pwYkc5OUlqTm1ZV05qTVRVaUlIUnlZVzV6Wm05eWJUwaWRISpoYm5Oc1lYUmxLREJzSURNektTSWdaRDBpVFRNMk9DQTBPQ3d0TkRBZ01HaHRNVEk0WXkwek5TNHpJREFnTmk0Z01qZ3VOUzAyTkNBMk5IWXhOaWd0T0dNdE1qSXVNU0F3TFRRd0lERTNPU2cwTUNCME1IWXhNVUpqTUNBeU1pNHhJREUzT1NBMENDQTBNSGg0VmpRNE16QWdNakZ1TlNBMk5DQTBPQ0EwT0doME9HTXlOaTR1TUNCME9DMDlNakV1TlNBMENDRTBMVGc0aERZMFZqUTRNeUF5Tmk0MUlESXhMalVnTkRkZ05EZ29OREpqTWpZdU5TQXdJRFU0TFRJeExtVWdORGd0TkRoMkxUUTRhRGhXTXpNMll6QXRNVE10TXkweU5TNHlMVGd1TWkwek5TNDVPRXcwTmpRZ01qRXlkak15T0dNd0xUTTFMekl0TWpndU1pMDJORDQyTkMwem1tMHRNalUySURJM01td3RNekk0TUNCME1DQXhNak1nMENBd0lETXllbTBOVXpJd0lESTRPR2cwT0cwMExUWTBhQzBwT0cwMExUWTBhRFE0YlRBdExUWTBhQzBwT0cwdE1USTRJREkxTm1nek1uWXRNelpvTXpKMk16SjZJdjg4TDNOMlpqND0iLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCIsInB1cnBvc2UiOiJhbnkgbWFza2FibGUifV19">
-
-    <!-- Embed Logo SVG (Orange Truck + Blue Background) -->
+    <!-- Embed Logo SVG sebagai Favicon dan Ikon Web App -->
     <link rel="icon"
-        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzBiNGM3YyIgcng9IjEwMCIgcnk9IjEwMCIvPjxwYXRoIGZpbGw9IiNmYWNjMTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsIDMyKSIgZD0iTTM2OCA0OGwtNDAgMGgtMTI4Yy0zNS4zIDAtNjQgMjguNy02NCA2NHYxNmgtOGMtMjIuMSAwLTQwIDE3LjktNDAgNDB2MTEyYzAgMjIuMSAxNy45IDQwIDQwIDQwaDh2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDY0djQ4YzAgMjYuNSAyMS41IDQ4IDQ4IDQwaDQ4YzI2LjUgMCA0OC0yMS41IDQ4LTQ4di00OGg4VjMzNmMwLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+"
+        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMGUhNWU5IiBkPSJNMzY4IDQ4bC00MCAwaC0xMjhjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2aC04Yy0yMi4xIDAtNDAgMTcuOS00MCA0MHYxMTJjMCAyMi4xIDE3LjkgNDAgNDAgNDBoOHY0OGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OHYtNDhoNjR2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDhWMzM2YzAgLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+"
         type="image/svg+xml">
     <link rel="apple-touch-icon"
-        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzBiNGM3YyIgcng9IjEwMCIgcnk9IjEwMCIvPjxwYXRoIGZpbGw9IiNmYWNjMTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsIDMyKSIgZD0iTTM2OCA0OGwtNDAgMGgtMTI4Yy0zNS4zIDAtNjQgMjguNy02NCA2NHYxNmgtOGMtMjIuMSAwLTQwIDE3LjktNDAgNDB2MTEyYzAgMjIuMSAxNy45IDQwIDQwIDQwaDh2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDY0djQ4YzAgMjYuNSAyMS41IDQ4IDQ4IDQwaDQ4YzI2LjUgMCA0OC0yMS41IDQ4LTQ4di00OGg4VjMzNmMwLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+">
+        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMGUhNWU5IiBkPSJNMzY4IDQ4bC00MCAwaC0xMjhjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2aC04Yy0yMi4xIDAtNDAgMTcuOS00MCA0MHYxMTJjMCAyMi4xIDE3LjkgNDAgNDAgNDBoOHY0OGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OHYtNDhoNjR2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDhWMzM2YzAgLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="manifest"
+        href="data:application/manifest+json;base64,eyJuYW1lIjoiTW9uaXRvcmluZyBDcmFuZSBUcnVjayBQUEEiLCJzaG9ydF9uYW1lIjoiTElGVElORyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZThmMmVhIiwidGhlbWVfY29sb3IiOiIjMGI0YzdjIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMmF5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWE5DYjNnMUlqQWdNQ0ExTVRJZ05URXlJajQ4Y0dGMGFDQm1hV3g1UFNJak1HVWhOV1U1SWlCa1BTSk5Nelk0TkRoS0xUUXdNR2d0TVRJMFl5MHpOUzR6SURBdE5qUWdNamd1TnkwdU5EaEVNREExTkRZMk1pMDNOamdnTUNBeE5pQXhMVEkyTkRBc0xUSXlMakVnTUNBMExUUXdJREUzTGprdE5EQWdOREIyTVRFeVl6QWdNakl1TVNBeE55NDVJRE1uTFRFd01qRTBNQ3d0TVRFaE5EQTRPREF3TXkwa0xUUXdOREI0T0NBeU5pNDVJREkyTGpVZ05Ea2dOREI0TnpRd0lERTNOamdnTkRjZ01EZ3RNalF1TkMwa0xUSXlMakVnTUNBeFlpMDNOalFnSURFdWVRc0xUUTBnTERRMHZIaEVJREUwSURBdE1EUXlNR1ZsTnpZME1EQXdJeTBoTFhNd05EY2RNalEwTkRBZ0lERXFMalFnSURBdExqUWdOQ3d0TnpZME1DQXhOalkwSWowOEwzTjJaeTQ9Iiwic2l6ZXMiOiI1MTJ4NTEyIiwidHlwZSI6ImltYWdlL3N2Zyt4bWwiLCJwdXJwb3NlIjoiYW55IG1hc2thYmxlIn1dfQ==">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -156,7 +152,7 @@
     </style>
 </head>
 
-<body class="text-slate-800 antialiased h-screen flex flex-col">
+<body class="text-slate-800 antialiased h-screen flex flex-col relative">
 
     <nav class="header-bg text-white shadow-md z-10 sticky top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -167,8 +163,14 @@
                     <span class="font-bold text-lg tracking-wide">CRANE TRUCK <span
                             class="font-normal text-blue-200">PPA SITE BIB</span></span>
                 </div>
-                <!-- Badge LIVE SYNC Dihapus sesuai permintaan, hanya menyisakan badge role -->
-                <div class="flex items-center">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <!-- Tombol Download / Install App -->
+                    <button type="button" onclick="installApp()" id="install-app-btn"
+                        class="bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm border border-white/10 select-none transition flex items-center outline-none focus:outline-none"
+                        title="Install Aplikasi ke HP">
+                        <i class="fa-solid fa-download sm:mr-1.5"></i><span class="hidden sm:inline">Install</span>
+                    </button>
+                    <!-- Badge Role -->
                     <div id="user-badge"
                         class="hidden bg-white/20 px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm border border-white/10 select-none">
                         <i class="fa-regular fa-user mr-2"></i><span id="role-display">Role</span>
@@ -178,9 +180,9 @@
         </div>
     </nav>
 
-    <main class="flex-grow overflow-y-auto p-4 sm:p-6 lg:p-8">
+    <main class="flex-grow overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-between">
 
-        <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10">
+        <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10 mb-10 w-full">
             <div class="space-y-8">
                 <!-- MENU 1 & 2: User/Pemohon -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
@@ -262,24 +264,21 @@
                             lapangan</p>
                     </div>
                 </div>
+            </div>
 
-                <!-- Watermark Footer -->
-                <div class="text-center pt-12 pb-2">
-                    <p class="text-slate-400 text-xs italic tracking-wide select-none opacity-70">created by FadillahM
-                    </p>
-                </div>
+            <!-- Watermark Footer diletakkan di akhir view-home agar tetap rapi -->
+            <div class="w-full text-center mt-12 pb-4 pointer-events-none select-none">
+                <p class="text-xs italic font-medium text-slate-400 opacity-60 tracking-wider">created by FadillahM</p>
             </div>
         </div>
 
-        <div id="view-user-form" class="hide max-w-3xl mx-auto">
-            <!-- Isi Halaman Buat Order Baru -->
+        <div id="view-user-form" class="hide max-w-3xl mx-auto w-full">
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-200">
                 <div class="bg-[#0ea5e9] p-5 text-white relative flex items-center justify-center">
                     <button type="button" onclick="navigate('home')"
                         class="absolute left-5 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition outline-none focus:outline-none select-none">
                         <i class="fa-solid fa-arrow-left"></i>
                     </button>
-                    <!-- Teks instruksi di bawah judul telah dihapus -->
                     <div class="text-center">
                         <h2 class="text-xl font-bold flex items-center justify-center gap-2">
                             <i class="fa-solid fa-circle-plus"></i> ORDER BARU
@@ -389,8 +388,7 @@
             </div>
         </div>
 
-        <div id="view-user-monitor" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
-            <!-- Halaman Monitor User -->
+        <div id="view-user-monitor" class="hide max-w-[90rem] mx-auto flex flex-col h-full w-full">
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
@@ -447,8 +445,7 @@
             </div>
         </div>
 
-        <div id="view-admin" class="hide max-w-[90rem] mx-auto space-y-6">
-            <!-- Halaman Admin -->
+        <div id="view-admin" class="hide max-w-[90rem] mx-auto space-y-6 w-full">
             <div class="flex flex-wrap gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-200">
                 <button type="button" onclick="switchAdminTab('dashboard')" id="tab-dashboard"
                     class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-blue-600 text-white shadow-md outline-none focus:outline-none select-none">
@@ -715,8 +712,7 @@
             </div>
         </div>
 
-        <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
-            <!-- Halaman Operator CT -->
+        <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full w-full">
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
@@ -846,7 +842,6 @@
         </div>
     </div>
 
-    <!-- JS Logic -->
     <script>
         // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4y021i9fSzPYCttY24O2_dPC16gIyWLqNP-D048sQX-Zh95RCFJFm_olnHovJUMI/exec';
@@ -862,7 +857,58 @@
         let autoSyncInterval = null;
         let lastDataHash = "";
 
-        // Mock Offline
+        // PWA Install Prompt Logic
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                Swal.fire({
+                    title: 'Install Aplikasi',
+                    html: 'Aplikasi ini dirancang untuk diinstal langsung ke HP Anda tanpa melalui App Store.<br><br><b>Pengguna Android (Chrome):</b><br>Ketuk ikon <b>titik tiga</b> di sudut kanan atas browser, lalu pilih <b>"Tambahkan ke Layar Utama" (Add to Home screen)</b>.<br><br><b>Pengguna iOS (Safari):</b><br>Ketuk ikon <b>Share (Panah ke Atas)</b> di bar navigasi bawah, lalu geser dan pilih <b>"Add to Home Screen"</b>.',
+                    icon: 'info',
+                    confirmButtonColor: '#0ea5e9',
+                    confirmButtonText: 'Mengerti'
+                });
+            }
+        }
+
+        // Mobile Back Button Trap (Pencegah Keluar Aplikasi)
+        window.addEventListener('load', () => {
+            history.pushState({ noBackExitsApp: true }, '');
+        });
+
+        window.addEventListener('popstate', (event) => {
+            Swal.fire({
+                title: 'Keluar dari Sistem?',
+                text: 'Apakah Anda yakin ingin menutup aplikasi ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Ya, Keluar',
+                cancelButtonText: 'Tetap di Sini',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.history.back(); // Izinkan keluar sepenuhnya
+                } else {
+                    history.pushState({ noBackExitsApp: true }, ''); // Tahan lagi
+                }
+            });
+        });
+
         let mockMasterData = [];
         let mockOrdersData = [];
 
@@ -896,30 +942,24 @@
             }
         }
 
-        // --- FETCH API HELPER (100% POST METHOD) ---
-        async function fetchAPI(action, payload = {}) {
+        async function fetchAPI(action, payload = null) {
             if (!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
 
             const options = {
                 method: 'POST',
                 redirect: "follow",
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: action, payload: payload })
+                body: JSON.stringify({ action: action, payload: payload || {} })
             };
 
             try {
                 const response = await fetch(SCRIPT_URL, options);
                 if (!response.ok) throw new Error("Jaringan bermasalah");
                 const data = await response.json();
-
-                if (action === 'getAppData' && !data.master) {
-                    throw new Error("Menerima response yang salah dari server");
-                }
-
                 isOnlineMode = true;
                 return data;
             } catch (error) {
-                console.warn("Fetch Error:", error);
+                console.warn("Fetch Error (API Down / CORS):", error);
                 isOnlineMode = false;
                 throw error;
             }
@@ -934,7 +974,9 @@
         }
 
         async function loadAppData(isRefresh = false, callback = null) {
-            if (isRefresh) Swal.fire({ title: 'Menyinkronkan Data...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+            if (isRefresh) {
+                Swal.fire({ title: 'Menyinkronkan Data...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+            }
 
             try {
                 const parsed = await fetchAPI('getAppData');
@@ -942,12 +984,17 @@
                 appData.master = parsed.master || [];
                 appData.orders = parsed.orders || [];
 
-                if (isRefresh) Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
+                if (isRefresh) {
+                    Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
+                }
             } catch (err) {
                 initMockData();
                 appData.master = [...mockMasterData];
                 appData.orders = [...mockOrdersData];
-                if (isRefresh) Swal.fire({ icon: 'warning', title: 'Mode Offline Aktif', text: 'Gagal terhubung ke database cloud. Menggunakan data lokal.', timer: 2500, showConfirmButton: false });
+
+                if (isRefresh) {
+                    Swal.fire({ icon: 'warning', title: 'Mode Offline Aktif', text: 'Gagal terhubung ke database cloud. Menggunakan data lokal.', timer: 2500, showConfirmButton: false });
+                }
             } finally {
                 refreshCurrentView();
                 if (callback) callback();
@@ -966,7 +1013,7 @@
                     appData.orders = parsed.orders || [];
                     refreshCurrentView();
                 }
-            }).catch(() => { });
+            }).catch(() => { /* Silent ignore on offline */ });
         }
 
         function startAutoSync() {
@@ -1203,6 +1250,7 @@
                     loadAppData(false);
                 } else { Swal.fire('Error', res.message, 'error'); }
             } catch (err) {
+                // Fallback Simpan Offline
                 const now = new Date();
                 const newOrder = {
                     ID_Order: `LIFT-${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}-${appData.orders.length + 1}`,
