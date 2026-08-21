@@ -30,11 +30,13 @@ function doGet(e) {
     ensureSheetsExist();
     const action = e.parameter.action;
 
+    // Jika parameter meminta data aplikasi, kirimkan object tabelnya
     if (action === 'getAppData') {
       const result = getAppData();
       return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
     }
 
+    // Pesan default jika link dibuka manual di browser
     return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "API Aktif. Sistem Monitoring Berjalan." })).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({ success: false, message: error.toString() })).setMimeType(ContentService.MimeType.JSON);
@@ -52,11 +54,13 @@ function ensureSheetsExist() {
   if (!orderSheet) {
     setupDatabase(ss, headers);
   } else {
+    // FITUR ANTI-HILANG: Cek jika jumlah kolom kurang dari header baku
     const currentCols = orderSheet.getLastColumn();
     if (currentCols < headers.length) {
       orderSheet.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight("bold").setBackground("#d2e3fc");
     }
   }
+
   if (!ss.getSheetByName("Master")) setupDatabase(ss, headers);
 }
 
@@ -112,6 +116,7 @@ function getAppData() {
           obj[headers[j]] = row[j];
         }
 
+        // Format Tanggal dan Waktu agar terbaca rapi di JSON
         if (obj.Timestamp && obj.Timestamp instanceof Date) obj.Timestamp = Utilities.formatDate(obj.Timestamp, "GMT+8", "dd/MM/yyyy HH:mm");
         if (obj.Tgl_Pelaksanaan && obj.Tgl_Pelaksanaan instanceof Date) obj.Tgl_Pelaksanaan = Utilities.formatDate(obj.Tgl_Pelaksanaan, "GMT+8", "yyyy-MM-dd");
         if (obj.Waktu_Request && obj.Waktu_Request instanceof Date) obj.Waktu_Request = Utilities.formatDate(obj.Waktu_Request, "GMT+8", "HH:mm");
@@ -131,7 +136,9 @@ function saveOrder(payload) {
 
   const data = sheet.getDataRange().getValues();
   let countToday = 0;
-  for (let i = 1; i < data.length; i++) if (String(data[i][0]).includes(`LIFT-${dateStr}`)) countToday++;
+  for (let i = 1; i < data.length; i++) {
+    if (String(data[i][0]).includes(`LIFT-${dateStr}`)) countToday++;
+  }
 
   const idOrder = `LIFT-${dateStr}-${countToday + 1}_${now.getTime()}`;
   const newRow = [
@@ -153,6 +160,7 @@ function updateJobRecord(payload) {
   }
   if (targetRow === -1) return { success: false, message: "ID Job tidak ditemukan di database" };
 
+  // Fitur Resume Job (Split ID)
   if (payload.isResuming) {
     let oldData = data[targetRow - 1];
     sheet.getRange(targetRow, 16).setValue('Completed');
@@ -175,6 +183,7 @@ function updateJobRecord(payload) {
     return { success: true };
   }
 
+  // Pembaruan Kolom Biasa
   if (payload.status !== undefined) sheet.getRange(targetRow, 16).setValue(payload.status);
   if (payload.unit !== undefined) sheet.getRange(targetRow, 17).setValue(payload.unit);
   if (payload.gl !== undefined) sheet.getRange(targetRow, 18).setValue(payload.gl);
@@ -184,6 +193,7 @@ function updateJobRecord(payload) {
   if (payload.endAktual !== undefined) sheet.getRange(targetRow, 22).setValue(payload.endAktual);
   if (payload.durasiAktual !== undefined) sheet.getRange(targetRow, 23).setValue(payload.durasiAktual);
   if (payload.alasanDelay !== undefined) sheet.getRange(targetRow, 24).setValue(payload.alasanDelay);
+
   if (payload.tglReq !== undefined) sheet.getRange(targetRow, 8).setValue(payload.tglReq);
   if (payload.shift !== undefined) sheet.getRange(targetRow, 9).setValue(payload.shift);
   if (payload.waktuReq !== undefined) sheet.getRange(targetRow, 10).setValue(payload.waktuReq);
