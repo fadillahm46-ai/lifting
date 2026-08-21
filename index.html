@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Crane Truck PPA</title>
 
-    <!-- Embed Logo SVG sebagai Favicon dan Ikon Web App -->
-    <link rel="icon"
-        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMGUhNWU5IiBkPSJNMzY4IDQ4bC00MCAwaC0xMjhjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2aC04Yy0yMi4xIDAtNDAgMTcuOS00MCA0MHYxMTJjMCAyMi4xIDE3LjkgNDAgNDAgNDBoOHY0OGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OHYtNDhoNjR2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDhWMzM2YzAgLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+"
-        type="image/svg+xml">
-    <link rel="apple-touch-icon"
-        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMGUhNWU5IiBkPSJNMzY4IDQ4bC00MCAwaC0xMjhjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2aC04Yy0yMi4xIDAtNDAgMTcuOS00MCA0MHYxMTJjMCAyMi4xIDE3LjkgNDAgNDAgNDBoOHY0OGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OHYtNDhoNjR2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDhWMzM2YzAgLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+">
+    <!-- Placeholder dinamis untuk Logo PNG & Manifest PWA -->
+    <link id="dyn-favicon" rel="icon" type="image/png" href="">
+    <link id="dyn-apple-icon" rel="apple-touch-icon" href="">
+    <link id="dyn-manifest" rel="manifest" href="">
+
+    <meta name="theme-color" content="#0b4c7c">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="manifest"
-        href="data:application/manifest+json;base64,eyJuYW1lIjoiTW9uaXRvcmluZyBDcmFuZSBUcnVjayBQUEEiLCJzaG9ydF9uYW1lIjoiTElGVElORyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZThmMmVhIiwidGhlbWVfY29sb3IiOiIjMGI0YzdjIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMmF5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWE5DYjNnMUlqQWdNQ0ExTVRJZ05URXlJajQ4Y0dGMGFDQm1hV3g1UFNJak1HVWhOV1U1SWlCa1BTSk5Nelk0TkRoS0xUUXdNR2d0TVRJMFl5MHpOUzR6SURBdE5qUWdNamd1TnkwdU5EaEVNREExTkRZMk1pMDNOamdnTUNBeE5pQXhMVEkyTkRBc0xUSXlMakVnTUNBMExUUXdJREUzTGprdE5EQWdOREIyTVRFeVl6QWdNakl1TVNBeE55NDVJRE1uTFRFd01qRTBNQ3d0TVRFaE5EQTRPREF3TXkwa0xUUXdOREI0T0NBeU5pNDVJREkyTGpVZ05Ea2dOREI0TnpRd0lERTNOamdnTkRjZ01EZ3RNalF1TkMwa0xUSXlMakVnTUNBeFlpMDNOalFnSURFdWVRc0xUUTBnTERRMHZIaEVJREUwSURBdE1EUXlNR1ZsTnpZME1EQXdJeTBoTFhNd05EY2RNalEwTkRBZ0lERXFMalFnSURBdExqUWdOQ3d0TnpZME1DQXhOalkwSWowOEwzTjJaeTQ9Iiwic2l6ZXMiOiI1MTJ4NTEyIiwidHlwZSI6ImltYWdlL3N2Zyt4bWwiLCJwdXJwb3NlIjoiYW55IG1hc2thYmxlIn1dfQ==">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="LIFTING">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -182,8 +181,8 @@
 
     <main class="flex-grow overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-between">
 
-        <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10 mb-10 w-full">
-            <div class="space-y-8">
+        <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10 mb-10 w-full flex-grow flex flex-col">
+            <div class="space-y-8 flex-grow">
                 <!-- MENU 1 & 2: User/Pemohon -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
                     <div onclick="navigate('user-form')"
@@ -268,7 +267,7 @@
 
             <!-- Watermark Footer diletakkan di akhir view-home agar tetap rapi -->
             <div class="w-full text-center mt-12 pb-4 pointer-events-none select-none">
-                <p class="text-xs italic font-medium text-slate-400 opacity-60 tracking-wider">created by FadillahM</p>
+                <p class="text-sm italic font-medium text-slate-400 opacity-60 tracking-wider">created by FadillahM</p>
             </div>
         </div>
 
@@ -844,7 +843,7 @@
 
     <script>
         // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4y021i9fSzPYCttY24O2_dPC16gIyWLqNP-D048sQX-Zh95RCFJFm_olnHovJUMI/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxQxmXEnwd61v0BjYuqZniT6Gmm0dl6F0dlLPObrkcTyvBf_JO7-qZIvF6zD1FLRSQR/exec';
 
         let isOnlineMode = false;
         let appData = { orders: [], master: [] };
@@ -883,6 +882,53 @@
                 });
             }
         }
+
+        // Generate PWA Icon dinamik (Mengubah SVG Truck ke format PNG di background)
+        function generatePWA() {
+            const svgCode = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="#0b4c7c" rx="100"/><path fill="#f97316" d="M480 224H384V160c0-17.6-14.4-32-32-32H96C78.4 128 64 142.4 64 160v160c0 17.6 14.4 32 32 32h16c0 35.3 28.7 64 64 64s64-28.7 64-64h128c0 35.3 28.7 64 64 64s64-28.7 64-64h16c17.6 0 32-14.4 32-32V256c0-17.6-14.4-32-32-32zm-304 96c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32zm224 0c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32zm48-48h-80v-48h64c8.8 0 16 7.2 16 16v32z"/></svg>`;
+
+            const canvas512 = document.createElement('canvas');
+            canvas512.width = 512; canvas512.height = 512;
+            const ctx512 = canvas512.getContext('2d');
+
+            const canvas192 = document.createElement('canvas');
+            canvas192.width = 192; canvas192.height = 192;
+            const ctx192 = canvas192.getContext('2d');
+
+            const img = new Image();
+            const svgBlob = new Blob([svgCode], { type: 'image/svg+xml;charset=utf-8' });
+            img.onload = function () {
+                ctx512.drawImage(img, 0, 0, 512, 512);
+                ctx192.drawImage(img, 0, 0, 192, 192);
+
+                const png512 = canvas512.toDataURL('image/png');
+                const png192 = canvas192.toDataURL('image/png');
+
+                document.getElementById('dyn-favicon').href = png192;
+                document.getElementById('dyn-apple-icon').href = png192;
+
+                const manifest = {
+                    "name": "Monitoring Crane Truck PPA",
+                    "short_name": "LIFTING",
+                    "start_url": window.location.href.split('?')[0],
+                    "display": "standalone",
+                    "background_color": "#f8fafc",
+                    "theme_color": "#0b4c7c",
+                    "orientation": "portrait",
+                    "icons": [
+                        { "src": png192, "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+                        { "src": png512, "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+                    ]
+                };
+
+                const manifestStr = JSON.stringify(manifest);
+                const manifestUrl = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(manifestStr);
+                document.getElementById('dyn-manifest').href = manifestUrl;
+            };
+            img.src = URL.createObjectURL(svgBlob);
+        }
+
+        generatePWA(); // Eksekusi pembuatan Logo/Manifest PWA
 
         // Mobile Back Button Trap (Pencegah Keluar Aplikasi)
         window.addEventListener('load', () => {
@@ -946,14 +992,19 @@
             if (!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
 
             const options = {
-                method: 'POST',
+                method: payload ? 'POST' : 'GET',
                 redirect: "follow",
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: action, payload: payload || {} })
             };
 
+            if (payload) {
+                options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
+                options.body = JSON.stringify({ action: action, payload: payload });
+            }
+
+            const url = payload ? SCRIPT_URL : `${SCRIPT_URL}?action=${action}`;
+
             try {
-                const response = await fetch(SCRIPT_URL, options);
+                const response = await fetch(url, options);
                 if (!response.ok) throw new Error("Jaringan bermasalah");
                 const data = await response.json();
                 isOnlineMode = true;
@@ -1247,7 +1298,7 @@
                                </div>`,
                         showConfirmButton: false, showCloseButton: true
                     });
-                    loadAppData(false);
+                    loadAppData(false); // Refresh bg
                 } else { Swal.fire('Error', res.message, 'error'); }
             } catch (err) {
                 // Fallback Simpan Offline
@@ -1902,6 +1953,7 @@
                     Swal.fire('Error', res.message, 'error');
                 }
             } catch (err) {
+                // Fallback Offline Update
                 const index = mockOrdersData.findIndex(o => o.ID_Order === order.ID_Order);
                 if (index > -1) {
                     mockOrdersData[index].Status = data.status;
