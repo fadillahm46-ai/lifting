@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Crane Truck PPA</title>
 
-    <!-- PWA Setup & Logo Icon -->
+    <!-- PWA Setup & Logo Icon (Truk Orange, Background Biru) -->
     <link rel="icon" href="https://drive.google.com/thumbnail?id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg&sz=w256"
         type="image/png">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg&sz=w256">
-    <link rel="manifest"
-        href='data:application/manifest+json;utf8,{"name":"LIFTING PPA BIB","short_name":"LIFTING","start_url":"/","display":"standalone","background_color":"#0b4c7c","theme_color":"#0b4c7c","icons":[{"src":"https://drive.google.com/thumbnail?id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg&sz=w256","sizes":"256x256","type":"image/png"}]}'>
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -175,57 +173,44 @@
             });
         });
 
-        // ==========================================
-        // FITUR INSTALL PWA (Add to Home Screen)
-        // ==========================================
-        let deferredPrompt;
+        // --- MANIFEST INJECTION UNTUK PWA ---
+        const manifestJSON = {
+            "name": "Monitoring Crane Truck PPA",
+            "short_name": "LIFTING",
+            "start_url": window.location.pathname,
+            "display": "standalone",
+            "background_color": "#0b4c7c",
+            "theme_color": "#0b4c7c",
+            "icons": [
+                { "src": "https://placehold.co/192x192/0b4c7c/ffffff.png?text=LIFT", "sizes": "192x192", "type": "image/png" },
+                { "src": "https://placehold.co/512x512/0b4c7c/ffffff.png?text=LIFT", "sizes": "512x512", "type": "image/png" }
+            ]
+        };
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = 'data:application/manifest+json;utf-8,' + encodeURIComponent(JSON.stringify(manifestJSON));
+        document.head.appendChild(manifestLink);
 
-        // Tangkap event sebelum browser memunculkan prompt install bawaan
+        let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); // Cegah prompt otomatis muncul
-            deferredPrompt = e; // Simpan event untuk dipanggil nanti saat tombol diklik
+            e.preventDefault();
+            deferredPrompt = e;
         });
 
         function installApp() {
             if (deferredPrompt) {
-                // Munculkan prompt install Google Chrome/Android
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
                     deferredPrompt = null;
                 });
             } else {
-                // Fallback jika device adalah iPhone/iOS atau prompt tidak tersedia
-                const isIos = () => {
-                    const userAgent = window.navigator.userAgent.toLowerCase();
-                    return /iphone|ipad|ipod/.test(userAgent);
-                }
-
-                if (isIos()) {
-                    Swal.fire({
-                        title: 'Install LIFTING di iPhone',
-                        html: 'Ketuk icon <b>Share</b> <i class="fa-solid fa-arrow-up-from-bracket mx-1"></i> di menu bawah Safari Anda, lalu pilih <br><b>Add to Home Screen</b>.',
-                        icon: 'info',
-                        confirmButtonColor: '#0ea5e9'
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Install LIFTING',
-                        html: 'Aplikasi mungkin sudah terinstal, atau browser tidak mendukung pop-up otomatis.<br><br><b>Cara manual:</b> Ketuk menu browser (titik 3 di pojok kanan atas) lalu pilih <b>Tambahkan ke Layar Utama / Install App</b>.',
-                        icon: 'info',
-                        confirmButtonColor: '#0ea5e9'
-                    });
-                }
+                Swal.fire({
+                    title: 'Install LIFTING',
+                    html: 'Di HP Android: Ketuk menu browser (titik 3) lalu pilih <b>Tambahkan ke Layar Utama / Install App</b>.<br><br>Di iPhone/iOS: Ketuk icon Share lalu pilih <b>Add to Home Screen</b>.',
+                    icon: 'info',
+                    confirmButtonColor: '#0ea5e9'
+                });
             }
-        }
-
-        // Syarat wajib Google Chrome: Service Worker agar tombol install bisa ditekan
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                const swCode = "self.addEventListener('install', (e) => { self.skipWaiting(); }); self.addEventListener('activate', (e) => { e.waitUntil(self.clients.claim()); }); self.addEventListener('fetch', (e) => { });";
-                const blob = new Blob([swCode], { type: 'application/javascript' });
-                const swUrl = URL.createObjectURL(blob);
-                navigator.serviceWorker.register(swUrl).catch(err => console.log('SW error', err));
-            });
         }
     </script>
 </head>
@@ -242,12 +227,11 @@
                             class="font-normal text-blue-200">PPA SITE BIB</span></span>
                 </div>
                 <div class="flex items-center">
-                    <!-- TOMBOL INSTALL PWA -->
-                    <button type="button" onclick="installApp()"
+                    <button onclick="installApp()"
                         class="hidden sm:flex items-center bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full border border-white/20 mr-3 select-none text-xs font-semibold transition outline-none focus:outline-none">
                         <i class="fa-solid fa-download mr-1.5"></i> Install App
                     </button>
-                    <button type="button" onclick="installApp()"
+                    <button onclick="installApp()"
                         class="sm:hidden text-white/80 hover:text-white mr-4 p-1 outline-none focus:outline-none">
                         <i class="fa-solid fa-download text-lg"></i>
                     </button>
@@ -345,6 +329,7 @@
                     </div>
                 </div>
 
+                <!-- Watermark -->
                 <div class="text-center mt-12">
                     <span class="text-slate-400 italic text-xs select-none cursor-default">created by FadillahM</span>
                 </div>
@@ -652,6 +637,7 @@
                 </div>
             </div>
 
+            <!-- Tab: Database -->
             <div id="admin-tab-database"
                 class="hide bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col max-h-[75vh]">
                 <div
@@ -725,6 +711,7 @@
                 </div>
             </div>
 
+            <!-- Tab: Data Master -->
             <div id="admin-tab-master"
                 class="hide bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-5 border-b border-slate-200 bg-slate-50">
@@ -786,6 +773,7 @@
         </div>
 
         <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
+            <!-- Halaman Operator CT -->
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
@@ -840,6 +828,7 @@
 
     </main>
 
+    <!-- Modal Validasi -->
     <div id="modal-validasi"
         class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-visible">
@@ -925,6 +914,7 @@
         let userTimerInterval = null;
         let lastDataHash = "";
 
+        // Mock Data Fallback
         let mockMasterData = [];
         let mockOrdersData = [];
 
@@ -949,24 +939,27 @@
             }
         }
 
-        // --- CORE FETCH API HELPER (METODE POST PENUH ANTI POTONG) ---
+        // --- CORE FETCH API HELPER ---
         async function fetchAPI(action, payload = null) {
-            let options = {
-                method: 'POST', // Hanya gunakan POST untuk menghindari redirect Google menghapus parameter
-                redirect: "follow",
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: action, payload: payload || {} })
-            };
+            if (!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
+
+            let url = SCRIPT_URL;
+            let options = { redirect: "follow" };
+
+            // Menggunakan POST penuh agar data tidak terpotong oleh sistem keamanan browser
+            options.method = 'POST';
+            options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
+            options.body = JSON.stringify({ action: action, payload: payload || {} });
 
             try {
-                const response = await fetch(SCRIPT_URL, options);
+                const response = await fetch(url, options);
                 if (!response.ok) throw new Error("Jaringan bermasalah");
                 const data = await response.json();
 
-                // Cek jika balasan kosong dari server
                 if (data.status === 'success' && !data.master && !data.orders && action === 'getAppData') {
                     throw new Error("Respon data kosong dari server. Google Apps Script gagal mengirim data master/order.");
                 }
+
                 if (data.success === false) {
                     console.error("Backend Error:", data.message);
                     throw new Error(data.message);
@@ -975,7 +968,7 @@
                 isOnlineMode = true;
                 return data;
             } catch (error) {
-                console.warn("Fetch Error:", error);
+                console.warn("Fetch Error (API Down / CORS):", error);
                 isOnlineMode = false;
                 throw error;
             }
@@ -983,10 +976,10 @@
 
         function refreshCurrentView() {
             populateDropdowns();
-            if (!document.getElementById('admin-tab-dashboard').classList.contains('hide')) updateDashboard();
-            if (!document.getElementById('admin-tab-database').classList.contains('hide')) renderAdminTable();
-            if (!document.getElementById('view-user-monitor').classList.contains('hide')) renderUserMonitor();
-            if (!document.getElementById('view-ct-panel').classList.contains('hide')) renderKanban();
+            if (document.getElementById('admin-tab-dashboard') && !document.getElementById('admin-tab-dashboard').classList.contains('hide')) updateDashboard();
+            if (document.getElementById('admin-tab-database') && !document.getElementById('admin-tab-database').classList.contains('hide')) renderAdminTable();
+            if (document.getElementById('view-user-monitor') && !document.getElementById('view-user-monitor').classList.contains('hide')) renderUserMonitor();
+            if (document.getElementById('view-ct-panel') && !document.getElementById('view-ct-panel').classList.contains('hide')) renderKanban();
         }
 
         // --- LOAD DATA FULL ---
@@ -1008,19 +1001,18 @@
 
                 if (isRefresh) Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
             } catch (err) {
-                // Munculkan notifikasi jika gagal tarik data
+                if (appData.orders.length === 0) {
+                    initMockData();
+                    appData.master = [...mockMasterData];
+                    appData.orders = [...mockOrdersData];
+                }
+
                 Swal.fire({
                     icon: 'error',
                     title: 'Akses Ditolak / Diblokir',
                     html: `Gagal menarik data dari Google. Pastikan URL benar dan pada saat <b>Deploy Apps Script</b>, pilihan <b>Who has access</b> sudah disetel ke <b>"Anyone" (Siapa Saja)</b>.<br><br><i class="text-xs text-slate-500">${err.message}</i>`,
                     confirmButtonColor: '#ef4444'
                 });
-
-                if (appData.orders.length === 0) {
-                    initMockData();
-                    appData.master = [...mockMasterData];
-                    appData.orders = [...mockOrdersData];
-                }
             } finally {
                 refreshCurrentView();
                 if (callback) callback();
@@ -1100,31 +1092,40 @@
         }
 
         function navigate(view) {
-            document.querySelectorAll('main > div').forEach(el => { if (el.id.startsWith('view-')) el.classList.add('hide'); });
+            document.querySelectorAll('main > div').forEach(el => {
+                if (el && el.id && el.id.startsWith('view-')) el.classList.add('hide');
+            });
             const badge = document.getElementById('user-badge');
-            badge.classList.remove('hidden');
+            if (badge) badge.classList.remove('hidden');
             stopUserTimers();
 
+            const roleDisplay = document.getElementById('role-display');
+
             if (view === 'home') {
-                document.getElementById('view-home').classList.remove('hide');
-                badge.classList.add('hidden');
+                const viewHome = document.getElementById('view-home');
+                if (viewHome) viewHome.classList.remove('hide');
+                if (badge) badge.classList.add('hidden');
             } else if (view === 'user-form') {
-                document.getElementById('view-user-form').classList.remove('hide');
-                document.getElementById('role-display').innerText = 'User / Pemohon';
+                const viewForm = document.getElementById('view-user-form');
+                if (viewForm) viewForm.classList.remove('hide');
+                if (roleDisplay) roleDisplay.innerText = 'User / Pemohon';
                 loadAppData(false, populateDropdowns);
             } else if (view === 'user-monitor') {
-                document.getElementById('view-user-monitor').classList.remove('hide');
-                document.getElementById('role-display').innerText = 'User / Pemohon';
+                const viewMonitor = document.getElementById('view-user-monitor');
+                if (viewMonitor) viewMonitor.classList.remove('hide');
+                if (roleDisplay) roleDisplay.innerText = 'User / Pemohon';
                 switchUserMonitorTab('masuk');
                 loadAppData(false);
             } else if (view === 'admin-dashboard') {
-                document.getElementById('view-admin').classList.remove('hide');
-                document.getElementById('role-display').innerText = 'Administrator';
+                const viewAdmin = document.getElementById('view-admin');
+                if (viewAdmin) viewAdmin.classList.remove('hide');
+                if (roleDisplay) roleDisplay.innerText = 'Administrator';
                 switchAdminTab('dashboard');
                 loadAppData(false);
             } else if (view === 'ct-panel') {
-                document.getElementById('view-ct-panel').classList.remove('hide');
-                document.getElementById('role-display').innerText = 'Tim Crane Truck';
+                const viewCt = document.getElementById('view-ct-panel');
+                if (viewCt) viewCt.classList.remove('hide');
+                if (roleDisplay) roleDisplay.innerText = 'Tim Crane Truck';
                 switchCtTab('progress');
                 loadAppData(false);
             }
@@ -1132,11 +1133,16 @@
 
         function switchAdminTab(tab) {
             ['dashboard', 'database', 'master'].forEach(t => {
-                document.getElementById(`tab-${t}`).className = "flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 outline-none focus:outline-none select-none";
-                document.getElementById(`admin-tab-${t}`).classList.add('hide');
+                const btn = document.getElementById(`tab-${t}`);
+                const panel = document.getElementById(`admin-tab-${t}`);
+                if (btn) btn.className = "flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 outline-none focus:outline-none select-none";
+                if (panel) panel.classList.add('hide');
             });
-            document.getElementById(`tab-${tab}`).className = "flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-blue-600 text-white shadow-md outline-none focus:outline-none select-none";
-            document.getElementById(`admin-tab-${tab}`).classList.remove('hide');
+
+            const activeBtn = document.getElementById(`tab-${tab}`);
+            const activePanel = document.getElementById(`admin-tab-${tab}`);
+            if (activeBtn) activeBtn.className = "flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-blue-600 text-white shadow-md outline-none focus:outline-none select-none";
+            if (activePanel) activePanel.classList.remove('hide');
 
             if (tab === 'dashboard') updateDashboard();
             if (tab === 'database') renderAdminTable();
@@ -1174,7 +1180,7 @@
         }
 
         function autoSelectShift() {
-            const timeStr = document.getElementById('f_waktu').value || document.getElementById('v_edit_waktu').value;
+            const timeStr = document.getElementById('f_waktu') ? document.getElementById('f_waktu').value : (document.getElementById('v_edit_waktu') ? document.getElementById('v_edit_waktu').value : null);
             if (!timeStr) return;
             const [hours, minutes] = timeStr.split(':').map(Number);
             const shiftSelectForm = document.getElementById('f_shift');
@@ -1195,7 +1201,7 @@
             const fileInput = document.getElementById('f_foto');
             let fotoBase64 = "Tidak ada lampiran";
 
-            if (fileInput.files.length > 0) {
+            if (fileInput && fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 fotoBase64 = await new Promise((resolve) => {
                     const reader = new FileReader();
@@ -1322,62 +1328,79 @@
             tabs.forEach(t => {
                 const el = document.getElementById(`user-tab-${t}`);
                 const badge = document.getElementById(`user-count-${t}`);
-                el.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none";
-                badge.className = "bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2";
+                if (el) el.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none";
+                if (badge) badge.className = "bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2";
             });
 
             const activeEl = document.getElementById(`user-tab-${tab}`);
             const activeBadge = document.getElementById(`user-count-${tab}`);
 
             if (tab === 'masuk') {
-                activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-red-50 text-red-700 border-red-500 flex items-center gap-2 outline-none focus:outline-none select-none";
-                activeBadge.className = "bg-red-200 text-red-800 px-2 py-0.5 rounded text-xs ml-2";
+                if (activeEl) activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-red-50 text-red-700 border-red-500 flex items-center gap-2 outline-none focus:outline-none select-none";
+                if (activeBadge) activeBadge.className = "bg-red-200 text-red-800 px-2 py-0.5 rounded text-xs ml-2";
             } else if (tab === 'progress') {
-                activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-blue-50 text-blue-700 border-blue-500 flex items-center gap-2 outline-none focus:outline-none select-none";
-                activeBadge.className = "bg-blue-200 text-blue-800 px-2 py-0.5 rounded text-xs ml-2";
+                if (activeEl) activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-blue-50 text-blue-700 border-blue-500 flex items-center gap-2 outline-none focus:outline-none select-none";
+                if (activeBadge) activeBadge.className = "bg-blue-200 text-blue-800 px-2 py-0.5 rounded text-xs ml-2";
             } else if (tab === 'completed') {
-                activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-emerald-50 text-emerald-700 border-emerald-500 flex items-center gap-2 outline-none focus:outline-none select-none";
-                activeBadge.className = "bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded text-xs ml-2";
+                if (activeEl) activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-emerald-50 text-emerald-700 border-emerald-500 flex items-center gap-2 outline-none focus:outline-none select-none";
+                if (activeBadge) activeBadge.className = "bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded text-xs ml-2";
             }
             renderUserMonitor();
         }
 
         function renderUserMonitor() {
             stopUserTimers();
-            const filterDept = document.getElementById('filter_user_dept').value;
+            const filterDeptEl = document.getElementById('filter_user_dept');
+            const filterDept = filterDeptEl ? filterDeptEl.value : 'All';
             const container = document.getElementById('user-cards-container');
+            if (!container) return;
             container.innerHTML = '';
 
             let counts = { masuk: 0, prog: 0, comp: 0 };
             const nowMs = new Date().getTime();
             const TWO_DAYS_MS = 48 * 60 * 60 * 1000;
 
-            let sortedOrders = [...appData.orders].sort((a, b) => b.ID_Order.localeCompare(a.ID_Order, undefined, { numeric: true }));
+            let sortedOrders = [...appData.orders].sort((a, b) => {
+                const idA = String(a.ID_Order || '');
+                const idB = String(b.ID_Order || '');
+                return idB.localeCompare(idA, undefined, { numeric: true });
+            });
 
             sortedOrders.forEach(order => {
-                if (filterDept !== 'All' && order.Departemen !== filterDept) return;
+                try {
+                    const status = String(order.Status || '').trim();
+                    const dept = String(order.Departemen || '').trim();
 
-                let isMasuk = order.Status === 'Menunggu Validasi';
-                let isProg = ['On Progress', 'Scheduled', 'Unscheduled', 'Pending'].includes(order.Status);
-                let isComp = order.Status === 'Completed';
+                    if (filterDept !== 'All' && dept !== filterDept) return;
 
-                let orderTime = parseTimestampStr(order.Timestamp).getTime();
-                if ((nowMs - orderTime) > TWO_DAYS_MS) return;
+                    let isMasuk = status === 'Menunggu Validasi';
+                    let isProg = ['On Progress', 'Scheduled', 'Unscheduled', 'Pending'].includes(status);
+                    let isComp = status === 'Completed';
 
-                if (isMasuk) counts.masuk++;
-                if (isProg) counts.prog++;
-                if (isComp) counts.comp++;
+                    let orderTime = parseTimestampStr(order.Timestamp).getTime();
+                    if ((nowMs - orderTime) > TWO_DAYS_MS) return;
 
-                if ((currentUserTab === 'masuk' && isMasuk) ||
-                    (currentUserTab === 'progress' && isProg) ||
-                    (currentUserTab === 'completed' && isComp)) {
-                    container.appendChild(createUserMonitorCard(order));
+                    if (isMasuk) counts.masuk++;
+                    if (isProg) counts.prog++;
+                    if (isComp) counts.comp++;
+
+                    if ((currentUserTab === 'masuk' && isMasuk) ||
+                        (currentUserTab === 'progress' && isProg) ||
+                        (currentUserTab === 'completed' && isComp)) {
+                        container.appendChild(createUserMonitorCard(order));
+                    }
+                } catch (err) {
+                    console.warn("Gagal render User Monitor Card:", err);
                 }
             });
 
-            document.getElementById('user-count-masuk').innerText = counts.masuk;
-            document.getElementById('user-count-progress').innerText = counts.prog;
-            document.getElementById('user-count-completed').innerText = counts.comp;
+            const countMasuk = document.getElementById('user-count-masuk');
+            const countProg = document.getElementById('user-count-progress');
+            const countComp = document.getElementById('user-count-completed');
+
+            if (countMasuk) countMasuk.innerText = counts.masuk;
+            if (countProg) countProg.innerText = counts.prog;
+            if (countComp) countComp.innerText = counts.comp;
 
             if (container.innerHTML === '') {
                 container.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-xl border border-dashed border-slate-300 shadow-sm"><i class="fa-solid fa-box-open text-5xl mb-4 text-slate-300"></i><br><span class="font-medium text-lg">Tidak ada data orderan di tab ini.</span></div>`;
@@ -1388,32 +1411,33 @@
 
         function createUserMonitorCard(order) {
             const div = document.createElement('div');
+            const status = String(order.Status || '').trim();
 
             let sC = 'text-blue-600 bg-blue-100', sT = 'ON PROGRESS';
-            if (order.Status === 'Menunggu Validasi') { sC = 'text-red-600 bg-red-100'; sT = 'MENUNGGU VALIDASI'; }
-            if (order.Status === 'Scheduled') { sC = 'text-purple-600 bg-purple-100'; sT = 'SCHEDULED'; }
-            if (order.Status === 'Unscheduled') { sC = 'text-orange-600 bg-orange-100'; sT = 'UNSCHEDULED'; }
-            if (order.Status === 'Pending') { sC = 'text-orange-600 bg-orange-100'; sT = 'PENDING'; }
-            if (order.Status === 'Completed') { sC = 'text-emerald-600 bg-emerald-100'; sT = 'COMPLETED'; }
+            if (status === 'Menunggu Validasi') { sC = 'text-red-600 bg-red-100'; sT = 'MENUNGGU VALIDASI'; }
+            if (status === 'Scheduled') { sC = 'text-purple-600 bg-purple-100'; sT = 'SCHEDULED'; }
+            if (status === 'Unscheduled') { sC = 'text-orange-600 bg-orange-100'; sT = 'UNSCHEDULED'; }
+            if (status === 'Pending') { sC = 'text-orange-600 bg-orange-100'; sT = 'PENDING'; }
+            if (status === 'Completed') { sC = 'text-emerald-600 bg-emerald-100'; sT = 'COMPLETED'; }
 
             let borderClass = 'border-blue-400';
-            if (order.Status === 'Completed') borderClass = 'border-emerald-400';
-            else if (order.Status === 'Menunggu Validasi') borderClass = 'border-red-300';
-            else if (order.Status === 'Pending') borderClass = 'border-orange-400';
+            if (status === 'Completed') borderClass = 'border-emerald-400';
+            else if (status === 'Menunggu Validasi') borderClass = 'border-red-300';
+            else if (status === 'Pending') borderClass = 'border-orange-400';
 
-            let wReq = order.Waktu_Request || '';
-            if (wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0, 5);
-            else if (wReq) wReq = String(wReq).substring(0, 5);
+            let wReq = String(order.Waktu_Request || '');
+            if (wReq.includes('T')) wReq = wReq.split('T')[1].substring(0, 5);
+            else wReq = wReq.substring(0, 5);
 
-            const displayId = order.ID_Order.split('_')[0];
+            const displayId = String(order.ID_Order || 'ID_N/A').split('_')[0];
 
             let timerBlock = '';
-            if (order.Status === 'Menunggu Validasi') {
+            if (status === 'Menunggu Validasi') {
                 timerBlock = `
                     <div class="mt-4 pt-3 border-t border-slate-100 bg-red-50 rounded p-2.5 text-center text-xs text-red-800 border border-red-100">
                         <i class="fa-solid fa-clock-rotate-left mr-1"></i> Job baru masuk. Menunggu Admin / Tim CT.
                     </div>`;
-            } else if (order.Status !== 'Completed') {
+            } else if (status !== 'Completed') {
                 let targetDateMs = 0;
                 if (order.Tgl_Pelaksanaan && wReq) {
                     const reqDateObj = new Date(`${order.Tgl_Pelaksanaan}T${wReq}:00`);
@@ -1442,7 +1466,7 @@
 
             div.className = `bg-white p-5 rounded-xl shadow-sm border ${borderClass} hover:shadow-md transition flex flex-col relative overflow-hidden`;
             div.innerHTML = `
-                ${order.Status === 'Completed' ? '<div class="absolute -right-6 -top-6 text-emerald-100 opacity-20"><i class="fa-solid fa-certificate text-8xl"></i></div>' : ''}
+                ${status === 'Completed' ? '<div class="absolute -right-6 -top-6 text-emerald-100 opacity-20"><i class="fa-solid fa-certificate text-8xl"></i></div>' : ''}
                 <div class="relative z-10">
                     <div class="flex justify-between items-start mb-3">
                         <div>
@@ -1452,22 +1476,22 @@
                         <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded border border-blue-100"><i class="fa-solid fa-truck"></i> ${order.Unit_CT || 'Belum Ditugaskan'}</span>
                     </div>
                     <div class="flex justify-between items-center text-xs text-slate-500 mb-3 bg-slate-50 p-2 rounded">
-                        <span><i class="fa-regular fa-calendar mr-1"></i> ${order.Tgl_Pelaksanaan}</span>
-                        <span class="font-bold text-slate-700"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${wReq} (${order.Durasi_Request} J)</span>
+                        <span><i class="fa-regular fa-calendar mr-1"></i> ${order.Tgl_Pelaksanaan || '-'}</span>
+                        <span class="font-bold text-slate-700"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${wReq || '-'} (${order.Durasi_Request || '-'} J)</span>
                     </div>
                     <div class="flex justify-between items-center mb-3 gap-2">
-                        <h4 class="font-bold text-sm text-slate-800 leading-tight">${order.Deskripsi}</h4>
+                        <h4 class="font-bold text-sm text-slate-800 leading-tight">${order.Deskripsi || '-'}</h4>
                         <button type="button" onclick="viewPhoto('${order.ID_Order}')" class="shrink-0 text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-100 w-8 h-8 flex items-center justify-center rounded transition outline-none focus:outline-none select-none" title="Lihat Foto Lampiran">
                             <i class="fa-solid fa-eye"></i>
                         </button>
                     </div>
                     <div class="text-xs space-y-2 mb-4 bg-slate-50 p-3 rounded border border-slate-100 flex-grow">
-                        <div class="flex"><i class="fa-solid fa-paper-plane text-blue-400 w-5 mt-0.5"></i> <span class="text-slate-600 truncate">Dari: ${order.Lokasi}</span></div>
-                        <div class="flex"><i class="fa-solid fa-flag-checkered text-emerald-500 w-5 mt-0.5"></i> <span class="text-slate-600 truncate">Ke: ${order.Tujuan}</span></div>
+                        <div class="flex"><i class="fa-solid fa-paper-plane text-blue-400 w-5 mt-0.5"></i> <span class="text-slate-600 truncate">Dari: ${order.Lokasi || '-'}</span></div>
+                        <div class="flex"><i class="fa-solid fa-flag-checkered text-emerald-500 w-5 mt-0.5"></i> <span class="text-slate-600 truncate">Ke: ${order.Tujuan || '-'}</span></div>
                     </div>
                     <div class="text-[11px] text-slate-600 mb-2">
                         <div class="grid grid-cols-2 gap-2 mb-1">
-                            <div><span class="text-slate-400">Pemohon:</span><br>${order.Nama_Pemohon} (${order.Departemen})</div>
+                            <div><span class="text-slate-400">Pemohon:</span><br>${order.Nama_Pemohon || '-'} (${order.Departemen || '-'})</div>
                             <div><span class="text-slate-400">Personil CT:</span><br>${order.Operator || '-'} / ${order.Rigger || '-'}</div>
                         </div>
                     </div>
@@ -1523,25 +1547,25 @@
             tabs.forEach(t => {
                 const el = document.getElementById(`ct-tab-${t}`);
                 const badge = document.getElementById(`count-${t}`);
-                el.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none";
-                badge.className = "bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2";
+                if (el) el.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none";
+                if (badge) badge.className = "bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2";
             });
 
             const activeEl = document.getElementById(`ct-tab-${tab}`);
             const activeBadge = document.getElementById(`count-${tab}`);
 
             if (tab === 'progress') {
-                activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-blue-50 text-blue-700 border-blue-600 flex items-center gap-2 outline-none focus:outline-none select-none";
-                activeBadge.className = "bg-blue-200 text-blue-800 px-2 py-0.5 rounded text-xs ml-2";
+                if (activeEl) activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-blue-50 text-blue-700 border-blue-600 flex items-center gap-2 outline-none focus:outline-none select-none";
+                if (activeBadge) activeBadge.className = "bg-blue-200 text-blue-800 px-2 py-0.5 rounded text-xs ml-2";
             } else if (tab === 'pending') {
-                activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-orange-50 text-orange-700 border-orange-500 flex items-center gap-2 outline-none focus:outline-none select-none";
-                activeBadge.className = "bg-orange-200 text-orange-800 px-2 py-0.5 rounded text-xs ml-2";
+                if (activeEl) activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-orange-50 text-orange-700 border-orange-500 flex items-center gap-2 outline-none focus:outline-none select-none";
+                if (activeBadge) activeBadge.className = "bg-orange-200 text-orange-800 px-2 py-0.5 rounded text-xs ml-2";
             } else if (tab === 'completed') {
-                activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-emerald-50 text-emerald-700 border-emerald-500 flex items-center gap-2 outline-none focus:outline-none select-none";
-                activeBadge.className = "bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded text-xs ml-2";
+                if (activeEl) activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-emerald-50 text-emerald-700 border-emerald-500 flex items-center gap-2 outline-none focus:outline-none select-none";
+                if (activeBadge) activeBadge.className = "bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded text-xs ml-2";
             } else if (tab === 'canceled') {
-                activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-red-50 text-red-700 border-red-600 flex items-center gap-2 outline-none focus:outline-none select-none";
-                activeBadge.className = "bg-red-200 text-red-800 px-2 py-0.5 rounded text-xs ml-2";
+                if (activeEl) activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-red-50 text-red-700 border-red-600 flex items-center gap-2 outline-none focus:outline-none select-none";
+                if (activeBadge) activeBadge.className = "bg-red-200 text-red-800 px-2 py-0.5 rounded text-xs ml-2";
             }
             renderKanban();
         }
@@ -1556,7 +1580,6 @@
                 container.innerHTML = '';
                 let counts = { prog: 0, pend: 0, comp: 0, canc: 0 };
 
-                // Pengaman agar tidak error jika ada ID yang bolong
                 let sortedOrders = [...appData.orders].sort((a, b) => {
                     const idA = String(a.ID_Order || '');
                     const idB = String(b.ID_Order || '');
@@ -1573,7 +1596,6 @@
 
                         let isMatch = false;
 
-                        // Perhitungan Tab
                         if (['On Progress', 'Scheduled', 'Unscheduled'].includes(status)) {
                             counts.prog++;
                             if (currentCtTab === 'progress') isMatch = true;
@@ -1588,7 +1610,6 @@
                             if (currentCtTab === 'canceled') isMatch = true;
                         }
 
-                        // Menggambar kartu
                         if (isMatch) {
                             const card = createKanbanCard(order);
                             container.appendChild(card);
@@ -1598,7 +1619,6 @@
                     }
                 });
 
-                // Update jumlah badge
                 const elProg = document.getElementById('count-progress');
                 const elPend = document.getElementById('count-pending');
                 const elComp = document.getElementById('count-completed');
@@ -1653,7 +1673,6 @@
                 recordHtml = `<div class="mt-2 text-[10px] text-orange-700 bg-orange-50 border border-orange-200 p-1.5 rounded font-mono"><i class="fa-solid fa-stopwatch"></i> Record Sebelumnya: ${order.Waktu_Start_Aktual} - ${order.Waktu_End_Aktual} (${order.Durasi_Aktual}j)</div>`;
             }
 
-            // PENGAMAN: Memaksa String agar tidak crash jika Alasan Delay kosong/null
             let rawAlasan = String(order.Alasan_Delay || '');
             let inspeksiMatch = rawAlasan.match(/\[Inspeksi:\s*(.*?)\]/);
             let waktuInspeksi = inspeksiMatch ? inspeksiMatch[1] : '';
