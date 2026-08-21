@@ -5,19 +5,23 @@
 function doPost(e) {
   try {
     ensureSheetsExist();
+
+    // Parse request dari frontend yang sekarang 100% menggunakan POST
     const request = JSON.parse(e.postData.contents);
     const action = request.action;
     const payload = request.payload || {};
 
     let result;
-    if (action === 'saveOrder') result = saveOrder(payload);
+    if (action === 'getAppData') result = getAppData();
+    else if (action === 'saveOrder') result = saveOrder(payload);
     else if (action === 'updateJobRecord') result = updateJobRecord(payload);
     else if (action === 'updatePasswords') result = updatePasswords(payload.adminPass, payload.ctPass);
     else if (action === 'addMasterItem') result = addMasterItem(payload.category, payload.value);
     else if (action === 'deleteMasterItem') result = deleteMasterItem(payload.category, payload.value);
     else if (action === 'deleteJobRecord') result = deleteJobRecord(payload.id);
-    else result = getAppData(); // Fallback
+    else throw new Error("Aksi tidak valid atau tidak ditemukan");
 
+    // Return respons JSON ke Frontend
     return ContentService.createTextOutput(JSON.stringify(result))
       .setMimeType(ContentService.MimeType.JSON);
 
@@ -27,26 +31,13 @@ function doPost(e) {
   }
 }
 
-// PERBAIKAN: doGet sekarang menangani penarikan data (getAppData)
+// Menangani klik URL Script secara langsung dari browser agar tidak muncul tulisan Error
 function doGet(e) {
-  try {
-    ensureSheetsExist();
-    const action = e.parameter.action;
-
-    if (action === 'getAppData') {
-      return ContentService.createTextOutput(JSON.stringify(getAppData()))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
-
-    return ContentService.createTextOutput(JSON.stringify({
-      status: "success",
-      message: "API Aktif. Backend berjalan normal."
-    })).setMimeType(ContentService.MimeType.JSON);
-
-  } catch (error) {
-    return ContentService.createTextOutput(JSON.stringify({ success: false, message: error.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
+  ensureSheetsExist();
+  return ContentService.createTextOutput(JSON.stringify({
+    status: "success",
+    message: "Backend API Crane Truck Aktif dan Berjalan Normal. Database siap digunakan!"
+  })).setMimeType(ContentService.MimeType.JSON);
 }
 
 // ==========================================
