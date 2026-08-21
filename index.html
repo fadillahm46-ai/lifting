@@ -155,6 +155,7 @@
         // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4y021i9fSzPYCttY24O2_dPC16gIyWLqNP-D048sQX-Zh95RCFJFm_olnHovJUMI/exec';
 
+        // PENCEGAH KELUAR APLIKASI SAAT GESER BACK (HISTORY TRAP)
         window.history.pushState(null, null, location.href);
         window.addEventListener('popstate', function (event) {
             window.history.pushState(null, null, location.href);
@@ -169,27 +170,14 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.history.back();
+                    window.history.back(); // Izinkan keluar
                 }
             });
         });
 
-        // Fitur Download APK Langsung
         function installApp() {
-            Swal.fire({
-                title: 'Download APK',
-                text: 'Anda akan mengunduh file aplikasi LIFTING (.apk) ke perangkat Anda.',
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonColor: '#0ea5e9',
-                cancelButtonColor: '#64748b',
-                confirmButtonText: '<i class="fa-solid fa-download"></i> Mulai Download'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // SILAKAN GANTI URL INI DENGAN LINK GOOGLE DRIVE FILE APK ANDA
-                    window.location.href = "MASUKKAN_LINK_DOWNLOAD_APK_ANDA_DISINI";
-                }
-            });
+            // Karena menggunakan link eksternal langsung, fungsi default dibiarkan.
+            // A href pada tombol akan otomatis mengarahkan ke link download APK.
         }
     </script>
 </head>
@@ -206,13 +194,15 @@
                             class="font-normal text-blue-200">PPA SITE BIB</span></span>
                 </div>
                 <div class="flex items-center">
-                    <button onclick="installApp()"
+                    <!-- TOMBOL DOWNLOAD APK -->
+                    <a href="MASUKKAN_LINK_DOWNLOAD_APK_ANDA_DISINI" target="_blank" onclick="installApp()"
                         class="hidden sm:flex items-center bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full border border-white/20 mr-3 select-none text-xs font-semibold transition">
-                        <i class="fa-solid fa-download mr-1.5"></i> Install
-                    </button>
-                    <button onclick="installApp()" class="sm:hidden text-white/80 hover:text-white mr-4 p-1">
+                        <i class="fa-solid fa-download mr-1.5"></i> Download APK
+                    </a>
+                    <a href="MASUKKAN_LINK_DOWNLOAD_APK_ANDA_DISINI" target="_blank" onclick="installApp()"
+                        class="sm:hidden text-white/80 hover:text-white mr-4 p-1">
                         <i class="fa-solid fa-download text-lg"></i>
-                    </button>
+                    </a>
                     <div id="user-badge"
                         class="hidden bg-white/20 px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm border border-white/10 select-none">
                         <i class="fa-regular fa-user mr-2"></i><span id="role-display">Role</span>
@@ -226,6 +216,7 @@
 
         <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10 relative pb-10">
             <div class="space-y-8">
+                <!-- MENU 1 & 2: User/Pemohon -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
                     <div onclick="navigate('user-form')"
                         class="card-hover bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-2 border-blue-400 cursor-pointer text-center group select-none outline-none focus:outline-none relative overflow-hidden">
@@ -886,7 +877,6 @@
         let userTimerInterval = null;
         let lastDataHash = "";
 
-        // Mock Data Fallback
         let mockMasterData = [];
         let mockOrdersData = [];
 
@@ -911,32 +901,24 @@
             }
         }
 
-        // --- CORE FETCH API HELPER ---
+        // --- CORE FETCH API HELPER (METODE POST PENUH ANTI POTONG) ---
         async function fetchAPI(action, payload = null) {
-            if (!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
-
-            let url = SCRIPT_URL;
-            let options = { redirect: "follow" };
-
-            // Tarik data WAJIB pakai GET, Simpan data WAJIB pakai POST
-            if (action === 'getAppData') {
-                url = `${SCRIPT_URL}?action=${action}`;
-                options.method = 'GET';
-            } else {
-                options.method = 'POST';
-                options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
-                options.body = JSON.stringify({ action: action, payload: payload });
-            }
+            let options = {
+                method: 'POST', // Hanya gunakan POST untuk menghindari redirect Google menghapus parameter
+                redirect: "follow",
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: action, payload: payload || {} })
+            };
 
             try {
-                const response = await fetch(url, options);
+                const response = await fetch(SCRIPT_URL, options);
                 if (!response.ok) throw new Error("Jaringan bermasalah");
                 const data = await response.json();
 
+                // Cek jika balasan kosong dari server
                 if (data.status === 'success' && !data.master && !data.orders && action === 'getAppData') {
-                    throw new Error("Respon data kosong dari server. Memaksa fallback.");
+                    throw new Error("Respon data kosong dari server. Google Apps Script gagal mengirim data master/order.");
                 }
-
                 if (data.success === false) {
                     console.error("Backend Error:", data.message);
                     throw new Error(data.message);
@@ -945,7 +927,7 @@
                 isOnlineMode = true;
                 return data;
             } catch (error) {
-                console.warn("Fetch Error (API Down / CORS):", error);
+                console.warn("Fetch Error:", error);
                 isOnlineMode = false;
                 throw error;
             }
@@ -978,12 +960,19 @@
 
                 if (isRefresh) Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
             } catch (err) {
+                // Munculkan notifikasi jika gagal tarik data
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Akses Ditolak / Diblokir',
+                    html: `Gagal menarik data dari Google. Pastikan URL benar dan pada saat <b>Deploy Apps Script</b>, pilihan <b>Who has access</b> sudah disetel ke <b>"Anyone" (Siapa Saja)</b>.<br><br><i class="text-xs text-slate-500">${err.message}</i>`,
+                    confirmButtonColor: '#ef4444'
+                });
+
                 if (appData.orders.length === 0) {
                     initMockData();
                     appData.master = [...mockMasterData];
                     appData.orders = [...mockOrdersData];
                 }
-                if (isRefresh) Swal.fire({ icon: 'warning', title: 'Gangguan Jaringan', text: 'Gagal memuat data terbaru dari cloud.', timer: 2000, showConfirmButton: false });
             } finally {
                 refreshCurrentView();
                 if (callback) callback();
