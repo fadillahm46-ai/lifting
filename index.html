@@ -6,17 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Crane Truck PPA</title>
 
-    <!-- Link Logo & Manifest PWA -->
-    <link rel="icon" type="image/png"
-        href="https://drive.google.com/uc?export=view&id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg">
-    <link rel="apple-touch-icon" href="https://drive.google.com/uc?export=view&id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg">
-    <link rel="manifest"
-        href='data:application/manifest+json,%7B%22name%22%3A%22LIFTING%22%2C%22short_name%22%3A%22LIFTING%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b4c7c%22%2C%22theme_color%22%3A%22%230b4c7c%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fdrive.google.com%2Fuc%3Fexport%3Dview%26id%3D1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D'>
+    <!-- PWA Setup & Logo Icon (Truk Orange, Background Biru) -->
+    <link rel="icon"
+        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAGoSURBVHhe7ZDRasMwEEb/7x8sEAyW4A2ywWCw2CDrBllP0A2ywWCwQNYNskEwWCAYZINgwMAZ5DkP6ZzIUuzYkvo+OPQlx0/Sc9J1h2zbtnXwJ31eB/oVj40e0Bv0iO7Hw97sL7pDP+lxPOx79FvD5DnoD62Lh12jP+lzPDRt7/f7YRiGfJ/P53xN/d5D6/eK9oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oOhHw14PB7b+/2e72n7+18K/Y6B0P1+Px0Oh3yN6vV6bVqt1rO+N+j1en09HA63Tqfzqu8NGqVyu91u7Xb7U9+bgWaz2Vqt1q+uA81ms61Wq29dB4L1er01m82vrgMhR6lU5+v1WtcBoUK1Wv3WdbDQbDaHulqtftf3hZDP52O1Wu2q68ASqFSr1Vd9XwgY8Xic6vX6V9eBJaE6nU5b14GQI5VKnXUdiB5yuVxXrVbf9H0hYEQiEaqv0x6GfswH2x36SY/jYd+j3xrtF32P+fAD8m2v/m1mD4UAAAAASUVORK5CYII="
+        type="image/png">
+    <link rel="apple-touch-icon"
+        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAGoSURBVHhe7ZDRasMwEEb/7x8sEAyW4A2ywWCw2CDrBllP0A2ywWCwQNYNskEwWCAYZINgwMAZ5DkP6ZzIUuzYkvo+OPQlx0/Sc9J1h2zbtnXwJ31eB/oVj40e0Bv0iO7Hw97sL7pDP+lxPOx79FvD5DnoD62Lh12jP+lzPDRt7/f7YRiGfJ/P53xN/d5D6/eK9oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oOhHw14PB7b+/2e72n7+18K/Y6B0P1+Px0Oh3yN6vV6bVqt1rO+N+j1en09HA63Tqfzqu8NGqVyu91u7Xb7U9+bgWaz2Vqt1q+uA81ms61Wq29dB4L1er01m82vrgMhR6lU5+v1WtcBoUK1Wv3WdbDQbDaHulqtftf3hZDP52O1Wu2q68ASqFSr1Vd9XwgY8Xic6vX6V9eBJaE6nU5b14GQI5VKnXUdiB5yuVxXrVbf9H0hYEQiEaqv0x6GfswH2x36SY/jYd+j3xrtF32P+fAD8m2v/m1mD4UAAAAASUVORK5CYII=">
 
-    <meta name="theme-color" content="#0b4c7c">
+    <link rel="manifest"
+        href='data:application/manifest+json;utf8,{"name":"LIFTING PPA BIB","short_name":"LIFTING","start_url":"/","display":"standalone","background_color":"#0b4c7c","theme_color":"#0b4c7c","icons":[{"src":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAGoSURBVHhe7ZDRasMwEEb/7x8sEAyW4A2ywWCw2CDrBllP0A2ywWCwQNYNskEwWCAYZINgwMAZ5DkP6ZzIUuzYkvo+OPQlx0/Sc9J1h2zbtnXwJ31eB/oVj40e0Bv0iO7Hw97sL7pDP+lxPOx79FvD5DnoD62Lh12jP+lzPDRt7/f7YRiGfJ/P53xN/d5D6/eK9oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oMh+oOhHw14PB7b+/2e72n7+18K/Y6B0P1+Px0Oh3yN6vV6bVqt1rO+N+j1en09HA63Tqfzqu8NGqVyu91u7Xb7U9+bgWaz2Vqt1q+uA81ms61Wq29dB4L1er01m82vrgMhR6lU5+v1WtcBoUK1Wv3WdbDQbDaHulqtftf3hZDP52O1Wu2q68ASqFSr1Vd9XwgY8Xic6vX6V9eBJaE6nU5b14GQI5VKnXUdiB5yuVxXrVbf9H0hYEQiEaqv0x6GfswH2x36SY/jYd+j3xrtF32P+fAD8m2v/m1mD4UAAAAASUVORK5CYII=","sizes":"64x64","type":"image/png"}]}'>
+
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="LIFTING">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#0b4c7c">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -151,9 +153,57 @@
             background-color: #e2e8f0;
         }
     </style>
+
+    <script>
+        // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4y021i9fSzPYCttY24O2_dPC16gIyWLqNP-D048sQX-Zh95RCFJFm_olnHovJUMI/exec';
+
+        // PENCEGAH KELUAR APLIKASI SAAT GESER BACK (HISTORY TRAP)
+        window.history.pushState(null, null, location.href);
+        window.addEventListener('popstate', function (event) {
+            window.history.pushState(null, null, location.href);
+            Swal.fire({
+                title: 'Keluar Aplikasi?',
+                text: "Apakah Anda yakin ingin keluar dari halaman sistem ini?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Keluar',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.history.back(); // Izinkan keluar jika di-iya-kan
+                }
+            });
+        });
+
+        // PWA INSTALL LOGIC
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                });
+            } else {
+                Swal.fire({
+                    title: 'Install LIFTING',
+                    html: 'Di HP Android: Ketuk menu browser (titik 3) lalu pilih <b>Tambahkan ke Layar Utama</b>.<br><br>Di iPhone/iOS: Ketuk icon Share lalu pilih <b>Add to Home Screen</b>.',
+                    icon: 'info',
+                    confirmButtonColor: '#0ea5e9'
+                });
+            }
+        }
+    </script>
 </head>
 
-<body class="text-slate-800 antialiased h-screen flex flex-col relative">
+<body class="text-slate-800 antialiased h-screen flex flex-col">
 
     <nav class="header-bg text-white shadow-md z-10 sticky top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -164,14 +214,14 @@
                     <span class="font-bold text-lg tracking-wide">CRANE TRUCK <span
                             class="font-normal text-blue-200">PPA SITE BIB</span></span>
                 </div>
-                <div class="flex items-center gap-2 sm:gap-3">
-                    <!-- Tombol Download / Install App -->
-                    <button type="button" onclick="installApp()" id="install-app-btn"
-                        class="bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm border border-white/10 select-none transition flex items-center outline-none focus:outline-none"
-                        title="Install Aplikasi ke HP">
-                        <i class="fa-solid fa-download sm:mr-1.5"></i><span class="hidden sm:inline">Install</span>
+                <div class="flex items-center">
+                    <button onclick="installApp()"
+                        class="hidden sm:flex items-center bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full border border-white/20 mr-3 select-none text-xs font-semibold transition">
+                        <i class="fa-solid fa-download mr-1.5"></i> Install
                     </button>
-                    <!-- Badge Role -->
+                    <button onclick="installApp()" class="sm:hidden text-white/80 hover:text-white mr-4 p-1">
+                        <i class="fa-solid fa-download text-lg"></i>
+                    </button>
                     <div id="user-badge"
                         class="hidden bg-white/20 px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm border border-white/10 select-none">
                         <i class="fa-regular fa-user mr-2"></i><span id="role-display">Role</span>
@@ -181,10 +231,10 @@
         </div>
     </nav>
 
-    <main class="flex-grow overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-between">
+    <main class="flex-grow overflow-y-auto p-4 sm:p-6 lg:p-8">
 
-        <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10 mb-10 w-full flex-grow flex flex-col">
-            <div class="space-y-8 flex-grow">
+        <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10 relative pb-10">
+            <div class="space-y-8">
                 <!-- MENU 1 & 2: User/Pemohon -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
                     <div onclick="navigate('user-form')"
@@ -265,15 +315,16 @@
                             lapangan</p>
                     </div>
                 </div>
-            </div>
 
-            <!-- Watermark Footer diletakkan di akhir view-home agar tetap rapi -->
-            <div class="w-full text-center mt-12 pb-4 pointer-events-none select-none">
-                <p class="text-sm italic font-medium text-slate-400 opacity-60 tracking-wider">created by FadillahM</p>
+                <!-- Watermark -->
+                <div class="text-center mt-12">
+                    <span class="text-slate-400 italic text-xs select-none cursor-default">created by FadillahM</span>
+                </div>
             </div>
         </div>
 
-        <div id="view-user-form" class="hide max-w-3xl mx-auto w-full">
+        <div id="view-user-form" class="hide max-w-3xl mx-auto">
+            <!-- Isi Halaman Buat Order Baru -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-200">
                 <div class="bg-[#0ea5e9] p-5 text-white relative flex items-center justify-center">
                     <button type="button" onclick="navigate('home')"
@@ -389,7 +440,8 @@
             </div>
         </div>
 
-        <div id="view-user-monitor" class="hide max-w-[90rem] mx-auto flex flex-col h-full w-full">
+        <div id="view-user-monitor" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
+            <!-- Halaman Monitor User -->
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
@@ -446,7 +498,8 @@
             </div>
         </div>
 
-        <div id="view-admin" class="hide max-w-[90rem] mx-auto space-y-6 w-full">
+        <div id="view-admin" class="hide max-w-[90rem] mx-auto space-y-6">
+            <!-- Halaman Admin -->
             <div class="flex flex-wrap gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-200">
                 <button type="button" onclick="switchAdminTab('dashboard')" id="tab-dashboard"
                     class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-blue-600 text-white shadow-md outline-none focus:outline-none select-none">
@@ -713,7 +766,8 @@
             </div>
         </div>
 
-        <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full w-full">
+        <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
+            <!-- Halaman Operator CT -->
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
@@ -843,9 +897,10 @@
         </div>
     </div>
 
+    <!-- JS Logic -->
     <script>
         // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxQxmXEnwd61v0BjYuqZniT6Gmm0dl6F0dlLPObrkcTyvBf_JO7-qZIvF6zD1FLRSQR/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4y021i9fSzPYCttY24O2_dPC16gIyWLqNP-D048sQX-Zh95RCFJFm_olnHovJUMI/exec';
 
         let isOnlineMode = false;
         let appData = { orders: [], master: [] };
@@ -855,83 +910,73 @@
         let currentUserTab = 'masuk';
         let dbSort = { key: 'default', asc: false };
         let userTimerInterval = null;
-        let autoSyncInterval = null;
         let lastDataHash = "";
 
-        // --- FITUR PWA (INSTALL APP) & BACK BUTTON TRAP ---
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
-
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    deferredPrompt = null;
-                });
-            } else {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Install Aplikasi LIFTING',
-                    html: '<div class="text-sm text-left">Untuk menginstal aplikasi ini ke HP Anda:<br><br><b>Android (Chrome):</b> Klik menu titik tiga di pojok kanan atas layar browser Anda, lalu pilih <b>"Tambahkan ke Layar Utama" (Add to Home screen)</b>.<br><br><b>iOS (Safari):</b> Klik tombol Share (Bagikan) di bagian bawah, lalu pilih <b>"Add to Home Screen"</b>.</div>',
-                    confirmButtonText: 'Mengerti',
-                    confirmButtonColor: '#0ea5e9'
-                });
-            }
-        }
-
-        // Mencegah keluar aplikasi secara tiba-tiba saat layar digeser atau tombol Back ditekan
-        window.history.pushState(null, null, window.location.href);
-        window.onpopstate = function () {
-            window.history.pushState(null, null, window.location.href);
-            Swal.fire({
-                title: 'Keluar Aplikasi?',
-                text: "Apakah Anda yakin ingin menutup aplikasi LIFTING?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#ef4444',
-                cancelButtonColor: '#94a3b8',
-                confirmButtonText: 'Ya, Keluar',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.history.go(-2); // Kembali paksa atau tutup
-                }
-            });
-        };
-
-        // Data Mock untuk Fallback Mode Offline
+        // Mock Data Fallback
         let mockMasterData = [];
         let mockOrdersData = [];
 
-        // Inisialisasi Mock Data (Offline)
         function initMockData() {
-            // DATA DUMMY DIHAPUS.
-            // Sistem tidak akan lagi memunculkan data "Lokal" atau "Dummy" yang membingungkan
-            // ketika terjadi gangguan jaringan.
+            if (mockMasterData.length === 0 && mockOrdersData.length === 0) {
+                const mPerusahaan = ["PT. PPA", "PT. BIB"];
+                const mDept = ["PLANT", "PROD", "HCGA"];
+                const mSec = ["Mechanic", "Warehouse", "Hauling"];
+                const mUnit = ["MC7001", "GR501", "CT2514"];
+                const mGL = ["M. IQBAL H.", "ACHMAD HARIYANTO"];
+                const mOp = ["ISKANDAR", "ABDURAHMAN"];
+                const mRig = ["KHOLIK SYAIFUDIN", "M.ADAM"];
+
+                mPerusahaan.forEach(v => mockMasterData.push(["Perusahaan", v]));
+                mDept.forEach(v => mockMasterData.push(["Departemen", v]));
+                mSec.forEach(v => mockMasterData.push(["Section", v]));
+                mUnit.forEach(v => mockMasterData.push(["Unit CT", v]));
+                mGL.forEach(v => mockMasterData.push(["GL", v]));
+                mOp.forEach(v => mockMasterData.push(["Operator", v]));
+                mRig.forEach(v => mockMasterData.push(["Rigger", v]));
+                mockMasterData.push(["Password", "Admin|101010"], ["Password", "CT|191919"]);
+            }
         }
 
         // --- CORE FETCH API HELPER ---
         async function fetchAPI(action, payload = null) {
             if (!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
 
-            // Selalu menggunakan POST dengan text/plain untuk menghindari masalah pemblokiran CORS
-            // dari browser maupun lingkungan pratinjau (Sandbox)
-            const options = {
-                method: 'POST',
-                redirect: "follow",
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: action, payload: payload || {} })
-            };
+            let url = SCRIPT_URL;
+            let options = { redirect: "follow" };
 
-            const response = await fetch(SCRIPT_URL, options);
-            if (!response.ok) throw new Error("Jaringan bermasalah (Server merespons error)");
-            return await response.json();
+            // Tarik data WAJIB pakai GET, Simpan data WAJIB pakai POST
+            if (action === 'getAppData') {
+                url = `${SCRIPT_URL}?action=${action}`;
+                options.method = 'GET';
+            } else {
+                options.method = 'POST';
+                options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
+                options.body = JSON.stringify({ action: action, payload: payload });
+            }
+
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) throw new Error("Jaringan bermasalah");
+                const data = await response.json();
+
+                if (data.status === 'success' && !data.master && !data.orders && action === 'getAppData') {
+                    throw new Error("Respon data kosong dari server. Memaksa fallback.");
+                }
+
+                if (data.success === false) {
+                    console.error("Backend Error:", data.message);
+                    throw new Error(data.message);
+                }
+
+                isOnlineMode = true;
+                return data;
+            } catch (error) {
+                console.warn("Fetch Error (API Down / CORS):", error);
+                isOnlineMode = false;
+                throw error;
+            }
         }
 
-        // --- REFRESH UI ---
         function refreshCurrentView() {
             populateDropdowns();
             if (!document.getElementById('admin-tab-dashboard').classList.contains('hide')) updateDashboard();
@@ -949,48 +994,26 @@
             try {
                 const parsed = await fetchAPI('getAppData');
 
-                // Cek jika error dilempar dari backend
-                if (parsed.success === false) throw new Error(parsed.message);
+                if (!parsed || !parsed.master || !parsed.orders) {
+                    throw new Error("Format data tidak valid dari server.");
+                }
 
                 lastDataHash = JSON.stringify(parsed);
-                appData.master = parsed.master || [];
-                appData.orders = parsed.orders || [];
+                appData.master = parsed.master;
+                appData.orders = parsed.orders;
 
-                if (isRefresh) {
-                    Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
-                }
+                if (isRefresh) Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
             } catch (err) {
-                // Mode Offline / Fallback
-                // Mengubah console.error menjadi console.warn agar sistem pratinjau tidak mendeteksinya sebagai Crash System
-                console.warn("Info: Berjalan dalam Mode Offline (Koneksi ke Apps Script diblokir oleh pratinjau atau tanpa jaringan). Detail: ", err.message);
-
-                if (isRefresh) {
-                    Swal.fire({ icon: 'warning', title: 'Koneksi Terganggu', text: 'Tidak dapat menghubungi server cloud. Sistem memuat mode lokal.', timer: 3000, showConfirmButton: false });
+                if (appData.orders.length === 0) {
+                    initMockData();
+                    appData.master = [...mockMasterData];
+                    appData.orders = [...mockOrdersData];
                 }
+                if (isRefresh) Swal.fire({ icon: 'warning', title: 'Gangguan Jaringan', text: 'Gagal memuat data terbaru dari cloud.', timer: 2000, showConfirmButton: false });
             } finally {
                 refreshCurrentView();
                 if (callback) callback();
             }
-        }
-
-        function silentSync() {
-            if (!document.getElementById('modal-validasi').classList.contains('hidden')) return;
-            if (Swal.isVisible()) return;
-
-            fetchAPI('getAppData').then(parsed => {
-                let newHash = JSON.stringify(parsed);
-                if (lastDataHash !== newHash) {
-                    lastDataHash = newHash;
-                    appData.master = parsed.master || [];
-                    appData.orders = parsed.orders || [];
-                    refreshCurrentView();
-                }
-            }).catch(() => { /* Silent ignore on offline */ });
-        }
-
-        function startAutoSync() {
-            if (autoSyncInterval) clearInterval(autoSyncInterval);
-            autoSyncInterval = setInterval(silentSync, 10000);
         }
 
         function formatTglId(dateStr) {
@@ -1219,30 +1242,11 @@
                                </div>`,
                         showConfirmButton: false, showCloseButton: true
                     });
-                    loadAppData(false); // Refresh bg
+                    loadAppData(false);
                 } else { Swal.fire('Error', res.message, 'error'); }
             } catch (err) {
-                // Fallback Simpan Offline
-                const now = new Date();
-                const newOrder = {
-                    ID_Order: `LIFT-${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}-${appData.orders.length + 1}`,
-                    Timestamp: 'Sekarang', Nama_Pemohon: orderPayload.nama, No_WA: orderPayload.wa, Perusahaan: orderPayload.perusahaan, Departemen: orderPayload.departemen, Section: orderPayload.section, Tgl_Pelaksanaan: orderPayload.tanggal, Shift: orderPayload.shift, Waktu_Request: orderPayload.waktu, Durasi_Request: orderPayload.durasi, Lokasi: orderPayload.lokasi, Tujuan: orderPayload.tujuan, Deskripsi: orderPayload.deskripsi, Foto_Base64: orderPayload.foto, Status: 'Menunggu Validasi', Unit_CT: '', GL: '', Operator: '', Rigger: '', Waktu_Start_Aktual: '', Waktu_End_Aktual: '', Durasi_Aktual: '', Alasan_Delay: ''
-                };
-                mockOrdersData.unshift(newOrder);
-                appData.orders.unshift(newOrder);
                 btn.innerHTML = orig; btn.disabled = false;
-
-                const waTextMock = waTextStr.replace('LIFT-(Sistem)', newOrder.ID_Order.split('_')[0]);
-                Swal.fire({
-                    icon: 'success', title: 'Order Tersimpan (Data Lokal)!',
-                    html: `Anda dalam Mode Offline. Data tersimpan di memori perangkat sementara.<br><br>
-                           <div class="flex gap-2 justify-center mt-3">
-                               <button type="button" onclick="copyTextFallback(decodeURIComponent('${encodeURIComponent(waTextMock)}'))" class="bg-slate-200 text-slate-800 px-4 py-2 rounded shadow hover:bg-slate-300 outline-none focus:outline-none select-none"><i class="fa-solid fa-copy"></i> Salin Job</button>
-                               <a href="https://wa.me/?text=${encodeURIComponent(waTextMock)}" target="_blank" class="bg-[#25D366] text-white px-4 py-2 rounded shadow hover:bg-[#1da851] outline-none focus:outline-none select-none"><i class="fa-brands fa-whatsapp"></i> Kirim WA</a>
-                           </div>`,
-                    showConfirmButton: false, showCloseButton: true
-                });
-                document.getElementById('form-order').reset();
+                Swal.fire('Error', 'Gagal menyimpan ke server', 'error');
             }
         }
 
@@ -2446,7 +2450,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             navigate('home');
             loadAppData(false);
-            startAutoSync();
         });
     </script>
 </body>
