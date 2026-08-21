@@ -856,155 +856,32 @@
         let autoSyncInterval = null;
         let lastDataHash = "";
 
-        // PWA Install Prompt Logic
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
-
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the install prompt');
-                    }
-                    deferredPrompt = null;
-                });
-            } else {
-                Swal.fire({
-                    title: 'Install Aplikasi',
-                    html: 'Aplikasi ini dirancang untuk diinstal langsung ke HP Anda tanpa melalui App Store.<br><br><b>Pengguna Android (Chrome):</b><br>Ketuk ikon <b>titik tiga</b> di sudut kanan atas browser, lalu pilih <b>"Tambahkan ke Layar Utama" (Add to Home screen)</b>.<br><br><b>Pengguna iOS (Safari):</b><br>Ketuk ikon <b>Share (Panah ke Atas)</b> di bar navigasi bawah, lalu geser dan pilih <b>"Add to Home Screen"</b>.',
-                    icon: 'info',
-                    confirmButtonColor: '#0ea5e9',
-                    confirmButtonText: 'Mengerti'
-                });
-            }
-        }
-
-        // Generate PWA Icon dinamik (Mengubah SVG Truck ke format PNG di background)
-        function generatePWA() {
-            const svgCode = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="#0b4c7c" rx="100"/><path fill="#f97316" d="M480 224H384V160c0-17.6-14.4-32-32-32H96C78.4 128 64 142.4 64 160v160c0 17.6 14.4 32 32 32h16c0 35.3 28.7 64 64 64s64-28.7 64-64h128c0 35.3 28.7 64 64 64s64-28.7 64-64h16c17.6 0 32-14.4 32-32V256c0-17.6-14.4-32-32-32zm-304 96c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32zm224 0c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32zm48-48h-80v-48h64c8.8 0 16 7.2 16 16v32z"/></svg>`;
-
-            const canvas512 = document.createElement('canvas');
-            canvas512.width = 512; canvas512.height = 512;
-            const ctx512 = canvas512.getContext('2d');
-
-            const canvas192 = document.createElement('canvas');
-            canvas192.width = 192; canvas192.height = 192;
-            const ctx192 = canvas192.getContext('2d');
-
-            const img = new Image();
-            const svgBlob = new Blob([svgCode], { type: 'image/svg+xml;charset=utf-8' });
-            img.onload = function () {
-                ctx512.drawImage(img, 0, 0, 512, 512);
-                ctx192.drawImage(img, 0, 0, 192, 192);
-
-                const png512 = canvas512.toDataURL('image/png');
-                const png192 = canvas192.toDataURL('image/png');
-
-                document.getElementById('dyn-favicon').href = png192;
-                document.getElementById('dyn-apple-icon').href = png192;
-
-                const manifest = {
-                    "name": "Monitoring Crane Truck PPA",
-                    "short_name": "LIFTING",
-                    "start_url": window.location.href.split('?')[0],
-                    "display": "standalone",
-                    "background_color": "#f8fafc",
-                    "theme_color": "#0b4c7c",
-                    "orientation": "portrait",
-                    "icons": [
-                        { "src": png192, "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-                        { "src": png512, "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
-                    ]
-                };
-
-                const manifestStr = JSON.stringify(manifest);
-                const manifestUrl = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(manifestStr);
-                document.getElementById('dyn-manifest').href = manifestUrl;
-            };
-            img.src = URL.createObjectURL(svgBlob);
-        }
-
-        generatePWA(); // Eksekusi pembuatan Logo/Manifest PWA
-
-        // Mobile Back Button Trap (Pencegah Keluar Aplikasi)
-        window.addEventListener('load', () => {
-            history.pushState({ noBackExitsApp: true }, '');
-        });
-
-        window.addEventListener('popstate', (event) => {
-            Swal.fire({
-                title: 'Keluar dari Sistem?',
-                text: 'Apakah Anda yakin ingin menutup aplikasi ini?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#ef4444',
-                cancelButtonColor: '#64748b',
-                confirmButtonText: 'Ya, Keluar',
-                cancelButtonText: 'Tetap di Sini',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.history.back(); // Izinkan keluar sepenuhnya
-                } else {
-                    history.pushState({ noBackExitsApp: true }, ''); // Tahan lagi
-                }
-            });
-        });
-
+        // Data Mock untuk Fallback Mode Offline
         let mockMasterData = [];
         let mockOrdersData = [];
 
+        // Inisialisasi Mock Data (Offline)
         function initMockData() {
-            if (mockMasterData.length === 0 && mockOrdersData.length === 0) {
-                const mPerusahaan = ["PT. PPA", "PT. BIB", "PT. BOSTON", "PT. KILAN MITRA ENERGI", "PT. TRIATRA SINERGIA PRATAMA"];
-                const mDept = ["PLANT", "PROD", "HCGA", "SHE", "COE", "ENG", "SCM", "MNG", "OPD"];
-                const mSec = ["Mechanic", "Warehouse", "Hauling", "Welding"];
-                const mUnit = ["MC7001", "GR501", "CT2514", "CT2515", "CT52503", "CT52505", "CT52508"];
-                const mGL = ["M. IQBAL H.", "BRYAN", "DENNY SUHENDAR", "EKO PERMANA S.", "SUWARDI", "ACHMAD HARIYANTO", "RENO SEPTIADI P.", "IRWAN", "LUKMANNUL HAKIM"];
-                const mOp = ["ISKANDAR", "ABDURAHMAN", "AMIR MAHMUD", "YUSUF SAMUDRO", "RIPKI RISADI"];
-                const mRig = ["KHOLIK SYAIFUDIN", "GUSTI M.SYAHRUL RAMADHAN", "M.ADAM", "SUPIANI"];
-
-                mPerusahaan.forEach(v => mockMasterData.push(["Perusahaan", v]));
-                mDept.forEach(v => mockMasterData.push(["Departemen", v]));
-                mSec.forEach(v => mockMasterData.push(["Section", v]));
-                mUnit.forEach(v => mockMasterData.push(["Unit CT", v]));
-                mGL.forEach(v => mockMasterData.push(["GL", v]));
-                mOp.forEach(v => mockMasterData.push(["Operator", v]));
-                mRig.forEach(v => mockMasterData.push(["Rigger", v]));
-                mockMasterData.push(["Password", "Admin|101010"], ["Password", "CT|191919"]);
-
-                let nowStr = new Date().toLocaleDateString('en-GB') + " " + new Date().toLocaleTimeString('en-GB').substring(0, 5);
-
-                mockOrdersData.push(
-                    { ID_Order: "LIFT-20260723-1", Timestamp: "23/07/2026 08:15", Nama_Pemohon: "Budi Santoso (Data Lokal)", No_WA: "08123456789", Perusahaan: "PT. PPA", Departemen: "PLANT", Section: "Mechanic", Tgl_Pelaksanaan: "2026-07-23", Shift: "Shift 1", Waktu_Request: "09:00", Durasi_Request: "4", Lokasi: "Pit A", Tujuan: "Workshop", Deskripsi: "Angkat mesin excavator", Foto_Base64: "", Status: "Completed", Unit_CT: "CT2514", GL: "ACHMAD HARIYANTO", Operator: "ISKANDAR", Rigger: "KHOLIK SYAIFUDIN", Waktu_Start_Aktual: "09:00", Waktu_End_Aktual: "14:00", Durasi_Aktual: "4", Alasan_Delay: "[Inspeksi: 08:45]" },
-                    { ID_Order: "LIFT-20260723-4", Timestamp: "23/07/2026 12:30", Nama_Pemohon: "Tatang (Data Lokal)", No_WA: "08223344556", Perusahaan: "PT. PPA", Departemen: "PLANT", Section: "Welding", Tgl_Pelaksanaan: "2026-07-23", Shift: "Shift 1", Waktu_Request: "14:00", Durasi_Request: "2", Lokasi: "Workshop", Tujuan: "Pit B", Deskripsi: "Pindah bucket", Foto_Base64: "", Status: "On Progress", Unit_CT: "CT2514", GL: "ACHMAD HARIYANTO", Operator: "ISKANDAR", Rigger: "KHOLIK SYAIFUDIN", Waktu_Start_Aktual: "14:20", Waktu_End_Aktual: "", Durasi_Aktual: "", Alasan_Delay: "" },
-                    { ID_Order: "LIFT-20260723-2", Timestamp: nowStr, Nama_Pemohon: "Aris (Data Lokal)", No_WA: "08987654321", Perusahaan: "PT. BIB", Departemen: "PROD", Section: "Hauling", Tgl_Pelaksanaan: "2026-07-23", Shift: "Shift 2", Waktu_Request: "20:00", Durasi_Request: "3", Lokasi: "Area Hauling", Tujuan: "Scrap Yard", Deskripsi: "Pindah ban HD", Foto_Base64: "", Status: "Scheduled", Unit_CT: "CT2515", GL: "LUKMANNUL HAKIM", Operator: "ABDURAHMAN", Rigger: "M.ADAM", Waktu_Start_Aktual: "", Waktu_End_Aktual: "", Durasi_Aktual: "", Alasan_Delay: "" },
-                    { ID_Order: "LIFT-20260724-3", Timestamp: nowStr, Nama_Pemohon: "Deni (Data Lokal)", No_WA: "08112233445", Perusahaan: "PT. BOSTON", Departemen: "SCM", Section: "Warehouse", Tgl_Pelaksanaan: "2026-07-24", Shift: "Shift 1", Waktu_Request: "08:00", Durasi_Request: "1", Lokasi: "Gudang Utama", Tujuan: "Loading Port", Deskripsi: "Muat pipa besi", Foto_Base64: "", Status: "Pending", Unit_CT: "CT2516", GL: "ACHMAD HARIYANTO", Operator: "RIPKI RISADI", Rigger: "SUPIANI", Waktu_Start_Aktual: "08:00", Waktu_End_Aktual: "09:00", Durasi_Aktual: "1", Alasan_Delay: "[Pending]: Hujan deras" }
-                );
-            }
+            // DATA DUMMY DIHAPUS.
+            // Sistem tidak akan lagi memunculkan data "Lokal" atau "Dummy" yang membingungkan
+            // ketika terjadi gangguan jaringan.
         }
 
+        // --- CORE FETCH API HELPER ---
         async function fetchAPI(action, payload = null) {
             if (!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
 
+            // PERBAIKAN KRITIKAL: Selalu gunakan metode POST. 
+            // Metode GET sebelumnya diblokir oleh sistem keamanan Vercel/Browser (CORS).
             const options = {
-                method: payload ? 'POST' : 'GET',
+                method: 'POST',
                 redirect: "follow",
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: action, payload: payload || {} })
             };
 
-            if (payload) {
-                options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
-                options.body = JSON.stringify({ action: action, payload: payload });
-            }
-
-            const url = payload ? SCRIPT_URL : `${SCRIPT_URL}?action=${action}`;
-
             try {
-                const response = await fetch(url, options);
+                const response = await fetch(SCRIPT_URL, options);
                 if (!response.ok) throw new Error("Jaringan bermasalah");
                 const data = await response.json();
                 isOnlineMode = true;
@@ -1016,6 +893,7 @@
             }
         }
 
+        // --- REFRESH UI ---
         function refreshCurrentView() {
             populateDropdowns();
             if (!document.getElementById('admin-tab-dashboard').classList.contains('hide')) updateDashboard();
@@ -1024,6 +902,7 @@
             if (!document.getElementById('view-ct-panel').classList.contains('hide')) renderKanban();
         }
 
+        // --- LOAD DATA ---
         async function loadAppData(isRefresh = false, callback = null) {
             if (isRefresh) {
                 Swal.fire({ title: 'Menyinkronkan Data...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
@@ -1039,12 +918,14 @@
                     Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
                 }
             } catch (err) {
+                // Fallback Offline
                 initMockData();
-                appData.master = [...mockMasterData];
-                appData.orders = [...mockOrdersData];
+                // Kita matikan penimpaan data dummy agar data asli yang berhasil diload sebelumnya tetap aman
+                // appData.master = [...mockMasterData];
+                // appData.orders = [...mockOrdersData];
 
                 if (isRefresh) {
-                    Swal.fire({ icon: 'warning', title: 'Mode Offline Aktif', text: 'Gagal terhubung ke database cloud. Menggunakan data lokal.', timer: 2500, showConfirmButton: false });
+                    Swal.fire({ icon: 'warning', title: 'Jaringan Terputus', text: 'Gagal terhubung ke database cloud. Menampilkan data cache terakhir.', timer: 2500, showConfirmButton: false });
                 }
             } finally {
                 refreshCurrentView();
