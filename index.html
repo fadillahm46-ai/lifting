@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Crane Truck PPA</title>
-    
-    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMGUhNWU5IiBkPSJNMzY4IDQ4bC00MCAwaC0xMjhjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2aC04Yy0yMi4xIDAtNDAgMTcuOS00MCA0MHYxMTJjMCAyMi4xIDE3LjkgNDAgNDAgNDBoOHY0OGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OHYtNDhoNjR2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDhWMzM2YzAgLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMGUhNWU5IiBkPSJNMzY4IDQ4bC00MCAwaC0xMjhjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2aC04Yy0yMi4xIDAtNDAgMTcuOS00MCA0MHYxMTJjMCAyMi4xIDE3LjkgNDAgNDAgNDBoOHY0OGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OHYtNDhoNjR2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDhWMzM2YzAgLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+">
+
+    <!-- PWA Manifest & App Info -->
+    <meta name="theme-color" content="#0b4c7c">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="LIFTING">
+    <link rel="manifest"
+        href="data:application/manifest+json;base64,eyJuYW1lIjoiTW9uaXRvcmluZyBDcmFuZSBUcnVjayBQUEEiLCJzaG9ydF9uYW1lIjoiTElGVElORyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMGI0YzdjIiwidGhlbWVfY29sb3IiOiIjMGI0YzdjIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMmF5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWE5DYjNnMUlqQWdNQ0ExTVRJZ05URXlJajQ4Y21WamRDQjNhV1IwYUQwaU5URXlJaUJvWldsbmFIUTZJakUxTWlJZ1ptbHNiRDBpSXpCaU5HTTNZeUlnY25nOUlqRXdNQ0lnY25rOUlqRXdNQ0l2UGp4d1lYUm9JR1pwYkc5OUlqTm1ZV05qTVRVaUlIUnlZVzV6Wm05eWJUwaWRISpoYm5Oc1lYUmxLREJzSURNektTSWdaRDBpVFRNMk9DQTBPQ3d0TkRBZ01HaHRNVEk0WXkwek5TNHpJREFnTmk0Z01qZ3VOUzAyTkNBMk5IWXhOaWd0T0dNdE1qSXVNU0F3TFRRd0lERTNPU2cwTUNCME1IWXhNVUpqTUNBeU1pNHhJREUzT1NBMENDQTBNSGg0VmpRNE16QWdNakZ1TlNBMk5DQTBPQ0EwT0doME9HTXlOaTR1TUNCME9DMDlNakV1TlNBMENDRTBMVGc0aERZMFZqUTRNeUF5Tmk0MUlESXhMalVnTkRkZ05EZ29OREpqTWpZdU5TQXdJRFU0TFRJeExtVWdORGd0TkRoMkxUUTRhRGhXTXpNMll6QXRNVE10TXkweU5TNHlMVGd1TWkwek5TNDVPRXcwTmpRZ01qRXlkak15T0dNd0xUTTFMekl0TWpndU1pMDJORDQyTkMwem1tMHRNalUySURJM01td3RNekk0TUNCME1DQXhNak1nMENBd0lETXllbTBOVXpJd0lESTRPR2cwT0cwMExUWTBhQzBwT0cwMExUWTBhRFE0YlRBdExUWTBhQzBwT0cwdE1USTRJREkxTm1nek1uWXRNelpvTXpKMk16SjZJdjg4TDNOMlpqND0iLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCIsInB1cnBvc2UiOiJhbnkgbWFza2FibGUifV19">
+
+    <!-- Embed Logo SVG (Orange Truck + Blue Background) -->
+    <link rel="icon"
+        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzBiNGM3YyIgcng9IjEwMCIgcnk9IjEwMCIvPjxwYXRoIGZpbGw9IiNmYWNjMTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsIDMyKSIgZD0iTTM2OCA0OGwtNDAgMGgtMTI4Yy0zNS4zIDAtNjQgMjguNy02NCA2NHYxNmgtOGMtMjIuMSAwLTQwIDE3LjktNDAgNDB2MTEyYzAgMjIuMSAxNy45IDQwIDQwIDQwaDh2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDY0djQ4YzAgMjYuNSAyMS41IDQ4IDQ4IDQwaDQ4YzI2LjUgMCA0OC0yMS41IDQ4LTQ4di00OGg4VjMzNmMwLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+"
+        type="image/svg+xml">
+    <link rel="apple-touch-icon"
+        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzBiNGM3YyIgcng9IjEwMCIgcnk9IjEwMCIvPjxwYXRoIGZpbGw9IiNmYWNjMTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsIDMyKSIgZD0iTTM2OCA0OGwtNDAgMGgtMTI4Yy0zNS4zIDAtNjQgMjguNy02NCA2NHYxNmgtOGMtMjIuMSAwLTQwIDE3LjktNDAgNDB2MTEyYzAgMjIuMSAxNy45IDQwIDQwIDQwaDh2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDY0djQ4YzAgMjYuNSAyMS41IDQ4IDQ4IDQwaDQ4YzI2LjUgMCA0OC0yMS41IDQ4LTQ4di00OGg4VjMzNmMwLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -20,61 +31,146 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        * { -webkit-tap-highlight-color: transparent; }
-        html, body, div, h1, h2, h3, h4, h5, h6, p, span, label, table, th, td, ul, li, nav, main {
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body,
+        div,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        span,
+        label,
+        table,
+        th,
+        td,
+        ul,
+        li,
+        nav,
+        main {
             -webkit-user-select: none !important;
             -moz-user-select: none !important;
             -ms-user-select: none !important;
             user-select: none !important;
             cursor: default !important;
         }
-        input, textarea, .select2-search__field {
+
+        input,
+        textarea,
+        .select2-search__field {
             -webkit-user-select: text !important;
             -moz-user-select: text !important;
             -ms-user-select: text !important;
             user-select: text !important;
             cursor: text !important;
         }
-        button, a, select, .select2-selection, .card-hover, .cursor-pointer, button *, a * {
+
+        button,
+        a,
+        select,
+        .select2-selection,
+        .card-hover,
+        .cursor-pointer,
+        button *,
+        a * {
             cursor: pointer !important;
         }
 
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .header-bg { background-color: #0b4c7c; }
-        .btn-primary { background-color: #0284c7; color: white; transition: all 0.2s; }
-        .btn-primary:hover { background-color: #0369a1; transform: translateY(-1px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; }
-        .hide { display: none !important; }
-        
-        .select2-container .select2-selection--single { height: 42px !important; border-color: #cbd5e1 !important; border-radius: 0.5rem !important; display: flex; align-items: center; }
-        .select2-container--default .select2-selection--single .select2-selection__rendered { line-height: 42px !important; padding-left: 1rem !important; color: #334155 !important; cursor: pointer !important; }
-        .select2-container--default .select2-selection--single .select2-selection__arrow { height: 40px !important; }
-        
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        th.cursor-pointer:hover { background-color: #e2e8f0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .header-bg {
+            background-color: #0b4c7c;
+        }
+
+        .btn-primary {
+            background-color: #0284c7;
+            color: white;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0369a1;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 42px !important;
+            border-color: #cbd5e1 !important;
+            border-radius: 0.5rem !important;
+            display: flex;
+            align-items: center;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 42px !important;
+            padding-left: 1rem !important;
+            color: #334155 !important;
+            cursor: pointer !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 40px !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        th.cursor-pointer:hover {
+            background-color: #e2e8f0;
+        }
     </style>
 </head>
+
 <body class="text-slate-800 antialiased h-screen flex flex-col">
 
     <nav class="header-bg text-white shadow-md z-10 sticky top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-14">
-                <div class="flex items-center cursor-pointer select-none outline-none focus:outline-none" onclick="navigate('home')">
+                <div class="flex items-center cursor-pointer select-none outline-none focus:outline-none"
+                    onclick="navigate('home')">
                     <i class="fa-solid fa-truck-moving text-2xl text-yellow-400 mr-3"></i>
-                    <span class="font-bold text-lg tracking-wide">CRANE TRUCK <span class="font-normal text-blue-200">PPA SITE BIB</span></span>
+                    <span class="font-bold text-lg tracking-wide">CRANE TRUCK <span
+                            class="font-normal text-blue-200">PPA SITE BIB</span></span>
                 </div>
+                <!-- Badge LIVE SYNC Dihapus sesuai permintaan, hanya menyisakan badge role -->
                 <div class="flex items-center">
-                    <div id="sync-status" class="hidden sm:flex items-center bg-blue-800/50 px-3 py-1.5 rounded-full border border-blue-700/50 mr-4 select-none">
-                        <span class="flex h-2.5 w-2.5 relative mr-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                        </span>
-                        <span class="text-[10px] font-bold text-blue-100 tracking-wider">LIVE SYNC</span>
-                    </div>
-                    <div id="user-badge" class="hidden bg-white/20 px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm border border-white/10 select-none">
+                    <div id="user-badge"
+                        class="hidden bg-white/20 px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm border border-white/10 select-none">
                         <i class="fa-regular fa-user mr-2"></i><span id="role-display">Role</span>
                     </div>
                 </div>
@@ -83,35 +179,55 @@
     </nav>
 
     <main class="flex-grow overflow-y-auto p-4 sm:p-6 lg:p-8">
-        
+
         <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10">
             <div class="space-y-8">
                 <!-- MENU 1 & 2: User/Pemohon -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
-                    <div onclick="navigate('user-form')" class="card-hover bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-2 border-blue-400 cursor-pointer text-center group select-none outline-none focus:outline-none relative overflow-hidden">
-                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-blue-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 ease-out"></div>
+                    <div onclick="navigate('user-form')"
+                        class="card-hover bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-2 border-blue-400 cursor-pointer text-center group select-none outline-none focus:outline-none relative overflow-hidden">
+                        <div
+                            class="absolute -right-10 -top-10 w-32 h-32 bg-blue-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 ease-out">
+                        </div>
                         <div class="relative z-10">
-                            <div class="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-5 shadow-inner group-hover:bg-blue-500 transition-colors duration-300">
-                                <i class="fa-solid fa-file-signature text-3xl sm:text-4xl text-blue-600 group-hover:text-white transition-colors duration-300"></i>
+                            <div
+                                class="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-5 shadow-inner group-hover:bg-blue-500 transition-colors duration-300">
+                                <i
+                                    class="fa-solid fa-file-signature text-3xl sm:text-4xl text-blue-600 group-hover:text-white transition-colors duration-300"></i>
                             </div>
-                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">Buat Order Baru</h2>
-                            <p class="text-slate-500 text-xs sm:text-sm mb-5">Klik di sini untuk mengisi form permintaan unit Crane Truck.</p>
-                            <span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-bold bg-blue-600 text-white shadow-md group-hover:bg-blue-700 transition">
-                                Form Order <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            <h2
+                                class="text-xl sm:text-2xl font-extrabold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">
+                                Buat Order Baru</h2>
+                            <p class="text-slate-500 text-xs sm:text-sm mb-5">Klik di sini untuk mengisi form permintaan
+                                unit Crane Truck.</p>
+                            <span
+                                class="inline-flex items-center px-4 py-2 rounded-full text-xs font-bold bg-blue-600 text-white shadow-md group-hover:bg-blue-700 transition">
+                                Form Order <i
+                                    class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                             </span>
                         </div>
                     </div>
 
-                    <div onclick="navigate('user-monitor')" class="card-hover bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-2 border-emerald-400 cursor-pointer text-center group select-none outline-none focus:outline-none relative overflow-hidden">
-                        <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-emerald-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 ease-out"></div>
+                    <div onclick="navigate('user-monitor')"
+                        class="card-hover bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-2 border-emerald-400 cursor-pointer text-center group select-none outline-none focus:outline-none relative overflow-hidden">
+                        <div
+                            class="absolute -left-10 -bottom-10 w-32 h-32 bg-emerald-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 ease-out">
+                        </div>
                         <div class="relative z-10">
-                            <div class="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-emerald-100 rounded-full flex items-center justify-center mb-5 shadow-inner group-hover:bg-emerald-500 transition-colors duration-300">
-                                <i class="fa-solid fa-magnifying-glass-chart text-3xl sm:text-4xl text-emerald-600 group-hover:text-white transition-colors duration-300"></i>
+                            <div
+                                class="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-emerald-100 rounded-full flex items-center justify-center mb-5 shadow-inner group-hover:bg-emerald-500 transition-colors duration-300">
+                                <i
+                                    class="fa-solid fa-magnifying-glass-chart text-3xl sm:text-4xl text-emerald-600 group-hover:text-white transition-colors duration-300"></i>
                             </div>
-                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800 mb-2 group-hover:text-emerald-600 transition-colors">Cek Orderan</h2>
-                            <p class="text-slate-500 text-xs sm:text-sm mb-5">Pantau status eksekusi job, sisa waktu, dan progress CT.</p>
-                            <span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-md group-hover:bg-emerald-700 transition">
-                                Monitor Job <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            <h2
+                                class="text-xl sm:text-2xl font-extrabold text-slate-800 mb-2 group-hover:text-emerald-600 transition-colors">
+                                Cek Orderan</h2>
+                            <p class="text-slate-500 text-xs sm:text-sm mb-5">Pantau status eksekusi job, sisa waktu,
+                                dan progress CT.</p>
+                            <span
+                                class="inline-flex items-center px-4 py-2 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-md group-hover:bg-emerald-700 transition">
+                                Monitor Job <i
+                                    class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                             </span>
                         </div>
                     </div>
@@ -124,36 +240,50 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-                    <div onclick="promptLogin('Admin')" class="card-hover bg-white rounded-2xl p-6 shadow-sm border border-slate-200 cursor-pointer text-center group select-none outline-none focus:outline-none flex flex-col items-center justify-center hover:border-purple-300">
-                        <div class="w-14 h-14 bg-purple-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-purple-100 transition-colors">
+                    <div onclick="promptLogin('Admin')"
+                        class="card-hover bg-white rounded-2xl p-6 shadow-sm border border-slate-200 cursor-pointer text-center group select-none outline-none focus:outline-none flex flex-col items-center justify-center hover:border-purple-300">
+                        <div
+                            class="w-14 h-14 bg-purple-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-purple-100 transition-colors">
                             <i class="fa-solid fa-user-tie text-xl text-purple-500"></i>
                         </div>
                         <h2 class="text-lg font-bold text-slate-800 mb-1">Administrator</h2>
-                        <p class="text-slate-500 text-xs px-2">Dashboard analitik, kelola database order & pengaturan master</p>
+                        <p class="text-slate-500 text-xs px-2">Dashboard analitik, kelola database order & pengaturan
+                            master</p>
                     </div>
 
-                    <div onclick="promptLogin('CT')" class="card-hover bg-white rounded-2xl p-6 shadow-sm border border-slate-200 cursor-pointer text-center group select-none outline-none focus:outline-none flex flex-col items-center justify-center hover:border-orange-300">
-                        <div class="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-orange-100 transition-colors">
+                    <div onclick="promptLogin('CT')"
+                        class="card-hover bg-white rounded-2xl p-6 shadow-sm border border-slate-200 cursor-pointer text-center group select-none outline-none focus:outline-none flex flex-col items-center justify-center hover:border-orange-300">
+                        <div
+                            class="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-orange-100 transition-colors">
                             <i class="fa-solid fa-truck-fast text-xl text-orange-500"></i>
                         </div>
                         <h2 class="text-lg font-bold text-slate-800 mb-1">Tim Crane Truck</h2>
-                        <p class="text-slate-500 text-xs px-2">Kabin kontrol untuk update status eksekusi job di lapangan</p>
+                        <p class="text-slate-500 text-xs px-2">Kabin kontrol untuk update status eksekusi job di
+                            lapangan</p>
                     </div>
+                </div>
+
+                <!-- Watermark Footer -->
+                <div class="text-center pt-12 pb-2">
+                    <p class="text-slate-400 text-xs italic tracking-wide select-none opacity-70">created by FadillahM
+                    </p>
                 </div>
             </div>
         </div>
 
         <div id="view-user-form" class="hide max-w-3xl mx-auto">
+            <!-- Isi Halaman Buat Order Baru -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-200">
                 <div class="bg-[#0ea5e9] p-5 text-white relative flex items-center justify-center">
-                    <button type="button" onclick="navigate('home')" class="absolute left-5 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition outline-none focus:outline-none select-none">
+                    <button type="button" onclick="navigate('home')"
+                        class="absolute left-5 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition outline-none focus:outline-none select-none">
                         <i class="fa-solid fa-arrow-left"></i>
                     </button>
+                    <!-- Teks instruksi di bawah judul telah dihapus -->
                     <div class="text-center">
                         <h2 class="text-xl font-bold flex items-center justify-center gap-2">
                             <i class="fa-solid fa-circle-plus"></i> ORDER BARU
                         </h2>
-                        <p class="text-blue-100 text-sm mt-1">Harap isi formulir di bawah ini dengan lengkap (Wajib lampirkan foto)</p>
                     </div>
                 </div>
 
@@ -161,72 +291,98 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap Pemohon <span class="text-red-500">*</span></label>
-                                <input type="text" id="f_nama" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap Pemohon <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" id="f_nama" required
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">No. WhatsApp <span class="text-red-500">*</span></label>
-                                <input type="number" id="f_wa" placeholder="08..." required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">No. WhatsApp <span
+                                        class="text-red-500">*</span></label>
+                                <input type="number" id="f_wa" placeholder="08..." required
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Perusahaan <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Perusahaan <span
+                                        class="text-red-500">*</span></label>
                                 <select id="f_perusahaan" required class="w-full select2-search"></select>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Departemen <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Departemen <span
+                                        class="text-red-500">*</span></label>
                                 <select id="f_departemen" required class="w-full select2-search"></select>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Section <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Section <span
+                                        class="text-red-500">*</span></label>
                                 <select id="f_section" required class="w-full select2-search"></select>
                             </div>
                         </div>
 
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal Pelaksanaan <span class="text-red-500">*</span></label>
-                                <input type="date" id="f_tanggal" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal Pelaksanaan <span
+                                        class="text-red-500">*</span></label>
+                                <input type="date" id="f_tanggal" required
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-slate-700 mb-1">Waktu (Jam) <span class="text-red-500">*</span></label>
-                                    <input type="time" id="f_waktu" oninput="autoSelectShift()" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Waktu (Jam) <span
+                                            class="text-red-500">*</span></label>
+                                    <input type="time" id="f_waktu" oninput="autoSelectShift()" required
+                                        class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-slate-700 mb-1">Durasi (Jam) <span class="text-red-500">*</span></label>
-                                    <input type="number" id="f_durasi" step="0.5" min="0.5" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Durasi (Jam) <span
+                                            class="text-red-500">*</span></label>
+                                    <input type="number" id="f_durasi" step="0.5" min="0.5" required
+                                        class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Shift Kerja <span class="text-red-500">*</span></label>
-                                <select id="f_shift" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition bg-white select-none">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Shift Kerja <span
+                                        class="text-red-500">*</span></label>
+                                <select id="f_shift" required
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition bg-white select-none">
                                     <option value="">-- Pilih --</option>
                                     <option value="Shift 1">Shift 1 (05:00 - 16:59)</option>
                                     <option value="Shift 2">Shift 2 (17:00 - 04:59)</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Lokasi Pengangkatan <span class="text-red-500">*</span></label>
-                                <input type="text" id="f_lokasi" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Lokasi Pengangkatan <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" id="f_lokasi" required
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Tujuan / Drop Point <span class="text-red-500">*</span></label>
-                                <input type="text" id="f_tujuan" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Tujuan / Drop Point <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" id="f_tujuan" required
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Deskripsi Pekerjaan <span class="text-red-500">*</span></label>
-                        <textarea id="f_deskripsi" rows="3" placeholder="Sebutkan material dan jenis penanganan yang diperlukan..." required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition resize-none"></textarea>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Deskripsi Pekerjaan <span
+                                class="text-red-500">*</span></label>
+                        <textarea id="f_deskripsi" rows="3"
+                            placeholder="Sebutkan material dan jenis penanganan yang diperlukan..." required
+                            class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition resize-none"></textarea>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Foto Material / Komponen <span class="text-red-500">*</span> <span class="text-slate-500">(Wajib Lampirkan Foto)</span></label>
-                        <input type="file" id="f_foto" accept="image/*" required class="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-slate-300 rounded-lg cursor-pointer bg-white">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Foto Material / Komponen <span
+                                class="text-red-500">*</span> <span class="text-slate-500">(Wajib Lampirkan
+                                Foto)</span></label>
+                        <input type="file" id="f_foto" accept="image/*" required
+                            class="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-slate-300 rounded-lg cursor-pointer bg-white">
                     </div>
 
-                    <button type="submit" id="btn-submit-order" class="w-full btn-primary py-3.5 rounded-xl font-bold text-lg shadow-md flex justify-center items-center gap-2 mt-4 outline-none focus:outline-none select-none">
+                    <button type="submit" id="btn-submit-order"
+                        class="w-full btn-primary py-3.5 rounded-xl font-bold text-lg shadow-md flex justify-center items-center gap-2 mt-4 outline-none focus:outline-none select-none">
                         <i class="fa-solid fa-paper-plane"></i> Kirim Order & Buat WA
                     </button>
                 </form>
@@ -234,9 +390,12 @@
         </div>
 
         <div id="view-user-monitor" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
+            <!-- Halaman Monitor User -->
+            <div
+                class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
-                    <button type="button" onclick="navigate('home')" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center mr-4 transition outline-none focus:outline-none select-none">
+                    <button type="button" onclick="navigate('home')"
+                        class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center mr-4 transition outline-none focus:outline-none select-none">
                         <i class="fa-solid fa-arrow-left text-slate-600"></i>
                     </button>
                     <div>
@@ -244,55 +403,73 @@
                         <p class="text-slate-500 text-sm">Pantau status pengerjaan unit CT secara Live</p>
                     </div>
                 </div>
-                
+
                 <div class="flex flex-wrap items-center justify-end gap-3 mt-4 md:mt-0">
-                    <div class="bg-red-50 text-red-500 px-3 py-2 rounded-lg border border-red-100 text-[11px] sm:text-xs font-semibold flex items-center shadow-sm select-none" title="Catatan: Job otomatis sembunyi dari menu ini setelah 2 x 24 Jam (48 Jam) dari waktu order.">
-                        <i class="fa-solid fa-circle-info mr-1.5"></i> <span class="hidden sm:inline">Catatan: Job Sembunyi Auto 48 Jam</span><span class="sm:hidden">Auto-hide 48J</span>
+                    <div class="bg-red-50 text-red-500 px-3 py-2 rounded-lg border border-red-100 text-[11px] sm:text-xs font-semibold flex items-center shadow-sm select-none"
+                        title="Catatan: Job otomatis sembunyi dari menu ini setelah 2 x 24 Jam (48 Jam) dari waktu order.">
+                        <i class="fa-solid fa-circle-info mr-1.5"></i> <span class="hidden sm:inline">Catatan: Job
+                            Sembunyi Auto 48 Jam</span><span class="sm:hidden">Auto-hide 48J</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button type="button" onclick="loadAppData(true)" class="px-4 py-2 rounded-lg bg-emerald-100 text-emerald-700 font-semibold hover:bg-emerald-200 border border-emerald-200 transition text-sm flex items-center shadow-sm outline-none focus:outline-none select-none">
+                        <button type="button" onclick="loadAppData(true)"
+                            class="px-4 py-2 rounded-lg bg-emerald-100 text-emerald-700 font-semibold hover:bg-emerald-200 border border-emerald-200 transition text-sm flex items-center shadow-sm outline-none focus:outline-none select-none">
                             <i class="fa-solid fa-arrows-rotate mr-2"></i> Segarkan
                         </button>
-                        <select id="filter_user_dept" onchange="renderUserMonitor()" class="px-4 py-2 border border-slate-300 rounded-lg text-sm outline-none bg-white min-w-[130px]">
+                        <select id="filter_user_dept" onchange="renderUserMonitor()"
+                            class="px-4 py-2 border border-slate-300 rounded-lg text-sm outline-none bg-white min-w-[130px]">
                             <option value="All">Semua Dept</option>
                         </select>
                     </div>
                 </div>
             </div>
 
+            <!-- Tab Header (User) -->
             <div class="flex flex-wrap gap-2 mb-4 border-b border-slate-200 pb-1">
-                <button type="button" onclick="switchUserMonitorTab('masuk')" id="user-tab-masuk" class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-red-50 text-red-700 border-red-600 flex items-center gap-2 outline-none focus:outline-none select-none">
-                    <i class="fa-solid fa-inbox"></i> JOB MASUK <span id="user-count-masuk" class="bg-red-200 text-red-800 px-2 py-0.5 rounded text-xs ml-2">0</span>
+                <button type="button" onclick="switchUserMonitorTab('masuk')" id="user-tab-masuk"
+                    class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-red-50 text-red-700 border-red-600 flex items-center gap-2 outline-none focus:outline-none select-none">
+                    <i class="fa-solid fa-inbox"></i> JOB MASUK <span id="user-count-masuk"
+                        class="bg-red-200 text-red-800 px-2 py-0.5 rounded text-xs ml-2">0</span>
                 </button>
-                <button type="button" onclick="switchUserMonitorTab('progress')" id="user-tab-progress" class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none">
-                    <i class="fa-solid fa-truck-fast animate-pulse"></i> ON PROGRESS <span id="user-count-progress" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">0</span>
+                <button type="button" onclick="switchUserMonitorTab('progress')" id="user-tab-progress"
+                    class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none">
+                    <i class="fa-solid fa-truck-fast animate-pulse"></i> ON PROGRESS <span id="user-count-progress"
+                        class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">0</span>
                 </button>
-                <button type="button" onclick="switchUserMonitorTab('completed')" id="user-tab-completed" class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none">
-                    <i class="fa-solid fa-check-double"></i> COMPLETED <span id="user-count-completed" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">0</span>
+                <button type="button" onclick="switchUserMonitorTab('completed')" id="user-tab-completed"
+                    class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none">
+                    <i class="fa-solid fa-check-double"></i> COMPLETED <span id="user-count-completed"
+                        class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">0</span>
                 </button>
             </div>
 
-            <div id="user-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-inner min-h-[60vh] max-h-[65vh] overflow-y-auto content-start">
+            <div id="user-cards-container"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-inner min-h-[60vh] max-h-[65vh] overflow-y-auto content-start">
             </div>
         </div>
 
         <div id="view-admin" class="hide max-w-[90rem] mx-auto space-y-6">
+            <!-- Halaman Admin -->
             <div class="flex flex-wrap gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-200">
-                <button type="button" onclick="switchAdminTab('dashboard')" id="tab-dashboard" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-blue-600 text-white shadow-md outline-none focus:outline-none select-none">
+                <button type="button" onclick="switchAdminTab('dashboard')" id="tab-dashboard"
+                    class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-blue-600 text-white shadow-md outline-none focus:outline-none select-none">
                     <i class="fa-solid fa-chart-pie mr-2"></i> Dashboard Analitik
                 </button>
-                <button type="button" onclick="switchAdminTab('database')" id="tab-database" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 outline-none focus:outline-none select-none">
+                <button type="button" onclick="switchAdminTab('database')" id="tab-database"
+                    class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 outline-none focus:outline-none select-none">
                     <i class="fa-solid fa-database mr-2"></i> Database Order
                 </button>
-                <button type="button" onclick="switchAdminTab('master')" id="tab-master" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 outline-none focus:outline-none select-none">
+                <button type="button" onclick="switchAdminTab('master')" id="tab-master"
+                    class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 outline-none focus:outline-none select-none">
                     <i class="fa-solid fa-sliders mr-2"></i> Data Master Pengaturan
                 </button>
-                
+
                 <div class="flex gap-2 ml-auto">
-                    <button type="button" onclick="loadAppData(true)" class="px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-orange-100 text-orange-700 hover:bg-orange-200 border border-orange-200 outline-none focus:outline-none select-none">
+                    <button type="button" onclick="loadAppData(true)"
+                        class="px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-orange-100 text-orange-700 hover:bg-orange-200 border border-orange-200 outline-none focus:outline-none select-none">
                         <i class="fa-solid fa-arrows-rotate mr-1"></i> Refresh Data
                     </button>
-                    <button type="button" onclick="navigate('home')" class="px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200 outline-none focus:outline-none select-none">
+                    <button type="button" onclick="navigate('home')"
+                        class="px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200 outline-none focus:outline-none select-none">
                         <i class="fa-solid fa-arrow-left"></i> Keluar
                     </button>
                 </div>
@@ -300,34 +477,41 @@
 
             <!-- Tab: Dashboard -->
             <div id="admin-tab-dashboard" class="space-y-6">
+                <!-- Filter Dashboard -->
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap gap-4 items-end">
                     <div>
                         <label class="block text-xs font-medium text-slate-500 mb-1">TGL START</label>
-                        <input type="date" id="filter_start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none">
+                        <input type="date" id="filter_start"
+                            class="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-500 mb-1">TGL END</label>
-                        <input type="date" id="filter_end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none">
+                        <input type="date" id="filter_end"
+                            class="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-500 mb-1">SHIFT</label>
-                        <select id="filter_shift" class="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none bg-white min-w-[120px]">
+                        <select id="filter_shift"
+                            class="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none bg-white min-w-[120px]">
                             <option value="All">All Shift</option>
                             <option value="Shift 1">Shift 1</option>
                             <option value="Shift 2">Shift 2</option>
                         </select>
                     </div>
-                    <button type="button" onclick="updateDashboard()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-700 transition flex items-center outline-none focus:outline-none select-none">
+                    <button type="button" onclick="updateDashboard()"
+                        class="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-700 transition flex items-center outline-none focus:outline-none select-none">
                         <i class="fa-solid fa-filter mr-2"></i> Terapkan Filter
                     </button>
                 </div>
 
+                <!-- KPI Cards -->
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                     <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-blue-500">
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">TOTAL ORDER</p>
                         <h3 class="text-3xl font-bold text-slate-800" id="stat_total">0</h3>
                     </div>
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-orange-400">
+                    <div
+                        class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-orange-400">
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">SCHEDULED</p>
                         <h3 class="text-3xl font-bold text-slate-800" id="stat_scheduled">0</h3>
                     </div>
@@ -335,7 +519,8 @@
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">ON PROGRESS</p>
                         <h3 class="text-3xl font-bold text-slate-800" id="stat_progress">0</h3>
                     </div>
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-emerald-500">
+                    <div
+                        class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-emerald-500">
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">COMPLETED</p>
                         <h3 class="text-3xl font-bold text-slate-800" id="stat_completed">0</h3>
                     </div>
@@ -345,66 +530,84 @@
                     </div>
                 </div>
 
+                <!-- Charts -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 col-span-1 md:col-span-1">
-                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-chart-pie text-blue-500 mr-2"></i>Grafik Perusahaan</h4>
+                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i
+                                class="fa-solid fa-chart-pie text-blue-500 mr-2"></i>Grafik Perusahaan</h4>
                         <div class="relative h-48 w-full"><canvas id="chartCompany"></canvas></div>
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 col-span-1 md:col-span-2">
-                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-chart-bar text-orange-500 mr-2"></i>Diagram Batang Total Pekerjaan CT</h4>
+                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i
+                                class="fa-solid fa-chart-bar text-orange-500 mr-2"></i>Diagram Batang Total Pekerjaan CT
+                        </h4>
                         <div class="relative h-48 w-full"><canvas id="chartCT"></canvas></div>
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 col-span-1 md:col-span-1">
-                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-circle-notch text-indigo-500 mr-2"></i>Grafik Status Pekerjaan</h4>
+                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i
+                                class="fa-solid fa-circle-notch text-indigo-500 mr-2"></i>Grafik Status Pekerjaan</h4>
                         <div class="relative h-48 w-full"><canvas id="chartStatus"></canvas></div>
                     </div>
-                    
+
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 col-span-1 md:col-span-2">
-                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-chart-column text-pink-500 mr-2"></i>Grafik Batang Departemen</h4>
+                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i
+                                class="fa-solid fa-chart-column text-pink-500 mr-2"></i>Grafik Batang Departemen</h4>
                         <div class="relative h-48 w-full"><canvas id="chartDept"></canvas></div>
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 col-span-1 md:col-span-1">
-                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-clock-rotate-left text-red-500 mr-2"></i>Grafik Delay Pekerjaan</h4>
+                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i
+                                class="fa-solid fa-clock-rotate-left text-red-500 mr-2"></i>Grafik Delay Pekerjaan</h4>
                         <div class="relative h-48 w-full"><canvas id="chartDelay"></canvas></div>
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 col-span-1 md:col-span-1">
-                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-moon text-slate-600 mr-2"></i>Grafik Total Job per Shift</h4>
+                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i
+                                class="fa-solid fa-moon text-slate-600 mr-2"></i>Grafik Total Job per Shift</h4>
                         <div class="relative h-48 w-full"><canvas id="chartShift"></canvas></div>
                     </div>
 
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 col-span-1 md:col-span-2">
-                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-users text-purple-500 mr-2"></i>Grafik Total Pekerjaan Rigger (Job)</h4>
+                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i
+                                class="fa-solid fa-users text-purple-500 mr-2"></i>Grafik Total Pekerjaan Rigger (Job)
+                        </h4>
                         <div class="relative h-48 w-full"><canvas id="chartRiggerJob"></canvas></div>
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 col-span-1 md:col-span-2">
-                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-stopwatch text-orange-500 mr-2"></i>Grafik Total Jam Kerja Rigger (Jam)</h4>
+                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i
+                                class="fa-solid fa-stopwatch text-orange-500 mr-2"></i>Grafik Total Jam Kerja Rigger
+                            (Jam)</h4>
                         <div class="relative h-48 w-full"><canvas id="chartRiggerJam"></canvas></div>
                     </div>
                 </div>
             </div>
 
             <!-- Tab: Database -->
-            <div id="admin-tab-database" class="hide bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col max-h-[75vh]">
-                <div class="p-4 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
+            <div id="admin-tab-database"
+                class="hide bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col max-h-[75vh]">
+                <div
+                    class="p-4 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
                     <h3 class="font-bold text-slate-700 text-lg whitespace-nowrap">Database Order Masuk</h3>
                     <div class="flex flex-wrap items-center gap-2 text-sm w-full sm:w-auto">
                         <div class="flex items-center gap-1">
                             <span class="text-xs font-semibold text-slate-500">Tgl:</span>
-                            <input type="date" id="db_filter_start" onchange="renderAdminTable()" class="border border-slate-300 px-2 py-1.5 rounded outline-none text-xs">
+                            <input type="date" id="db_filter_start" onchange="renderAdminTable()"
+                                class="border border-slate-300 px-2 py-1.5 rounded outline-none text-xs">
                         </div>
                         <div class="flex items-center gap-1">
                             <span class="text-xs font-semibold text-slate-500">s/d</span>
-                            <input type="date" id="db_filter_end" onchange="renderAdminTable()" class="border border-slate-300 px-2 py-1.5 rounded outline-none text-xs">
+                            <input type="date" id="db_filter_end" onchange="renderAdminTable()"
+                                class="border border-slate-300 px-2 py-1.5 rounded outline-none text-xs">
                         </div>
                         <div class="flex items-center gap-1">
                             <span class="text-xs font-semibold text-slate-500">Shift:</span>
-                            <select id="db_filter_shift" onchange="renderAdminTable()" class="border border-slate-300 px-2 py-1.5 rounded outline-none bg-white text-xs">
+                            <select id="db_filter_shift" onchange="renderAdminTable()"
+                                class="border border-slate-300 px-2 py-1.5 rounded outline-none bg-white text-xs">
                                 <option value="All">All Shift</option>
                                 <option value="Shift 1">Shift 1</option>
                                 <option value="Shift 2">Shift 2</option>
                             </select>
                         </div>
-                        <div class="ml-auto sm:ml-4 text-xs bg-red-100 text-red-700 px-2 py-1 rounded font-bold whitespace-nowrap">
+                        <div
+                            class="ml-auto sm:ml-4 text-xs bg-red-100 text-red-700 px-2 py-1 rounded font-bold whitespace-nowrap">
                             Menunggu Validasi: <span id="badge-menunggu">0</span>
                         </div>
                     </div>
@@ -413,16 +616,36 @@
                     <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
                         <thead class="sticky top-0 z-20 shadow-sm">
                             <tr class="bg-slate-100 text-slate-600 font-semibold border-b select-none">
-                                <th class="p-3 text-center sticky left-0 bg-slate-100 z-30 shadow-[4px_0_6px_-1px_rgba(0,0,0,0.05)] w-24">Aksi</th>
-                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition" onclick="setDbSort('ID_Order')">No LIFT & Waktu <i class="fa-solid fa-sort ml-1 opacity-50"></i></th>
-                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition" onclick="setDbSort('Nama_Pemohon')">Pemohon / Dept <i class="fa-solid fa-sort ml-1 opacity-50"></i></th>
-                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition" onclick="setDbSort('Tgl_Pelaksanaan')">Jadwal & Shift <i class="fa-solid fa-sort ml-1 opacity-50"></i></th>
-                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition" onclick="setDbSort('Lokasi')">Lokasi / Tugas / Foto <i class="fa-solid fa-sort ml-1 opacity-50"></i></th>
-                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition" onclick="setDbSort('Status')">Status <i class="fa-solid fa-sort ml-1 opacity-50"></i></th>
-                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition" onclick="setDbSort('Unit_CT')">Penugasan (GL, OP, Rig) <i class="fa-solid fa-sort ml-1 opacity-50"></i></th>
-                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition" onclick="setDbSort('Waktu_Start_Aktual')">Waktu (Start - End) <i class="fa-solid fa-sort ml-1 opacity-50"></i></th>
-                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition" onclick="setDbSort('Durasi_Aktual')">Durasi <i class="fa-solid fa-sort ml-1 opacity-50"></i></th>
-                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition" onclick="setDbSort('Alasan_Delay')">Kendala / Keterangan <i class="fa-solid fa-sort ml-1 opacity-50"></i></th>
+                                <th
+                                    class="p-3 text-center sticky left-0 bg-slate-100 z-30 shadow-[4px_0_6px_-1px_rgba(0,0,0,0.05)] w-24">
+                                    Aksi</th>
+                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition"
+                                    onclick="setDbSort('ID_Order')">No LIFT & Waktu <i
+                                        class="fa-solid fa-sort ml-1 opacity-50"></i></th>
+                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition"
+                                    onclick="setDbSort('Nama_Pemohon')">Pemohon / Dept <i
+                                        class="fa-solid fa-sort ml-1 opacity-50"></i></th>
+                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition"
+                                    onclick="setDbSort('Tgl_Pelaksanaan')">Jadwal & Shift <i
+                                        class="fa-solid fa-sort ml-1 opacity-50"></i></th>
+                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition"
+                                    onclick="setDbSort('Lokasi')">Lokasi / Tugas / Foto <i
+                                        class="fa-solid fa-sort ml-1 opacity-50"></i></th>
+                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition"
+                                    onclick="setDbSort('Status')">Status <i
+                                        class="fa-solid fa-sort ml-1 opacity-50"></i></th>
+                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition"
+                                    onclick="setDbSort('Unit_CT')">Penugasan (GL, OP, Rig) <i
+                                        class="fa-solid fa-sort ml-1 opacity-50"></i></th>
+                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition"
+                                    onclick="setDbSort('Waktu_Start_Aktual')">Waktu (Start - End) <i
+                                        class="fa-solid fa-sort ml-1 opacity-50"></i></th>
+                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition"
+                                    onclick="setDbSort('Durasi_Aktual')">Durasi <i
+                                        class="fa-solid fa-sort ml-1 opacity-50"></i></th>
+                                <th class="p-3 bg-slate-100 cursor-pointer hover:bg-slate-200 transition"
+                                    onclick="setDbSort('Alasan_Delay')">Kendala / Keterangan <i
+                                        class="fa-solid fa-sort ml-1 opacity-50"></i></th>
                             </tr>
                         </thead>
                         <tbody id="table-orders-body" class="divide-y divide-slate-100">
@@ -432,33 +655,57 @@
             </div>
 
             <!-- Tab: Data Master -->
-            <div id="admin-tab-master" class="hide bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div id="admin-tab-master"
+                class="hide bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-5 border-b border-slate-200 bg-slate-50">
                     <h3 class="font-bold text-slate-700 mb-2 text-lg">Manajemen Data Master</h3>
-                    <p class="text-xs text-slate-500">Pilih kategori data untuk mengelola daftar dropdown di aplikasi.</p>
+                    <p class="text-xs text-slate-500">Pilih kategori data untuk mengelola daftar dropdown di aplikasi.
+                    </p>
                 </div>
                 <div class="p-5 grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="md:col-span-1 border-r border-slate-100 pr-4">
                         <ul class="space-y-2" id="master-category-list">
-                            <li><button type="button" id="btn-cat-Perusahaan" onclick="renderMasterData('Perusahaan')" class="w-full text-left px-4 py-2 rounded bg-blue-50 text-blue-700 font-semibold text-sm outline-none focus:outline-none select-none">Perusahaan</button></li>
-                            <li><button type="button" id="btn-cat-Departemen" onclick="renderMasterData('Departemen')" class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Departemen</button></li>
-                            <li><button type="button" id="btn-cat-Section" onclick="renderMasterData('Section')" class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Section</button></li>
-                            <li><button type="button" id="btn-cat-UnitCT" onclick="renderMasterData('Unit CT')" class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Unit CT</button></li>
-                            <li><button type="button" id="btn-cat-GL" onclick="renderMasterData('GL')" class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Group Leader (GL)</button></li>
-                            <li><button type="button" id="btn-cat-Operator" onclick="renderMasterData('Operator')" class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Operator</button></li>
-                            <li><button type="button" id="btn-cat-Rigger" onclick="renderMasterData('Rigger')" class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Rigger</button></li>
-                            <li class="pt-4 mt-2 border-t border-slate-100"><button type="button" id="btn-cat-Password" onclick="renderMasterData('Password')" class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm font-bold outline-none focus:outline-none select-none"><i class="fa-solid fa-lock mr-2"></i>Password Akses</button></li>
+                            <li><button type="button" id="btn-cat-Perusahaan" onclick="renderMasterData('Perusahaan')"
+                                    class="w-full text-left px-4 py-2 rounded bg-blue-50 text-blue-700 font-semibold text-sm outline-none focus:outline-none select-none">Perusahaan</button>
+                            </li>
+                            <li><button type="button" id="btn-cat-Departemen" onclick="renderMasterData('Departemen')"
+                                    class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Departemen</button>
+                            </li>
+                            <li><button type="button" id="btn-cat-Section" onclick="renderMasterData('Section')"
+                                    class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Section</button>
+                            </li>
+                            <li><button type="button" id="btn-cat-UnitCT" onclick="renderMasterData('Unit CT')"
+                                    class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Unit
+                                    CT</button></li>
+                            <li><button type="button" id="btn-cat-GL" onclick="renderMasterData('GL')"
+                                    class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Group
+                                    Leader (GL)</button></li>
+                            <li><button type="button" id="btn-cat-Operator" onclick="renderMasterData('Operator')"
+                                    class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Operator</button>
+                            </li>
+                            <li><button type="button" id="btn-cat-Rigger" onclick="renderMasterData('Rigger')"
+                                    class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none">Rigger</button>
+                            </li>
+                            <li class="pt-4 mt-2 border-t border-slate-100"><button type="button" id="btn-cat-Password"
+                                    onclick="renderMasterData('Password')"
+                                    class="w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm font-bold outline-none focus:outline-none select-none"><i
+                                        class="fa-solid fa-lock mr-2"></i>Password Akses</button></li>
                         </ul>
                     </div>
                     <div class="md:col-span-2">
                         <div class="flex justify-between items-center mb-4">
                             <h4 id="master-title" class="font-bold text-slate-700">Data: Perusahaan</h4>
-                            <button type="button" id="btn-add-master" onclick="addMasterData()" class="bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700 text-xs font-bold shadow-sm outline-none focus:outline-none select-none"><i class="fa-solid fa-plus mr-1"></i> Tambah Data</button>
+                            <button type="button" id="btn-add-master" onclick="addMasterData()"
+                                class="bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700 text-xs font-bold shadow-sm outline-none focus:outline-none select-none"><i
+                                    class="fa-solid fa-plus mr-1"></i> Tambah Data</button>
                         </div>
                         <div class="overflow-y-auto max-h-[400px] border border-slate-200 rounded">
                             <table class="w-full text-left text-sm">
                                 <thead class="bg-slate-50 sticky top-0" id="master-thead">
-                                    <tr class="border-b"><th class="p-3">Nama Data</th><th class="p-3 w-20 text-center">Aksi</th></tr>
+                                    <tr class="border-b">
+                                        <th class="p-3">Nama Data</th>
+                                        <th class="p-3 w-20 text-center">Aksi</th>
+                                    </tr>
                                 </thead>
                                 <tbody id="master-table-body" class="divide-y divide-slate-100"></tbody>
                             </table>
@@ -469,9 +716,12 @@
         </div>
 
         <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
+            <!-- Halaman Operator CT -->
+            <div
+                class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
-                    <button type="button" onclick="navigate('home')" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center mr-4 transition outline-none focus:outline-none select-none">
+                    <button type="button" onclick="navigate('home')"
+                        class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center mr-4 transition outline-none focus:outline-none select-none">
                         <i class="fa-solid fa-arrow-left text-slate-600"></i>
                     </button>
                     <div>
@@ -480,75 +730,102 @@
                     </div>
                 </div>
                 <div class="flex gap-3">
-                    <button type="button" onclick="loadAppData(true)" class="px-4 py-2 rounded-lg bg-orange-100 text-orange-700 font-semibold hover:bg-orange-200 border border-orange-200 transition text-sm flex items-center shadow-sm outline-none focus:outline-none select-none">
+                    <button type="button" onclick="loadAppData(true)"
+                        class="px-4 py-2 rounded-lg bg-orange-100 text-orange-700 font-semibold hover:bg-orange-200 border border-orange-200 transition text-sm flex items-center shadow-sm outline-none focus:outline-none select-none">
                         <i class="fa-solid fa-arrows-rotate mr-2"></i> Refresh Job
                     </button>
-                    <select id="filter_ct_unit" onchange="renderKanban()" class="px-4 py-2 border-2 border-blue-500 rounded-lg text-sm font-bold text-blue-700 outline-none bg-blue-50">
+                    <select id="filter_ct_unit" onchange="renderKanban()"
+                        class="px-4 py-2 border-2 border-blue-500 rounded-lg text-sm font-bold text-blue-700 outline-none bg-blue-50">
                         <option value="All">Semua Unit CT</option>
                     </select>
                 </div>
             </div>
 
             <div class="flex flex-wrap gap-2 mb-4 border-b border-slate-200 pb-1">
-                <button type="button" onclick="switchCtTab('progress')" id="ct-tab-progress" class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-blue-50 text-blue-700 border-blue-600 flex items-center gap-2 outline-none focus:outline-none select-none">
-                    <i class="fa-solid fa-truck-fast"></i> ON PROGRESS <span id="count-progress" class="bg-blue-200 text-blue-800 px-2 py-0.5 rounded text-xs ml-2">0</span>
+                <button type="button" onclick="switchCtTab('progress')" id="ct-tab-progress"
+                    class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-blue-50 text-blue-700 border-blue-600 flex items-center gap-2 outline-none focus:outline-none select-none">
+                    <i class="fa-solid fa-truck-fast"></i> ON PROGRESS <span id="count-progress"
+                        class="bg-blue-200 text-blue-800 px-2 py-0.5 rounded text-xs ml-2">0</span>
                 </button>
-                <button type="button" onclick="switchCtTab('pending')" id="ct-tab-pending" class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none">
-                    <i class="fa-solid fa-pause"></i> PENDING / SISA <span id="count-pending" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">0</span>
+                <button type="button" onclick="switchCtTab('pending')" id="ct-tab-pending"
+                    class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none">
+                    <i class="fa-solid fa-pause"></i> PENDING / SISA <span id="count-pending"
+                        class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">0</span>
                 </button>
-                <button type="button" onclick="switchCtTab('completed')" id="ct-tab-completed" class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none">
-                    <i class="fa-solid fa-check-double"></i> COMPLETED <span id="count-completed" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">0</span>
+                <button type="button" onclick="switchCtTab('completed')" id="ct-tab-completed"
+                    class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none">
+                    <i class="fa-solid fa-check-double"></i> COMPLETED <span id="count-completed"
+                        class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">0</span>
                 </button>
-                <button type="button" onclick="switchCtTab('canceled')" id="ct-tab-canceled" class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none">
-                    <i class="fa-solid fa-ban"></i> CANCELED <span id="count-canceled" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">0</span>
+                <button type="button" onclick="switchCtTab('canceled')" id="ct-tab-canceled"
+                    class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-white text-slate-500 border-transparent hover:bg-slate-50 flex items-center gap-2 outline-none focus:outline-none select-none">
+                    <i class="fa-solid fa-ban"></i> CANCELED <span id="count-canceled"
+                        class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">0</span>
                 </button>
             </div>
 
-            <div id="ct-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-inner min-h-[60vh] max-h-[65vh] overflow-y-auto content-start">
+            <div id="ct-cards-container"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-inner min-h-[60vh] max-h-[65vh] overflow-y-auto content-start">
             </div>
         </div>
 
     </main>
 
-    <div id="modal-validasi" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4">
+    <!-- Modal Validasi -->
+    <div id="modal-validasi"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-visible">
             <div class="bg-blue-600 p-4 rounded-t-2xl text-white flex justify-between items-center">
-                <h3 class="font-bold text-lg"><i class="fa-solid fa-clipboard-check mr-2"></i> Validasi / Edit Penugasan</h3>
-                <button type="button" onclick="closeModal('modal-validasi')" class="text-white hover:text-blue-200 outline-none focus:outline-none select-none"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <h3 class="font-bold text-lg"><i class="fa-solid fa-clipboard-check mr-2"></i> Validasi / Edit Penugasan
+                </h3>
+                <button type="button" onclick="closeModal('modal-validasi')"
+                    class="text-white hover:text-blue-200 outline-none focus:outline-none select-none"><i
+                        class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="p-6 space-y-4">
                 <input type="hidden" id="v_order_id">
-                
+
                 <div class="bg-blue-50/50 p-3 rounded-lg border border-blue-100 mb-4 space-y-3">
                     <div class="flex items-center justify-between mb-1">
-                        <span class="text-xs font-bold text-blue-800"><i class="fa-solid fa-pen-to-square"></i> Koreksi Data Request (Jika Perlu)</span>
+                        <span class="text-xs font-bold text-blue-800"><i class="fa-solid fa-pen-to-square"></i> Koreksi
+                            Data Request (Jika Perlu)</span>
                     </div>
                     <div class="grid grid-cols-3 gap-2">
                         <div>
                             <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Tanggal</label>
-                            <input type="date" id="v_edit_tgl" class="w-full px-2 py-1.5 border border-slate-300 rounded outline-none text-xs focus:border-blue-500">
+                            <input type="date" id="v_edit_tgl"
+                                class="w-full px-2 py-1.5 border border-slate-300 rounded outline-none text-xs focus:border-blue-500">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Jam (Req)</label>
-                            <input type="time" id="v_edit_waktu" oninput="autoSelectShift()" class="w-full px-2 py-1.5 border border-slate-300 rounded outline-none text-xs focus:border-blue-500">
+                            <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Jam
+                                (Req)</label>
+                            <input type="time" id="v_edit_waktu" oninput="autoSelectShift()"
+                                class="w-full px-2 py-1.5 border border-slate-300 rounded outline-none text-xs focus:border-blue-500">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Durasi (Jam)</label>
-                            <input type="number" id="v_edit_durasi" step="0.5" class="w-full px-2 py-1.5 border border-slate-300 rounded outline-none text-xs focus:border-blue-500">
+                            <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Durasi
+                                (Jam)</label>
+                            <input type="number" id="v_edit_durasi" step="0.5"
+                                class="w-full px-2 py-1.5 border border-slate-300 rounded outline-none text-xs focus:border-blue-500">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Deskripsi Pekerjaan</label>
-                        <textarea id="v_edit_desk" class="w-full px-2 py-1.5 border border-slate-300 rounded outline-none text-xs focus:border-blue-500 resize-none" rows="2"></textarea>
+                        <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Deskripsi
+                            Pekerjaan</label>
+                        <textarea id="v_edit_desk"
+                            class="w-full px-2 py-1.5 border border-slate-300 rounded outline-none text-xs focus:border-blue-500 resize-none"
+                            rows="2"></textarea>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Group Leader (GL) <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Group Leader (GL) <span
+                            class="text-red-500">*</span></label>
                     <select id="v_gl" class="w-full select2-search" style="width:100%"></select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Unit Crane Truck <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Unit Crane Truck <span
+                            class="text-red-500">*</span></label>
                     <select id="v_unit" class="w-full select2-search" style="width:100%"></select>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
@@ -561,17 +838,19 @@
                         <select id="v_rigger" class="w-full select2-search" style="width:100%"></select>
                     </div>
                 </div>
-                <button type="button" id="btn-save-validasi" onclick="saveValidation()" class="w-full btn-primary py-3 rounded-xl font-bold mt-4 shadow-md outline-none focus:outline-none select-none">
+                <button type="button" id="btn-save-validasi" onclick="saveValidation()"
+                    class="w-full btn-primary py-3 rounded-xl font-bold mt-4 shadow-md outline-none focus:outline-none select-none">
                     Simpan & Tugaskan <i class="fa-solid fa-paper-plane ml-1"></i>
                 </button>
             </div>
         </div>
     </div>
 
+    <!-- JS Logic -->
     <script>
         // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4y021i9fSzPYCttY24O2_dPC16gIyWLqNP-D048sQX-Zh95RCFJFm_olnHovJUMI/exec';
-        
+
         let isOnlineMode = false;
         let appData = { orders: [], master: [] };
         let charts = {};
@@ -583,11 +862,12 @@
         let autoSyncInterval = null;
         let lastDataHash = "";
 
+        // Mock Offline
         let mockMasterData = [];
         let mockOrdersData = [];
 
         function initMockData() {
-            if(mockMasterData.length === 0 && mockOrdersData.length === 0) {
+            if (mockMasterData.length === 0 && mockOrdersData.length === 0) {
                 const mPerusahaan = ["PT. PPA", "PT. BIB", "PT. BOSTON", "PT. KILAN MITRA ENERGI", "PT. TRIATRA SINERGIA PRATAMA"];
                 const mDept = ["PLANT", "PROD", "HCGA", "SHE", "COE", "ENG", "SCM", "MNG", "OPD"];
                 const mSec = ["Mechanic", "Warehouse", "Hauling", "Welding"];
@@ -604,9 +884,9 @@
                 mOp.forEach(v => mockMasterData.push(["Operator", v]));
                 mRig.forEach(v => mockMasterData.push(["Rigger", v]));
                 mockMasterData.push(["Password", "Admin|101010"], ["Password", "CT|191919"]);
-                
-                let nowStr = new Date().toLocaleDateString('en-GB') + " " + new Date().toLocaleTimeString('en-GB').substring(0,5);
-                
+
+                let nowStr = new Date().toLocaleDateString('en-GB') + " " + new Date().toLocaleTimeString('en-GB').substring(0, 5);
+
                 mockOrdersData.push(
                     { ID_Order: "LIFT-20260723-1", Timestamp: "23/07/2026 08:15", Nama_Pemohon: "Budi Santoso (Data Lokal)", No_WA: "08123456789", Perusahaan: "PT. PPA", Departemen: "PLANT", Section: "Mechanic", Tgl_Pelaksanaan: "2026-07-23", Shift: "Shift 1", Waktu_Request: "09:00", Durasi_Request: "4", Lokasi: "Pit A", Tujuan: "Workshop", Deskripsi: "Angkat mesin excavator", Foto_Base64: "", Status: "Completed", Unit_CT: "CT2514", GL: "ACHMAD HARIYANTO", Operator: "ISKANDAR", Rigger: "KHOLIK SYAIFUDIN", Waktu_Start_Aktual: "09:00", Waktu_End_Aktual: "14:00", Durasi_Aktual: "4", Alasan_Delay: "[Inspeksi: 08:45]" },
                     { ID_Order: "LIFT-20260723-4", Timestamp: "23/07/2026 12:30", Nama_Pemohon: "Tatang (Data Lokal)", No_WA: "08223344556", Perusahaan: "PT. PPA", Departemen: "PLANT", Section: "Welding", Tgl_Pelaksanaan: "2026-07-23", Shift: "Shift 1", Waktu_Request: "14:00", Durasi_Request: "2", Lokasi: "Workshop", Tujuan: "Pit B", Deskripsi: "Pindah bucket", Foto_Base64: "", Status: "On Progress", Unit_CT: "CT2514", GL: "ACHMAD HARIYANTO", Operator: "ISKANDAR", Rigger: "KHOLIK SYAIFUDIN", Waktu_Start_Aktual: "14:20", Waktu_End_Aktual: "", Durasi_Aktual: "", Alasan_Delay: "" },
@@ -616,15 +896,15 @@
             }
         }
 
+        // --- FETCH API HELPER (100% POST METHOD) ---
         async function fetchAPI(action, payload = {}) {
-            if(!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
-            
-            // Menggunakan POST murni untuk SEMUA request agar AppScript selalu membaca Payload JSON
+            if (!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
+
             const options = {
-                method: 'POST', 
+                method: 'POST',
                 redirect: "follow",
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: action, payload: payload || {} })
+                body: JSON.stringify({ action: action, payload: payload })
             };
 
             try {
@@ -632,7 +912,6 @@
                 if (!response.ok) throw new Error("Jaringan bermasalah");
                 const data = await response.json();
 
-                // Deteksi apabila Google salah mengembalikan struktur data
                 if (action === 'getAppData' && !data.master) {
                     throw new Error("Menerima response yang salah dari server");
                 }
@@ -640,7 +919,7 @@
                 isOnlineMode = true;
                 return data;
             } catch (error) {
-                console.warn("Fetch Error (API Down / CORS):", error);
+                console.warn("Fetch Error:", error);
                 isOnlineMode = false;
                 throw error;
             }
@@ -648,41 +927,30 @@
 
         function refreshCurrentView() {
             populateDropdowns();
-            if(!document.getElementById('admin-tab-dashboard').classList.contains('hide')) updateDashboard();
-            if(!document.getElementById('admin-tab-database').classList.contains('hide')) renderAdminTable();
-            if(!document.getElementById('view-user-monitor').classList.contains('hide')) renderUserMonitor();
-            if(!document.getElementById('view-ct-panel').classList.contains('hide')) renderKanban();
+            if (!document.getElementById('admin-tab-dashboard').classList.contains('hide')) updateDashboard();
+            if (!document.getElementById('admin-tab-database').classList.contains('hide')) renderAdminTable();
+            if (!document.getElementById('view-user-monitor').classList.contains('hide')) renderUserMonitor();
+            if (!document.getElementById('view-ct-panel').classList.contains('hide')) renderKanban();
         }
 
         async function loadAppData(isRefresh = false, callback = null) {
-            const syncStatus = document.getElementById('sync-status');
-            if (isRefresh) {
-                Swal.fire({ title: 'Menyinkronkan Data...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-            }
+            if (isRefresh) Swal.fire({ title: 'Menyinkronkan Data...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
             try {
                 const parsed = await fetchAPI('getAppData');
                 lastDataHash = JSON.stringify(parsed);
                 appData.master = parsed.master || [];
                 appData.orders = parsed.orders || [];
-                
-                syncStatus.classList.remove('hidden');
-                
-                if (isRefresh) {
-                    Swal.fire({icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false});
-                }
+
+                if (isRefresh) Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
             } catch (err) {
-                syncStatus.classList.add('hidden');
                 initMockData();
                 appData.master = [...mockMasterData];
                 appData.orders = [...mockOrdersData];
-
-                if (isRefresh) {
-                    Swal.fire({icon: 'warning', title: 'Mode Offline Aktif', text: 'Gagal terhubung ke database cloud. Menggunakan data lokal.', timer: 2500, showConfirmButton: false});
-                }
+                if (isRefresh) Swal.fire({ icon: 'warning', title: 'Mode Offline Aktif', text: 'Gagal terhubung ke database cloud. Menggunakan data lokal.', timer: 2500, showConfirmButton: false });
             } finally {
                 refreshCurrentView();
-                if(callback) callback();
+                if (callback) callback();
             }
         }
 
@@ -698,20 +966,20 @@
                     appData.orders = parsed.orders || [];
                     refreshCurrentView();
                 }
-            }).catch(() => { /* Silent ignore on offline */ });
+            }).catch(() => { });
         }
 
         function startAutoSync() {
-            if(autoSyncInterval) clearInterval(autoSyncInterval);
-            autoSyncInterval = setInterval(silentSync, 10000); 
+            if (autoSyncInterval) clearInterval(autoSyncInterval);
+            autoSyncInterval = setInterval(silentSync, 10000);
         }
 
         function formatTglId(dateStr) {
-            if(!dateStr) return '';
+            if (!dateStr) return '';
             const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
             const parts = dateStr.split('-');
-            if(parts.length !== 3) return dateStr;
-            return `${parts[2]} ${months[parseInt(parts[1])-1]} ${parts[0]}`;
+            if (parts.length !== 3) return dateStr;
+            return `${parts[2]} ${months[parseInt(parts[1]) - 1]} ${parts[0]}`;
         }
 
         function initSelect2() {
@@ -721,14 +989,14 @@
         function populateDropdowns() {
             const buildOptions = (type, customSort = null) => {
                 let items = appData.master.filter(m => m[0] === type).map(m => m[1]);
-                if(Array.isArray(customSort)) {
-                    items.sort((a,b) => {
+                if (Array.isArray(customSort)) {
+                    items.sort((a, b) => {
                         let idxA = customSort.indexOf(a); let idxB = customSort.indexOf(b);
-                        if(idxA === -1) idxA = 999; if(idxB === -1) idxB = 999;
+                        if (idxA === -1) idxA = 999; if (idxB === -1) idxB = 999;
                         return idxA - idxB;
                     });
                 } else if (customSort === null) { items.sort(); }
-                
+
                 let html = '<option value="">-- Pilih --</option>';
                 items.forEach(val => html += `<option value="${val}">${val}</option>`);
                 return html;
@@ -746,7 +1014,7 @@
             let filterHtml = '<option value="All">Semua Unit CT</option>';
             appData.master.filter(m => m[0] === 'Unit CT').forEach(m => { filterHtml += `<option value="${m[1]}">${m[1]}</option>`; });
             $('#filter_ct_unit').html(filterHtml);
-            
+
             let filterDeptHtml = '<option value="All">Semua Departemen</option>';
             appData.master.filter(m => m[0] === 'Departemen').forEach(m => { filterDeptHtml += `<option value="${m[1]}">${m[1]}</option>`; });
             $('#filter_user_dept').html(filterDeptHtml);
@@ -779,11 +1047,11 @@
         }
 
         function navigate(view) {
-            document.querySelectorAll('main > div').forEach(el => { if(el.id.startsWith('view-')) el.classList.add('hide'); });
+            document.querySelectorAll('main > div').forEach(el => { if (el.id.startsWith('view-')) el.classList.add('hide'); });
             const badge = document.getElementById('user-badge');
             badge.classList.remove('hidden');
-            stopUserTimers(); 
-            
+            stopUserTimers();
+
             if (view === 'home') {
                 document.getElementById('view-home').classList.remove('hide');
                 badge.classList.add('hidden');
@@ -794,17 +1062,17 @@
             } else if (view === 'user-monitor') {
                 document.getElementById('view-user-monitor').classList.remove('hide');
                 document.getElementById('role-display').innerText = 'User / Pemohon';
-                switchUserMonitorTab('masuk'); 
+                switchUserMonitorTab('masuk');
                 loadAppData(false);
             } else if (view === 'admin-dashboard') {
                 document.getElementById('view-admin').classList.remove('hide');
                 document.getElementById('role-display').innerText = 'Administrator';
-                switchAdminTab('dashboard'); 
+                switchAdminTab('dashboard');
                 loadAppData(false);
             } else if (view === 'ct-panel') {
                 document.getElementById('view-ct-panel').classList.remove('hide');
                 document.getElementById('role-display').innerText = 'Tim Crane Truck';
-                switchCtTab('progress'); 
+                switchCtTab('progress');
                 loadAppData(false);
             }
         }
@@ -817,9 +1085,9 @@
             document.getElementById(`tab-${tab}`).className = "flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-blue-600 text-white shadow-md outline-none focus:outline-none select-none";
             document.getElementById(`admin-tab-${tab}`).classList.remove('hide');
 
-            if(tab === 'dashboard') updateDashboard();
-            if(tab === 'database') renderAdminTable();
-            if(tab === 'master') renderMasterData(currentMasterCategory);
+            if (tab === 'dashboard') updateDashboard();
+            if (tab === 'database') renderAdminTable();
+            if (tab === 'master') renderMasterData(currentMasterCategory);
         }
 
         function copyTextFallback(text) {
@@ -830,17 +1098,17 @@
             document.body.appendChild(textArea);
             textArea.focus(); textArea.select();
             try {
-                if (document.execCommand('copy')) Swal.fire({icon: 'success', title: 'Tersalin!', timer: 1500, showConfirmButton:false});
-                else Swal.fire({icon: 'error', title: 'Gagal Menyalin', timer: 1500, showConfirmButton:false});
+                if (document.execCommand('copy')) Swal.fire({ icon: 'success', title: 'Tersalin!', timer: 1500, showConfirmButton: false });
+                else Swal.fire({ icon: 'error', title: 'Gagal Menyalin', timer: 1500, showConfirmButton: false });
             } catch (err) { console.error('Unable to copy', err); }
             document.body.removeChild(textArea);
         }
 
         function viewPhoto(id) {
             const order = appData.orders.find(o => o.ID_Order === id);
-            if(!order) return;
+            if (!order) return;
             let fotoData = order.Foto_Base64;
-            if(!fotoData || fotoData.length < 100) fotoData = "https://placehold.co/600x400/e2e8f0/475569?text=Tidak+Ada+Foto";
+            if (!fotoData || fotoData.length < 100) fotoData = "https://placehold.co/600x400/e2e8f0/475569?text=Tidak+Ada+Foto";
 
             Swal.fire({
                 title: 'Foto Material / Lampiran',
@@ -858,9 +1126,9 @@
             const [hours, minutes] = timeStr.split(':').map(Number);
             const shiftSelectForm = document.getElementById('f_shift');
             if (hours >= 5 && hours < 17) {
-                if(shiftSelectForm) shiftSelectForm.value = "Shift 1";
+                if (shiftSelectForm) shiftSelectForm.value = "Shift 1";
             } else {
-                if(shiftSelectForm) shiftSelectForm.value = "Shift 2";
+                if (shiftSelectForm) shiftSelectForm.value = "Shift 2";
             }
         }
 
@@ -896,29 +1164,29 @@
                 lokasi: document.getElementById('f_lokasi').value,
                 tujuan: document.getElementById('f_tujuan').value,
                 deskripsi: document.getElementById('f_deskripsi').value,
-                foto: fotoBase64 
+                foto: fotoBase64
             };
 
             const waTextStr = `*DETAIL JOB CRANE TRUCK*\n` +
-                              `ID: LIFT-(Sistem)\n` +
-                              `* NAMA USER : ${orderPayload.nama}\n` +
-                              `* NO WA: ${orderPayload.wa}\n` +
-                              `- PERUSAHAAN: ${orderPayload.perusahaan}\n` +
-                              `* DEPARTEMENT: ${orderPayload.departemen}\n` +
-                              `* SECTION: ${orderPayload.section}\n` +
-                              `- TANGGAL: ${formatTglId(orderPayload.tanggal)}\n` +
-                              `* SHIFT: ${orderPayload.shift}\n` +
-                              `* WAKTU REQUEST : ${orderPayload.waktu}\n` +
-                              `* DURASI PEKERJAAN : ${orderPayload.durasi} Jam\n` +
-                              `* LOKASI ANGKAT/ANGKUT: ${orderPayload.lokasi}\n` +
-                              `* TUJUAN : ${orderPayload.tujuan}\n` +
-                              `* DETAIL JOB: ${orderPayload.deskripsi}`;
+                `ID: LIFT-(Sistem)\n` +
+                `* NAMA USER : ${orderPayload.nama}\n` +
+                `* NO WA: ${orderPayload.wa}\n` +
+                `- PERUSAHAAN: ${orderPayload.perusahaan}\n` +
+                `* DEPARTEMENT: ${orderPayload.departemen}\n` +
+                `* SECTION: ${orderPayload.section}\n` +
+                `- TANGGAL: ${formatTglId(orderPayload.tanggal)}\n` +
+                `* SHIFT: ${orderPayload.shift}\n` +
+                `* WAKTU REQUEST : ${orderPayload.waktu}\n` +
+                `* DURASI PEKERJAAN : ${orderPayload.durasi} Jam\n` +
+                `* LOKASI ANGKAT/ANGKUT: ${orderPayload.lokasi}\n` +
+                `* TUJUAN : ${orderPayload.tujuan}\n` +
+                `* DETAIL JOB: ${orderPayload.deskripsi}`;
 
             try {
                 const res = await fetchAPI('saveOrder', orderPayload);
                 btn.innerHTML = orig; btn.disabled = false;
-                
-                if(res.success) {
+
+                if (res.success) {
                     const waTextFix = waTextStr.replace('LIFT-(Sistem)', res.id.split('_')[0]);
                     document.getElementById('form-order').reset();
                     $('.select2-search').val(null).trigger('change');
@@ -937,46 +1205,46 @@
             } catch (err) {
                 const now = new Date();
                 const newOrder = {
-                    ID_Order: `LIFT-${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}-${appData.orders.length + 1}`,
+                    ID_Order: `LIFT-${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}-${appData.orders.length + 1}`,
                     Timestamp: 'Sekarang', Nama_Pemohon: orderPayload.nama, No_WA: orderPayload.wa, Perusahaan: orderPayload.perusahaan, Departemen: orderPayload.departemen, Section: orderPayload.section, Tgl_Pelaksanaan: orderPayload.tanggal, Shift: orderPayload.shift, Waktu_Request: orderPayload.waktu, Durasi_Request: orderPayload.durasi, Lokasi: orderPayload.lokasi, Tujuan: orderPayload.tujuan, Deskripsi: orderPayload.deskripsi, Foto_Base64: orderPayload.foto, Status: 'Menunggu Validasi', Unit_CT: '', GL: '', Operator: '', Rigger: '', Waktu_Start_Aktual: '', Waktu_End_Aktual: '', Durasi_Aktual: '', Alasan_Delay: ''
                 };
-                mockOrdersData.unshift(newOrder); 
-                appData.orders.unshift(newOrder); 
+                mockOrdersData.unshift(newOrder);
+                appData.orders.unshift(newOrder);
                 btn.innerHTML = orig; btn.disabled = false;
-                
+
                 const waTextMock = waTextStr.replace('LIFT-(Sistem)', newOrder.ID_Order.split('_')[0]);
-                Swal.fire({ 
-                    icon: 'success', title: 'Order Tersimpan (Data Lokal)!', 
+                Swal.fire({
+                    icon: 'success', title: 'Order Tersimpan (Data Lokal)!',
                     html: `Anda dalam Mode Offline. Data tersimpan di memori perangkat sementara.<br><br>
                            <div class="flex gap-2 justify-center mt-3">
                                <button type="button" onclick="copyTextFallback(decodeURIComponent('${encodeURIComponent(waTextMock)}'))" class="bg-slate-200 text-slate-800 px-4 py-2 rounded shadow hover:bg-slate-300 outline-none focus:outline-none select-none"><i class="fa-solid fa-copy"></i> Salin Job</button>
                                <a href="https://wa.me/?text=${encodeURIComponent(waTextMock)}" target="_blank" class="bg-[#25D366] text-white px-4 py-2 rounded shadow hover:bg-[#1da851] outline-none focus:outline-none select-none"><i class="fa-brands fa-whatsapp"></i> Kirim WA</a>
                            </div>`,
-                    showConfirmButton: false, showCloseButton: true 
+                    showConfirmButton: false, showCloseButton: true
                 });
                 document.getElementById('form-order').reset();
             }
         }
 
-        function parseTime(t) { 
-            if(!t) return 0;
-            let [h, m] = t.split(':').map(Number); return h*60 + m; 
+        function parseTime(t) {
+            if (!t) return 0;
+            let [h, m] = t.split(':').map(Number); return h * 60 + m;
         }
 
         function calculateActualDuration(start, end, shift) {
             let s = parseTime(start);
             let e = parseTime(end);
-            if (e <= s) e += 1440; 
+            if (e <= s) e += 1440;
 
             let dur = e - s;
             if (shift === 'Shift 1') {
-                let b_s = 720, b_e = 780; 
+                let b_s = 720, b_e = 780;
                 let overlap = Math.max(0, Math.min(e, b_e) - Math.max(s, b_s));
                 dur -= overlap;
             } else if (shift === 'Shift 2') {
-                let b_s = 1440, b_e = 1500; 
+                let b_s = 1440, b_e = 1500;
                 let overlap1 = Math.max(0, Math.min(e, b_e) - Math.max(s, b_s));
-                let b_s2 = 0, b_e2 = 60; 
+                let b_s2 = 0, b_e2 = 60;
                 let overlap2 = Math.max(0, Math.min(e, b_e2) - Math.max(s, b_s2));
                 dur -= (overlap1 + overlap2);
             }
@@ -984,19 +1252,19 @@
         }
 
         function parseTimestampStr(ts) {
-            if(!ts || ts === 'Sekarang') return new Date(); 
+            if (!ts || ts === 'Sekarang') return new Date();
             let parts = ts.split(' ');
-            if(parts.length !== 2) return new Date();
+            if (parts.length !== 2) return new Date();
             let dateParts = parts[0].split('/');
             let timeParts = parts[1].split(':');
-            if(dateParts.length !== 3 || timeParts.length !== 2) return new Date();
-            return new Date(dateParts[2], parseInt(dateParts[1])-1, dateParts[0], timeParts[0], timeParts[1]);
+            if (dateParts.length !== 3 || timeParts.length !== 2) return new Date();
+            return new Date(dateParts[2], parseInt(dateParts[1]) - 1, dateParts[0], timeParts[0], timeParts[1]);
         }
 
         function switchUserMonitorTab(tab) {
             currentUserTab = tab;
             const tabs = ['masuk', 'progress', 'completed'];
-            
+
             tabs.forEach(t => {
                 const el = document.getElementById(`user-tab-${t}`);
                 const badge = document.getElementById(`user-count-${t}`);
@@ -1006,18 +1274,18 @@
 
             const activeEl = document.getElementById(`user-tab-${tab}`);
             const activeBadge = document.getElementById(`user-count-${tab}`);
-            
-            if(tab === 'masuk') {
+
+            if (tab === 'masuk') {
                 activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-red-50 text-red-700 border-red-500 flex items-center gap-2 outline-none focus:outline-none select-none";
                 activeBadge.className = "bg-red-200 text-red-800 px-2 py-0.5 rounded text-xs ml-2";
-            } else if(tab === 'progress') {
+            } else if (tab === 'progress') {
                 activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-blue-50 text-blue-700 border-blue-500 flex items-center gap-2 outline-none focus:outline-none select-none";
                 activeBadge.className = "bg-blue-200 text-blue-800 px-2 py-0.5 rounded text-xs ml-2";
-            } else if(tab === 'completed') {
+            } else if (tab === 'completed') {
                 activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-emerald-50 text-emerald-700 border-emerald-500 flex items-center gap-2 outline-none focus:outline-none select-none";
                 activeBadge.className = "bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded text-xs ml-2";
             }
-            renderUserMonitor(); 
+            renderUserMonitor();
         }
 
         function renderUserMonitor() {
@@ -1025,29 +1293,29 @@
             const filterDept = document.getElementById('filter_user_dept').value;
             const container = document.getElementById('user-cards-container');
             container.innerHTML = '';
-            
-            let counts = { masuk:0, prog:0, comp:0 };
+
+            let counts = { masuk: 0, prog: 0, comp: 0 };
             const nowMs = new Date().getTime();
             const TWO_DAYS_MS = 48 * 60 * 60 * 1000;
 
-            let sortedOrders = [...appData.orders].sort((a, b) => b.ID_Order.localeCompare(a.ID_Order, undefined, {numeric: true}));
+            let sortedOrders = [...appData.orders].sort((a, b) => b.ID_Order.localeCompare(a.ID_Order, undefined, { numeric: true }));
 
             sortedOrders.forEach(order => {
-                if(filterDept !== 'All' && order.Departemen !== filterDept) return;
+                if (filterDept !== 'All' && order.Departemen !== filterDept) return;
 
                 let isMasuk = order.Status === 'Menunggu Validasi';
                 let isProg = ['On Progress', 'Scheduled', 'Unscheduled', 'Pending'].includes(order.Status);
                 let isComp = order.Status === 'Completed';
 
                 let orderTime = parseTimestampStr(order.Timestamp).getTime();
-                if ((nowMs - orderTime) > TWO_DAYS_MS) return; 
+                if ((nowMs - orderTime) > TWO_DAYS_MS) return;
 
                 if (isMasuk) counts.masuk++;
                 if (isProg) counts.prog++;
                 if (isComp) counts.comp++;
 
-                if ((currentUserTab === 'masuk' && isMasuk) || 
-                    (currentUserTab === 'progress' && isProg) || 
+                if ((currentUserTab === 'masuk' && isMasuk) ||
+                    (currentUserTab === 'progress' && isProg) ||
                     (currentUserTab === 'completed' && isComp)) {
                     container.appendChild(createUserMonitorCard(order));
                 }
@@ -1056,9 +1324,9 @@
             document.getElementById('user-count-masuk').innerText = counts.masuk;
             document.getElementById('user-count-progress').innerText = counts.prog;
             document.getElementById('user-count-completed').innerText = counts.comp;
-            
+
             if (container.innerHTML === '') {
-                 container.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-xl border border-dashed border-slate-300 shadow-sm"><i class="fa-solid fa-box-open text-5xl mb-4 text-slate-300"></i><br><span class="font-medium text-lg">Tidak ada data orderan di tab ini.</span></div>`;
+                container.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-xl border border-dashed border-slate-300 shadow-sm"><i class="fa-solid fa-box-open text-5xl mb-4 text-slate-300"></i><br><span class="font-medium text-lg">Tidak ada data orderan di tab ini.</span></div>`;
             } else {
                 startUserTimers();
             }
@@ -1066,23 +1334,23 @@
 
         function createUserMonitorCard(order) {
             const div = document.createElement('div');
-            
+
             let sC = 'text-blue-600 bg-blue-100', sT = 'ON PROGRESS';
-            if(order.Status === 'Menunggu Validasi') { sC = 'text-red-600 bg-red-100'; sT = 'MENUNGGU VALIDASI'; }
-            if(order.Status === 'Scheduled') { sC = 'text-purple-600 bg-purple-100'; sT = 'SCHEDULED'; }
-            if(order.Status === 'Unscheduled') { sC = 'text-orange-600 bg-orange-100'; sT = 'UNSCHEDULED'; }
-            if(order.Status === 'Pending') { sC = 'text-orange-600 bg-orange-100'; sT = 'PENDING'; }
-            if(order.Status === 'Completed') { sC = 'text-emerald-600 bg-emerald-100'; sT = 'COMPLETED'; }
+            if (order.Status === 'Menunggu Validasi') { sC = 'text-red-600 bg-red-100'; sT = 'MENUNGGU VALIDASI'; }
+            if (order.Status === 'Scheduled') { sC = 'text-purple-600 bg-purple-100'; sT = 'SCHEDULED'; }
+            if (order.Status === 'Unscheduled') { sC = 'text-orange-600 bg-orange-100'; sT = 'UNSCHEDULED'; }
+            if (order.Status === 'Pending') { sC = 'text-orange-600 bg-orange-100'; sT = 'PENDING'; }
+            if (order.Status === 'Completed') { sC = 'text-emerald-600 bg-emerald-100'; sT = 'COMPLETED'; }
 
             let borderClass = 'border-blue-400';
-            if(order.Status === 'Completed') borderClass = 'border-emerald-400';
-            else if(order.Status === 'Menunggu Validasi') borderClass = 'border-red-300';
-            else if(order.Status === 'Pending') borderClass = 'border-orange-400';
-            
+            if (order.Status === 'Completed') borderClass = 'border-emerald-400';
+            else if (order.Status === 'Menunggu Validasi') borderClass = 'border-red-300';
+            else if (order.Status === 'Pending') borderClass = 'border-orange-400';
+
             let wReq = order.Waktu_Request || '';
-            if(wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0,5);
-            else if(wReq) wReq = String(wReq).substring(0,5);
-            
+            if (wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0, 5);
+            else if (wReq) wReq = String(wReq).substring(0, 5);
+
             const displayId = order.ID_Order.split('_')[0];
 
             let timerBlock = '';
@@ -1093,13 +1361,13 @@
                     </div>`;
             } else if (order.Status !== 'Completed') {
                 let targetDateMs = 0;
-                if(order.Tgl_Pelaksanaan && wReq) {
+                if (order.Tgl_Pelaksanaan && wReq) {
                     const reqDateObj = new Date(`${order.Tgl_Pelaksanaan}T${wReq}:00`);
-                    if(!isNaN(reqDateObj.getTime())) {
+                    if (!isNaN(reqDateObj.getTime())) {
                         targetDateMs = reqDateObj.getTime() + (parseFloat(order.Durasi_Request || 0) * 3600000);
                     }
                 }
-                
+
                 timerBlock = `
                     <div class="mt-4 pt-3 border-t border-slate-100">
                         <p class="text-[10px] text-slate-500 font-bold mb-1 uppercase tracking-wider">Estimasi Waktu Penyelesaian:</p>
@@ -1161,20 +1429,20 @@
                 document.querySelectorAll('.user-live-timer').forEach(el => {
                     const targetTime = parseInt(el.getAttribute('data-target'));
                     const container = el.parentElement;
-                    
+
                     if (!targetTime) {
                         el.innerHTML = '<span class="text-slate-400 font-mono text-sm">Jadwal Tidak Valid</span>';
                         return;
                     }
-                    
+
                     const now = new Date().getTime();
                     const diff = targetTime - now;
-                    
+
                     if (diff > 0) {
                         const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                         const s = Math.floor((diff % (1000 * 60)) / 1000);
-                        el.innerHTML = `<span class="text-blue-700 font-mono text-base font-bold"><i class="fa-solid fa-hourglass-half animate-pulse mr-1"></i> ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</span>`;
+                        el.innerHTML = `<span class="text-blue-700 font-mono text-base font-bold"><i class="fa-solid fa-hourglass-half animate-pulse mr-1"></i> ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}</span>`;
                         container.classList.remove('bg-red-50', 'border-red-200');
                         container.classList.add('bg-blue-50', 'border-blue-200');
                     } else {
@@ -1182,7 +1450,7 @@
                         const h = Math.floor((over % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         const m = Math.floor((over % (1000 * 60 * 60)) / (1000 * 60));
                         const s = Math.floor((over % (1000 * 60)) / 1000);
-                        el.innerHTML = `<span class="text-red-600 font-mono font-bold text-base"><i class="fa-solid fa-triangle-exclamation mr-1"></i> OVERTIME <span class="text-xs">(${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')})</span></span>`;
+                        el.innerHTML = `<span class="text-red-600 font-mono font-bold text-base"><i class="fa-solid fa-triangle-exclamation mr-1"></i> OVERTIME <span class="text-xs">(${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')})</span></span>`;
                         container.classList.remove('bg-blue-50', 'border-blue-200');
                         container.classList.add('bg-red-50', 'border-red-200');
                     }
@@ -1197,7 +1465,7 @@
         function switchCtTab(tab) {
             currentCtTab = tab;
             const tabs = ['progress', 'pending', 'completed', 'canceled'];
-            
+
             tabs.forEach(t => {
                 const el = document.getElementById(`ct-tab-${t}`);
                 const badge = document.getElementById(`count-${t}`);
@@ -1207,47 +1475,47 @@
 
             const activeEl = document.getElementById(`ct-tab-${tab}`);
             const activeBadge = document.getElementById(`count-${tab}`);
-            
-            if(tab === 'progress') {
+
+            if (tab === 'progress') {
                 activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-blue-50 text-blue-700 border-blue-600 flex items-center gap-2 outline-none focus:outline-none select-none";
                 activeBadge.className = "bg-blue-200 text-blue-800 px-2 py-0.5 rounded text-xs ml-2";
-            } else if(tab === 'pending') {
+            } else if (tab === 'pending') {
                 activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-orange-50 text-orange-700 border-orange-500 flex items-center gap-2 outline-none focus:outline-none select-none";
                 activeBadge.className = "bg-orange-200 text-orange-800 px-2 py-0.5 rounded text-xs ml-2";
-            } else if(tab === 'completed') {
+            } else if (tab === 'completed') {
                 activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-emerald-50 text-emerald-700 border-emerald-500 flex items-center gap-2 outline-none focus:outline-none select-none";
                 activeBadge.className = "bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded text-xs ml-2";
-            } else if(tab === 'canceled') {
+            } else if (tab === 'canceled') {
                 activeEl.className = "px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-red-50 text-red-700 border-red-600 flex items-center gap-2 outline-none focus:outline-none select-none";
                 activeBadge.className = "bg-red-200 text-red-800 px-2 py-0.5 rounded text-xs ml-2";
             }
-            renderKanban(); 
+            renderKanban();
         }
 
         function renderKanban() {
             const filterUnit = document.getElementById('filter_ct_unit').value;
             const container = document.getElementById('ct-cards-container');
             container.innerHTML = '';
-            
-            let counts = { prog:0, pend:0, comp:0, canc:0 };
 
-            let sortedOrders = [...appData.orders].sort((a, b) => b.ID_Order.localeCompare(a.ID_Order, undefined, {numeric: true}));
+            let counts = { prog: 0, pend: 0, comp: 0, canc: 0 };
+
+            let sortedOrders = [...appData.orders].sort((a, b) => b.ID_Order.localeCompare(a.ID_Order, undefined, { numeric: true }));
 
             sortedOrders.forEach(order => {
-                if(filterUnit !== 'All' && order.Unit_CT !== filterUnit) return;
-                if(order.Status === 'Menunggu Validasi') return;
+                if (filterUnit !== 'All' && order.Unit_CT !== filterUnit) return;
+                if (order.Status === 'Menunggu Validasi') return;
 
                 const card = createKanbanCard(order);
                 let isMatch = false;
 
                 if (['On Progress', 'Scheduled', 'Unscheduled'].includes(order.Status)) {
-                    counts.prog++; if(currentCtTab === 'progress') isMatch = true;
+                    counts.prog++; if (currentCtTab === 'progress') isMatch = true;
                 } else if (order.Status === 'Pending') {
-                    counts.pend++; if(currentCtTab === 'pending') isMatch = true;
+                    counts.pend++; if (currentCtTab === 'pending') isMatch = true;
                 } else if (order.Status === 'Completed') {
-                    counts.comp++; if(currentCtTab === 'completed') isMatch = true;
+                    counts.comp++; if (currentCtTab === 'completed') isMatch = true;
                 } else if (order.Status === 'Canceled') {
-                    counts.canc++; if(currentCtTab === 'canceled') isMatch = true;
+                    counts.canc++; if (currentCtTab === 'canceled') isMatch = true;
                 }
 
                 if (isMatch) container.appendChild(card);
@@ -1257,21 +1525,21 @@
             document.getElementById('count-pending').innerText = counts.pend;
             document.getElementById('count-completed').innerText = counts.comp;
             document.getElementById('count-canceled').innerText = counts.canc;
-            
+
             if (container.innerHTML === '') {
-                 container.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-xl border border-dashed border-slate-300 shadow-sm"><i class="fa-solid fa-folder-open text-5xl mb-4 text-slate-300"></i><br><span class="font-medium text-lg">Tidak ada job di tab ini.</span></div>`;
+                container.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-xl border border-dashed border-slate-300 shadow-sm"><i class="fa-solid fa-folder-open text-5xl mb-4 text-slate-300"></i><br><span class="font-medium text-lg">Tidak ada job di tab ini.</span></div>`;
             }
         }
 
         function createKanbanCard(order) {
             const div = document.createElement('div');
-            
+
             let sC = 'text-blue-600 bg-blue-100', sT = 'ON PROGRESS';
-            if(order.Status === 'Scheduled') { sC = 'text-purple-600 bg-purple-100'; sT = 'SCHEDULED'; }
-            if(order.Status === 'Unscheduled') { sC = 'text-orange-600 bg-orange-100'; sT = 'UNSCHEDULED'; }
-            if(order.Status === 'Pending') { sC = 'text-orange-600 bg-orange-100'; sT = 'PENDING'; }
-            if(order.Status === 'Completed') { sC = 'text-emerald-600 bg-emerald-100'; sT = 'COMPLETED'; }
-            if(order.Status === 'Canceled') { sC = 'text-red-600 bg-red-100'; sT = 'CANCELED'; }
+            if (order.Status === 'Scheduled') { sC = 'text-purple-600 bg-purple-100'; sT = 'SCHEDULED'; }
+            if (order.Status === 'Unscheduled') { sC = 'text-orange-600 bg-orange-100'; sT = 'UNSCHEDULED'; }
+            if (order.Status === 'Pending') { sC = 'text-orange-600 bg-orange-100'; sT = 'PENDING'; }
+            if (order.Status === 'Completed') { sC = 'text-emerald-600 bg-emerald-100'; sT = 'COMPLETED'; }
+            if (order.Status === 'Canceled') { sC = 'text-red-600 bg-red-100'; sT = 'CANCELED'; }
 
             let actHtml = '';
             if (['On Progress', 'Scheduled', 'Unscheduled'].includes(order.Status)) {
@@ -1305,18 +1573,18 @@
 
             let inspeksiHtml = waktuInspeksi ? `<div class="mt-2 bg-emerald-50 border border-emerald-200 text-emerald-700 p-2 rounded text-[10px]"><strong class="block mb-1"><i class="fa-solid fa-clipboard-check"></i> Waktu Inspeksi:</strong> Selesai Check pada ${waktuInspeksi}</div>` : '';
 
-            let kendalaHtml = ((order.Status === 'Completed' || order.Status === 'Canceled' || order.Status === 'Pending') && kendalaMurni) 
+            let kendalaHtml = ((order.Status === 'Completed' || order.Status === 'Canceled' || order.Status === 'Pending') && kendalaMurni)
                 ? `<div class="mt-2 bg-red-50 border border-red-200 text-red-700 p-2 rounded text-[10px] whitespace-pre-line"><strong class="block mb-1"><i class="fa-solid fa-triangle-exclamation"></i> Keterangan / Kendala:</strong>${kendalaMurni}</div>` : '';
 
             let borderClass = 'border-slate-200';
-            if(order.Status === 'Completed') borderClass = 'border-emerald-400';
-            else if(order.Status === 'Pending') borderClass = 'border-orange-300';
-            else if(order.Status === 'Canceled') borderClass = 'border-red-300';
-            
+            if (order.Status === 'Completed') borderClass = 'border-emerald-400';
+            else if (order.Status === 'Pending') borderClass = 'border-orange-300';
+            else if (order.Status === 'Canceled') borderClass = 'border-red-300';
+
             let wReq = order.Waktu_Request || '';
-            if(wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0,5);
-            else if(wReq) wReq = String(wReq).substring(0,5);
-            
+            if (wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0, 5);
+            else if (wReq) wReq = String(wReq).substring(0, 5);
+
             const displayId = order.ID_Order.split('_')[0];
 
             div.className = `bg-white p-5 rounded-xl shadow-sm border ${borderClass} hover:shadow-md transition flex flex-col`;
@@ -1369,13 +1637,13 @@
 
         function promptCloseJob(id) {
             const order = appData.orders.find(o => o.ID_Order === id);
-            
-            let opOptions = `<option value="">-- Pilih --</option>` + appData.master.filter(m=>m[0]==='Operator').map(m=>`<option value="${m[1]}" ${order.Operator===m[1]?'selected':''}>${m[1]}</option>`).join('');
-            let rigOptions = `<option value="">-- Pilih --</option>` + appData.master.filter(m=>m[0]==='Rigger').map(m=>`<option value="${m[1]}" ${order.Rigger===m[1]?'selected':''}>${m[1]}</option>`).join('');
+
+            let opOptions = `<option value="">-- Pilih --</option>` + appData.master.filter(m => m[0] === 'Operator').map(m => `<option value="${m[1]}" ${order.Operator === m[1] ? 'selected' : ''}>${m[1]}</option>`).join('');
+            let rigOptions = `<option value="">-- Pilih --</option>` + appData.master.filter(m => m[0] === 'Rigger').map(m => `<option value="${m[1]}" ${order.Rigger === m[1] ? 'selected' : ''}>${m[1]}</option>`).join('');
 
             let wReq = order.Waktu_Request || '';
-            if(wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0,5);
-            else if(wReq) wReq = String(wReq).substring(0,5);
+            if (wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0, 5);
+            else if (wReq) wReq = String(wReq).substring(0, 5);
 
             Swal.fire({
                 title: 'Konfirmasi Close Job',
@@ -1422,26 +1690,26 @@
                     const start = document.getElementById('swal-start').value;
                     const end = document.getElementById('swal-end').value;
                     const inspeksi = document.getElementById('swal-inspeksi').value;
-                    if(!start || !end || !inspeksi) { 
-                        Swal.showValidationMessage('Semua waktu (Start, End, dan Final Inspeksi) wajib diisi!'); 
-                        return false; 
+                    if (!start || !end || !inspeksi) {
+                        Swal.showValidationMessage('Semua waktu (Start, End, dan Final Inspeksi) wajib diisi!');
+                        return false;
                     }
                     return { op, rig, start, end, inspeksi, wReq, status: 'Completed' };
                 }
             }).then((res) => {
-                if(res.isConfirmed) processJobClosing(order, res.value);
+                if (res.isConfirmed) processJobClosing(order, res.value);
             });
         }
 
         function promptPendingJob(id) {
             const order = appData.orders.find(o => o.ID_Order === id);
-            
-            let opOptions = `<option value="">-- Pilih --</option>` + appData.master.filter(m=>m[0]==='Operator').map(m=>`<option value="${m[1]}" ${order.Operator===m[1]?'selected':''}>${m[1]}</option>`).join('');
-            let rigOptions = `<option value="">-- Pilih --</option>` + appData.master.filter(m=>m[0]==='Rigger').map(m=>`<option value="${m[1]}" ${order.Rigger===m[1]?'selected':''}>${m[1]}</option>`).join('');
+
+            let opOptions = `<option value="">-- Pilih --</option>` + appData.master.filter(m => m[0] === 'Operator').map(m => `<option value="${m[1]}" ${order.Operator === m[1] ? 'selected' : ''}>${m[1]}</option>`).join('');
+            let rigOptions = `<option value="">-- Pilih --</option>` + appData.master.filter(m => m[0] === 'Rigger').map(m => `<option value="${m[1]}" ${order.Rigger === m[1] ? 'selected' : ''}>${m[1]}</option>`).join('');
 
             let wReq = order.Waktu_Request || '';
-            if(wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0,5);
-            else if(wReq) wReq = String(wReq).substring(0,5);
+            if (wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0, 5);
+            else if (wReq) wReq = String(wReq).substring(0, 5);
 
             Swal.fire({
                 title: 'Pending Job / Hujan',
@@ -1487,24 +1755,24 @@
                     const start = document.getElementById('swal-start').value;
                     const end = document.getElementById('swal-end').value;
                     const alasan = document.getElementById('swal-alasan').value;
-                    if(!alasan) { 
-                        Swal.showValidationMessage('Alasan Pending wajib diisi!'); 
-                        return false; 
+                    if (!alasan) {
+                        Swal.showValidationMessage('Alasan Pending wajib diisi!');
+                        return false;
                     }
-                    if((start && !end) || (!start && end)) {
-                        Swal.showValidationMessage('Jika mengisi jam, Start dan Pending harus diisi keduanya!'); 
-                        return false; 
+                    if ((start && !end) || (!start && end)) {
+                        Swal.showValidationMessage('Jika mengisi jam, Start dan Pending harus diisi keduanya!');
+                        return false;
                     }
                     return { op, rig, start, end, inspeksi: '00:00', wReq, alasanPending: alasan, status: 'Pending' };
                 }
             }).then((res) => {
-                if(res.isConfirmed) processJobClosing(order, res.value);
+                if (res.isConfirmed) processJobClosing(order, res.value);
             });
         }
 
         function processJobClosing(order, data) {
             let durasiAktual = "";
-            if(data.start && data.end) {
+            if (data.start && data.end) {
                 durasiAktual = calculateActualDuration(data.start, data.end, order.Shift);
             }
 
@@ -1515,18 +1783,18 @@
             if (data.status === 'Completed') {
                 let reqStartMin = parseTime(data.wReq);
                 let actStartMin = parseTime(data.start);
-                if (actStartMin < reqStartMin && (reqStartMin - actStartMin) > 720) actStartMin += 1440; 
-                
+                if (actStartMin < reqStartMin && (reqStartMin - actStartMin) > 720) actStartMin += 1440;
+
                 let delayStart = actStartMin - reqStartMin;
                 let reqDur = parseFloat(order.Durasi_Request);
                 let actDur = parseFloat(durasiAktual);
                 let overDurMin = (actDur - reqDur) * 60;
 
-                if (delayStart > 15) { 
+                if (delayStart > 15) {
                     requiresReason = true; hasTelat = true;
                     telatHtml = `<div class="mb-3"><label class="block text-left text-xs font-bold text-slate-700 mb-1"><i class="fa-regular fa-clock text-red-500"></i> Alasan Telat Mulai (${delayStart} Menit):</label><textarea id="swal-alasan-telat" class="w-full px-3 py-2 border border-slate-300 rounded outline-none text-sm" rows="2" required></textarea></div>`;
                 }
-                if (overDurMin > 15) { 
+                if (overDurMin > 15) {
                     requiresReason = true; hasOver = true;
                     overHtml = `<div class="mb-3"><label class="block text-left text-xs font-bold text-slate-700 mb-1"><i class="fa-solid fa-stopwatch text-red-500"></i> Alasan Over Durasi (${Math.round(overDurMin)} Menit):</label><textarea id="swal-alasan-over" class="w-full px-3 py-2 border border-slate-300 rounded outline-none text-sm" rows="2" required></textarea></div>`;
                 }
@@ -1542,19 +1810,19 @@
                             if (hasTelat && !txtTelat.trim()) { Swal.showValidationMessage('Alasan Telat wajib diisi!'); return false; }
                             if (hasOver && !txtOver.trim()) { Swal.showValidationMessage('Alasan Over Durasi wajib diisi!'); return false; }
                             let combined = "";
-                            if(hasTelat) combined += `[Telat]: ${txtTelat.trim()}\n`;
-                            if(hasOver) combined += `[Over]: ${txtOver.trim()}`;
+                            if (hasTelat) combined += `[Telat]: ${txtTelat.trim()}\n`;
+                            if (hasOver) combined += `[Over]: ${txtOver.trim()}`;
                             return combined.trim();
                         }
                     }).then((res2) => {
-                        if(res2.isConfirmed) saveClosedJobToServer(order, data, durasiAktual, res2.value);
+                        if (res2.isConfirmed) saveClosedJobToServer(order, data, durasiAktual, res2.value);
                     });
                 } else {
                     saveClosedJobToServer(order, data, durasiAktual, "");
                 }
             } else if (data.status === 'Pending') {
-                 let alasan = `[Pending]: ${data.alasanPending}`;
-                 saveClosedJobToServer(order, data, durasiAktual, alasan);
+                let alasan = `[Pending]: ${data.alasanPending}`;
+                saveClosedJobToServer(order, data, durasiAktual, alasan);
             }
         }
 
@@ -1579,9 +1847,9 @@
 
             try {
                 const res = await fetchAPI('updateJobRecord', payload);
-                if(res.success) {
-                    if(data.status === 'Completed') showCloseJobSuccess(order, data, durasi, alasan); 
-                    else { Swal.fire({icon: 'success', title: 'Berhasil', text: 'Job dipending dan direcord.', timer: 1500, showConfirmButton:false}); loadAppData(false); }
+                if (res.success) {
+                    if (data.status === 'Completed') showCloseJobSuccess(order, data, durasi, alasan);
+                    else { Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Job dipending dan direcord.', timer: 1500, showConfirmButton: false }); loadAppData(false); }
                 } else {
                     Swal.fire('Error', res.message, 'error');
                 }
@@ -1595,32 +1863,32 @@
                     mockOrdersData[index].Waktu_End_Aktual = data.end;
                     mockOrdersData[index].Durasi_Aktual = durasi;
                     mockOrdersData[index].Alasan_Delay = alasanFinal;
-                    
-                    if(data.status === 'Completed') showCloseJobSuccess(mockOrdersData[index], data, durasi, alasan); 
-                    else { Swal.fire({icon: 'success', title: 'Berhasil (Lokal)', text: 'Job dipending dan direcord (Mode Offline).', timer: 1500, showConfirmButton:false}); loadAppData(false); }
+
+                    if (data.status === 'Completed') showCloseJobSuccess(mockOrdersData[index], data, durasi, alasan);
+                    else { Swal.fire({ icon: 'success', title: 'Berhasil (Lokal)', text: 'Job dipending dan direcord (Mode Offline).', timer: 1500, showConfirmButton: false }); loadAppData(false); }
                 }
             }
         }
 
         function showCloseJobSuccess(orderData, data, durasi, alasanDelay) {
             let wReq = orderData.Waktu_Request || '';
-            if(wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0,5);
-            else if(wReq) wReq = String(wReq).substring(0,5);
+            if (wReq && String(wReq).includes('T')) wReq = String(wReq).split('T')[1].substring(0, 5);
+            else if (wReq) wReq = String(wReq).substring(0, 5);
 
             const displayId = orderData.ID_Order.split('_')[0];
 
             const waText = `*DETAIL JOB CRANE TRUCK - SELESAI*\n` +
-                           `ID: ${displayId}\n` +
-                           `* NAMA USER : ${orderData.Nama_Pemohon}\n` +
-                           `* NO WA: ${orderData.No_WA || '-'}\n` +
-                           `- PERUSAHAAN: ${orderData.Perusahaan}\n` +
-                           `* WAKTU REQUEST : ${wReq}\n` +
-                           `* DURASI PEKERJAAN : ${orderData.Durasi_Request} Jam\n` +
-                           `- TANGGAL: ${formatTglId(orderData.Tgl_Pelaksanaan)}\n` +
-                           `* LOKASI: ${orderData.Lokasi} -> ${orderData.Tujuan}\n` +
-                           `* DETAIL JOB: ${orderData.Deskripsi}\n\n` +
-                           `*PENUGASAN CT*\n- UNIT CT: ${orderData.Unit_CT}\n- OP: ${data.op} | RIG: ${data.rig}\n\n` +
-                           `*WAKTU AKTUAL*\n- START: ${data.start} | END: ${data.end}\n- FINAL INSPEKSI: ${data.inspeksi}\n- DURASI BERSIH: ${durasi} Jam\n- KENDALA: ${alasanDelay ? alasanDelay.replace(/\n/g, ' ') : 'Tidak ada (Lancar)'}`;
+                `ID: ${displayId}\n` +
+                `* NAMA USER : ${orderData.Nama_Pemohon}\n` +
+                `* NO WA: ${orderData.No_WA || '-'}\n` +
+                `- PERUSAHAAN: ${orderData.Perusahaan}\n` +
+                `* WAKTU REQUEST : ${wReq}\n` +
+                `* DURASI PEKERJAAN : ${orderData.Durasi_Request} Jam\n` +
+                `- TANGGAL: ${formatTglId(orderData.Tgl_Pelaksanaan)}\n` +
+                `* LOKASI: ${orderData.Lokasi} -> ${orderData.Tujuan}\n` +
+                `* DETAIL JOB: ${orderData.Deskripsi}\n\n` +
+                `*PENUGASAN CT*\n- UNIT CT: ${orderData.Unit_CT}\n- OP: ${data.op} | RIG: ${data.rig}\n\n` +
+                `*WAKTU AKTUAL*\n- START: ${data.start} | END: ${data.end}\n- FINAL INSPEKSI: ${data.inspeksi}\n- DURASI BERSIH: ${durasi} Jam\n- KENDALA: ${alasanDelay ? alasanDelay.replace(/\n/g, ' ') : 'Tidak ada (Lancar)'}`;
 
             Swal.fire({
                 icon: 'success', title: 'Job Berhasil Di-close!',
@@ -1635,13 +1903,13 @@
         }
 
         async function updateJobStatus(id, status) {
-            if(status === 'Canceled') {
+            if (status === 'Canceled') {
                 Swal.fire({
                     title: 'Batalkan Job?', text: 'Masukkan alasan pembatalan job ini:',
                     input: 'textarea', icon: 'warning', showCancelButton: true, confirmButtonColor: '#ef4444',
                     inputValidator: (value) => { if (!value || !value.trim()) return 'Alasan pembatalan wajib diisi!' }
                 }).then(r => {
-                    if(r.isConfirmed) {
+                    if (r.isConfirmed) {
                         sendDirectStatusUpdate(id, status, "[Dibatalkan]: " + r.value.trim());
                     }
                 });
@@ -1654,19 +1922,19 @@
             const payload = { id: id, status: status, alasanDelay: alasan };
             try {
                 const res = await fetchAPI('updateJobRecord', payload);
-                if(res.success) loadAppData(false);
+                if (res.success) loadAppData(false);
             } catch (err) {
-                const i = mockOrdersData.findIndex(o=>o.ID_Order===id); 
-                if(i>-1) {
-                    mockOrdersData[i].Status = status; 
-                    if(alasan) mockOrdersData[i].Alasan_Delay = alasan;
+                const i = mockOrdersData.findIndex(o => o.ID_Order === id);
+                if (i > -1) {
+                    mockOrdersData[i].Status = status;
+                    if (alasan) mockOrdersData[i].Alasan_Delay = alasan;
                     loadAppData(false);
                 }
             }
         }
 
         function setDbSort(key) {
-            if(dbSort.key === key) {
+            if (dbSort.key === key) {
                 dbSort.asc = !dbSort.asc;
             } else {
                 dbSort.key = key;
@@ -1678,38 +1946,38 @@
         function renderAdminTable() {
             const tbody = document.getElementById('table-orders-body');
             tbody.innerHTML = '';
-            
+
             let filterStart = document.getElementById('db_filter_start').value;
             let filterEnd = document.getElementById('db_filter_end').value;
             let filterShift = document.getElementById('db_filter_shift').value;
 
             let filtered = appData.orders.filter(o => {
-                if(filterStart && o.Tgl_Pelaksanaan < filterStart) return false;
-                if(filterEnd && o.Tgl_Pelaksanaan > filterEnd) return false;
-                if(filterShift !== 'All' && o.Shift !== filterShift) return false;
+                if (filterStart && o.Tgl_Pelaksanaan < filterStart) return false;
+                if (filterEnd && o.Tgl_Pelaksanaan > filterEnd) return false;
+                if (filterShift !== 'All' && o.Shift !== filterShift) return false;
                 return true;
             });
 
             filtered.sort((a, b) => {
                 if (dbSort.key === 'default') {
-                    if(a.Status === 'Menunggu Validasi' && b.Status !== 'Menunggu Validasi') return -1;
-                    if(a.Status !== 'Menunggu Validasi' && b.Status === 'Menunggu Validasi') return 1;
-                    return b.ID_Order.localeCompare(a.ID_Order, undefined, {numeric: true});
+                    if (a.Status === 'Menunggu Validasi' && b.Status !== 'Menunggu Validasi') return -1;
+                    if (a.Status !== 'Menunggu Validasi' && b.Status === 'Menunggu Validasi') return 1;
+                    return b.ID_Order.localeCompare(a.ID_Order, undefined, { numeric: true });
                 } else {
                     let valA = (a[dbSort.key] || '').toString().toLowerCase();
                     let valB = (b[dbSort.key] || '').toString().toLowerCase();
-                    if(valA < valB) return dbSort.asc ? -1 : 1;
-                    if(valA > valB) return dbSort.asc ? 1 : -1;
+                    if (valA < valB) return dbSort.asc ? -1 : 1;
+                    if (valA > valB) return dbSort.asc ? 1 : -1;
                     return 0;
                 }
             });
 
             let waitingCount = 0;
             filtered.forEach(order => {
-                if(order.Status === 'Menunggu Validasi') waitingCount++;
+                if (order.Status === 'Menunggu Validasi') waitingCount++;
 
                 let statusBadge = '';
-                switch(order.Status) {
+                switch (order.Status) {
                     case 'Menunggu Validasi': statusBadge = '<span class="px-2 py-1 bg-red-100 text-red-700 rounded text-[10px] font-bold">Menunggu Validasi</span>'; break;
                     case 'Scheduled': statusBadge = '<span class="px-2 py-1 bg-purple-100 text-purple-700 rounded text-[10px] font-bold">Scheduled</span>'; break;
                     case 'Unscheduled': statusBadge = '<span class="px-2 py-1 bg-orange-100 text-orange-700 rounded text-[10px] font-bold">Unscheduled</span>'; break;
@@ -1721,68 +1989,68 @@
                 }
 
                 let wReq = order.Waktu_Request || '';
-                if(wReq && String(wReq).includes('T')) {
-                    wReq = String(wReq).split('T')[1].substring(0,5);
-                } else if(wReq) {
-                    wReq = String(wReq).substring(0,5);
+                if (wReq && String(wReq).includes('T')) {
+                    wReq = String(wReq).split('T')[1].substring(0, 5);
+                } else if (wReq) {
+                    wReq = String(wReq).substring(0, 5);
                 }
 
                 let rawAlasan = order.Alasan_Delay || '';
                 let inspeksiMatch = rawAlasan.match(/\[Inspeksi:\s*(.*?)\]/);
                 let waktuInspeksi = inspeksiMatch ? inspeksiMatch[1] : '';
                 let kendalaMurni = rawAlasan.replace(/\[Inspeksi:\s*.*?\]/g, '').trim();
-                
+
                 const displayId = order.ID_Order.split('_')[0];
 
                 let jobText = `*DETAIL JOB CRANE TRUCK*\n` +
-                              `ID: ${displayId}\n` +
-                              `* NAMA USER : ${order.Nama_Pemohon}\n` +
-                              `* NO WA: ${order.No_WA || '-'}\n` +
-                              `- PERUSAHAAN: ${order.Perusahaan}\n` +
-                              `* DEPARTEMENT: ${order.Departemen}\n` +
-                              `* SECTION: ${order.Section}\n` +
-                              `- TANGGAL: ${formatTglId(order.Tgl_Pelaksanaan)}\n` +
-                              `* SHIFT: ${order.Shift}\n` +
-                              `* WAKTU REQUEST : ${wReq}\n` +
-                              `* DURASI PEKERJAAN : ${order.Durasi_Request} Jam\n` +
-                              `* LOKASI ANGKAT/ANGKUT: ${order.Lokasi}\n` +
-                              `* TUJUAN : ${order.Tujuan}\n` +
-                              `* DETAIL JOB: ${order.Deskripsi}`;
-                              
-                if(order.Unit_CT || order.GL) {
+                    `ID: ${displayId}\n` +
+                    `* NAMA USER : ${order.Nama_Pemohon}\n` +
+                    `* NO WA: ${order.No_WA || '-'}\n` +
+                    `- PERUSAHAAN: ${order.Perusahaan}\n` +
+                    `* DEPARTEMENT: ${order.Departemen}\n` +
+                    `* SECTION: ${order.Section}\n` +
+                    `- TANGGAL: ${formatTglId(order.Tgl_Pelaksanaan)}\n` +
+                    `* SHIFT: ${order.Shift}\n` +
+                    `* WAKTU REQUEST : ${wReq}\n` +
+                    `* DURASI PEKERJAAN : ${order.Durasi_Request} Jam\n` +
+                    `* LOKASI ANGKAT/ANGKUT: ${order.Lokasi}\n` +
+                    `* TUJUAN : ${order.Tujuan}\n` +
+                    `* DETAIL JOB: ${order.Deskripsi}`;
+
+                if (order.Unit_CT || order.GL) {
                     jobText += `\n\n*PENUGASAN CT*\n- UNIT CT: ${order.Unit_CT || '-'}\n- GL: ${order.GL || '-'}\n- OPERATOR: ${order.Operator || '-'}\n- RIGGER: ${order.Rigger || '-'}`;
                 }
                 if (order.Status === 'Completed' || order.Status === 'Canceled' || order.Status === 'Pending') {
                     jobText += `\n\n*WAKTU AKTUAL*\n- START: ${order.Waktu_Start_Aktual || '-'}\n- END: ${order.Waktu_End_Aktual || '-'}\n- DURASI BERSIH: ${order.Durasi_Aktual ? order.Durasi_Aktual + ' Jam' : '-'}`;
-                    if(waktuInspeksi) jobText += `\n- FINAL INSPEKSI: ${waktuInspeksi}`;
+                    if (waktuInspeksi) jobText += `\n- FINAL INSPEKSI: ${waktuInspeksi}`;
                     jobText += `\n- KENDALA: ${kendalaMurni ? kendalaMurni.replace(/\n/g, ' ') : 'Tidak ada (Lancar)'}`;
                 }
-                
+
                 let actionBtn = '';
 
-                if(order.Status === 'Menunggu Validasi') {
+                if (order.Status === 'Menunggu Validasi') {
                     actionBtn = `
                         <button type="button" onclick="openValidasiModal('${order.ID_Order}')" class="bg-blue-600 text-white px-2.5 py-1 rounded hover:bg-blue-700 text-xs shadow-sm w-full text-left flex items-center justify-between outline-none focus:outline-none select-none mb-1"><i class="fa-solid fa-check"></i> Edit/Validasi</button>
                         <button type="button" onclick="deleteJob('${order.ID_Order}')" class="bg-red-50 text-red-600 border border-red-200 px-2.5 py-1 rounded hover:bg-red-100 text-xs shadow-sm w-full text-left flex items-center justify-between outline-none focus:outline-none select-none"><i class="fa-solid fa-trash"></i> Hapus</button>
                     `;
                 } else {
                     actionBtn = `<button type="button" onclick="copyTextFallback(decodeURIComponent('${encodeURIComponent(jobText)}'))" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded hover:bg-slate-200 border border-slate-200 text-xs shadow-sm w-full text-left flex items-center justify-between mb-1 outline-none focus:outline-none select-none"><i class="fa-solid fa-copy"></i> Salin</button>`;
-                    
-                    if(['Scheduled', 'Unscheduled', 'On Progress'].includes(order.Status)) {
+
+                    if (['Scheduled', 'Unscheduled', 'On Progress'].includes(order.Status)) {
                         actionBtn += `<button type="button" onclick="openValidasiModal('${order.ID_Order}')" class="bg-orange-50 text-orange-600 border border-orange-200 px-2.5 py-1 rounded hover:bg-orange-100 text-xs shadow-sm w-full text-left flex items-center justify-between outline-none focus:outline-none select-none mb-1" title="Edit Unit CT / Personil"><i class="fa-solid fa-pen"></i> Edit Job</button>`;
                     } else if (order.Status === 'Pending') {
                         actionBtn += `<button type="button" onclick="openValidasiModal('${order.ID_Order}')" class="bg-blue-50 text-blue-600 border border-blue-200 px-2.5 py-1 rounded hover:bg-blue-100 text-xs shadow-sm w-full text-left flex items-center justify-between outline-none focus:outline-none select-none mb-1" title="Lanjutkan Job & Edit"><i class="fa-solid fa-play"></i> Lanjut Job</button>`;
                     }
-                    
+
                     if (['Completed', 'Canceled'].includes(order.Status)) {
                         actionBtn += `<button type="button" onclick="deleteJob('${order.ID_Order}')" class="bg-red-50 text-red-600 border border-red-200 px-2.5 py-1 rounded hover:bg-red-100 text-xs shadow-sm w-full text-left flex items-center justify-between outline-none focus:outline-none select-none"><i class="fa-solid fa-trash"></i> Hapus</button>`;
                     }
                 }
 
                 let delayContent = '';
-                if(waktuInspeksi) delayContent += `<div class="text-emerald-700 bg-emerald-50 p-1 mb-1 rounded text-[10px] border border-emerald-100 font-semibold leading-tight"><i class="fa-solid fa-clipboard-check"></i> Insp: ${waktuInspeksi}</div>`;
-                if(kendalaMurni) delayContent += `<div class="bg-red-50 text-red-700 p-1.5 rounded text-[10px] border border-red-100 whitespace-pre-line leading-tight"><i class="fa-solid fa-circle-exclamation"></i> ${kendalaMurni}</div>`;
-                if(!delayContent) delayContent = '-';
+                if (waktuInspeksi) delayContent += `<div class="text-emerald-700 bg-emerald-50 p-1 mb-1 rounded text-[10px] border border-emerald-100 font-semibold leading-tight"><i class="fa-solid fa-clipboard-check"></i> Insp: ${waktuInspeksi}</div>`;
+                if (kendalaMurni) delayContent += `<div class="bg-red-50 text-red-700 p-1.5 rounded text-[10px] border border-red-100 whitespace-pre-line leading-tight"><i class="fa-solid fa-circle-exclamation"></i> ${kendalaMurni}</div>`;
+                if (!delayContent) delayContent = '-';
 
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 border-b border-slate-100 align-top group";
@@ -1807,11 +2075,11 @@
                     </td>
                     <td class="p-3">${statusBadge}</td>
                     <td class="p-3 text-[10px] leading-tight text-slate-600">
-                        GL: <strong>${order.GL||'-'}</strong> | CT: <strong>${order.Unit_CT||'-'}</strong><br>
-                        OP: ${order.Operator||'-'} | Rg: ${order.Rigger||'-'}
+                        GL: <strong>${order.GL || '-'}</strong> | CT: <strong>${order.Unit_CT || '-'}</strong><br>
+                        OP: ${order.Operator || '-'} | Rg: ${order.Rigger || '-'}
                     </td>
-                    <td class="p-3 text-[11px] font-mono">${order.Waktu_Start_Aktual||'--:--'} s/d ${order.Waktu_End_Aktual||'--:--'}</td>
-                    <td class="p-3 font-bold text-center">${order.Durasi_Aktual ? order.Durasi_Aktual+' J' : '-'}</td>
+                    <td class="p-3 text-[11px] font-mono">${order.Waktu_Start_Aktual || '--:--'} s/d ${order.Waktu_End_Aktual || '--:--'}</td>
+                    <td class="p-3 font-bold text-center">${order.Durasi_Aktual ? order.Durasi_Aktual + ' J' : '-'}</td>
                     <td class="p-3 max-w-[180px]">
                         ${delayContent}
                     </td>
@@ -1827,34 +2095,34 @@
             const fShift = document.getElementById('filter_shift').value;
 
             let filtered = appData.orders.filter(o => {
-                if(fStart && o.Tgl_Pelaksanaan < fStart) return false;
-                if(fEnd && o.Tgl_Pelaksanaan > fEnd) return false;
-                if(fShift !== 'All' && o.Shift !== fShift) return false;
+                if (fStart && o.Tgl_Pelaksanaan < fStart) return false;
+                if (fEnd && o.Tgl_Pelaksanaan > fEnd) return false;
+                if (fShift !== 'All' && o.Shift !== fShift) return false;
                 return true;
             });
 
-            let stats = { tot: filtered.length, sch:0, prog:0, comp:0, canc:0 };
-            let cComp={}, cCT={}, cStat={}, cDept={}, cDelay={'Ontime / Normal':0, 'Delay Keterlambatan':0}, cShift={}, cRigJob={}, cRigJam={};
+            let stats = { tot: filtered.length, sch: 0, prog: 0, comp: 0, canc: 0 };
+            let cComp = {}, cCT = {}, cStat = {}, cDept = {}, cDelay = { 'Ontime / Normal': 0, 'Delay Keterlambatan': 0 }, cShift = {}, cRigJob = {}, cRigJam = {};
 
             filtered.forEach(o => {
-                if(['Scheduled', 'Unscheduled'].includes(o.Status)) stats.sch++;
-                if(o.Status === 'On Progress' || o.Status === 'Pending') stats.prog++;
-                if(o.Status === 'Completed') stats.comp++;
-                if(o.Status === 'Canceled') stats.canc++;
+                if (['Scheduled', 'Unscheduled'].includes(o.Status)) stats.sch++;
+                if (o.Status === 'On Progress' || o.Status === 'Pending') stats.prog++;
+                if (o.Status === 'Completed') stats.comp++;
+                if (o.Status === 'Canceled') stats.canc++;
 
-                cComp[o.Perusahaan] = (cComp[o.Perusahaan]||0)+1;
-                if(o.Unit_CT) cCT[o.Unit_CT] = (cCT[o.Unit_CT]||0)+1;
-                cStat[o.Status] = (cStat[o.Status]||0)+1;
-                cDept[o.Departemen] = (cDept[o.Departemen]||0)+1;
-                cShift[o.Shift] = (cShift[o.Shift]||0)+1;
-                
-                if(o.Rigger && o.Status === 'Completed') {
-                    cRigJob[o.Rigger] = (cRigJob[o.Rigger]||0)+1;
-                    cRigJam[o.Rigger] = (parseFloat(cRigJam[o.Rigger]||0) + parseFloat(o.Durasi_Aktual || 0)).toFixed(2);
+                cComp[o.Perusahaan] = (cComp[o.Perusahaan] || 0) + 1;
+                if (o.Unit_CT) cCT[o.Unit_CT] = (cCT[o.Unit_CT] || 0) + 1;
+                cStat[o.Status] = (cStat[o.Status] || 0) + 1;
+                cDept[o.Departemen] = (cDept[o.Departemen] || 0) + 1;
+                cShift[o.Shift] = (cShift[o.Shift] || 0) + 1;
+
+                if (o.Rigger && o.Status === 'Completed') {
+                    cRigJob[o.Rigger] = (cRigJob[o.Rigger] || 0) + 1;
+                    cRigJam[o.Rigger] = (parseFloat(cRigJam[o.Rigger] || 0) + parseFloat(o.Durasi_Aktual || 0)).toFixed(2);
                 }
 
-                if(o.Status === 'Completed') {
-                    if(o.Alasan_Delay && !o.Alasan_Delay.startsWith("[Inspeksi")) cDelay['Delay Keterlambatan']++; else cDelay['Ontime / Normal']++;
+                if (o.Status === 'Completed') {
+                    if (o.Alasan_Delay && !o.Alasan_Delay.startsWith("[Inspeksi")) cDelay['Delay Keterlambatan']++; else cDelay['Ontime / Normal']++;
                 }
             });
 
@@ -1864,63 +2132,63 @@
             document.getElementById('stat_completed').innerText = stats.comp;
             document.getElementById('stat_canceled').innerText = stats.canc;
 
-            renderChart('chartCompany', 'pie', Object.keys(cComp), Object.values(cComp), ['#0ea5e9','#8b5cf6','#f59e0b']);
-            renderChart('chartCT', 'bar', Object.keys(cCT), Object.values(cCT), ['#f97316','#0ea5e9']);
-            renderChart('chartStatus', 'doughnut', Object.keys(cStat), Object.values(cStat), ['#10b981','#f59e0b','#3b82f6','#ef4444','#94a3b8']);
-            renderChart('chartDept', 'bar', Object.keys(cDept), Object.values(cDept), ['#8b5cf6','#ec4899','#14b8a6']);
-            renderChart('chartDelay', 'pie', Object.keys(cDelay), Object.values(cDelay), ['#10b981','#ef4444']);
-            renderChart('chartShift', 'pie', Object.keys(cShift), Object.values(cShift), ['#64748b','#334155']);
+            renderChart('chartCompany', 'pie', Object.keys(cComp), Object.values(cComp), ['#0ea5e9', '#8b5cf6', '#f59e0b']);
+            renderChart('chartCT', 'bar', Object.keys(cCT), Object.values(cCT), ['#f97316', '#0ea5e9']);
+            renderChart('chartStatus', 'doughnut', Object.keys(cStat), Object.values(cStat), ['#10b981', '#f59e0b', '#3b82f6', '#ef4444', '#94a3b8']);
+            renderChart('chartDept', 'bar', Object.keys(cDept), Object.values(cDept), ['#8b5cf6', '#ec4899', '#14b8a6']);
+            renderChart('chartDelay', 'pie', Object.keys(cDelay), Object.values(cDelay), ['#10b981', '#ef4444']);
+            renderChart('chartShift', 'pie', Object.keys(cShift), Object.values(cShift), ['#64748b', '#334155']);
             renderChart('chartRiggerJob', 'bar', Object.keys(cRigJob), Object.values(cRigJob), ['#a855f7']);
             renderChart('chartRiggerJam', 'bar', Object.keys(cRigJam), Object.values(cRigJam).map(Number), ['#f59e0b']);
         }
 
         function renderChart(id, type, labels, data, colors) {
             const ctx = document.getElementById(id);
-            if(!ctx) return;
-            if(charts[id]) charts[id].destroy();
+            if (!ctx) return;
+            if (charts[id]) charts[id].destroy();
             charts[id] = new Chart(ctx, {
                 type: type,
-                data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth:1 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: type==='pie'||type==='doughnut', position: 'bottom' } }, scales: type==='bar'?{y:{beginAtZero:true}}:{} }
+                data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: 1 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: type === 'pie' || type === 'doughnut', position: 'bottom' } }, scales: type === 'bar' ? { y: { beginAtZero: true } } : {} }
             });
         }
 
         function openValidasiModal(id) {
             const order = appData.orders.find(o => o.ID_Order === id);
-            if(!order) return;
+            if (!order) return;
 
             document.getElementById('v_order_id').value = id;
             document.getElementById('v_edit_tgl').value = order.Tgl_Pelaksanaan || '';
-            
+
             let rawWaktu = order.Waktu_Request;
             let formatWaktu = '';
             if (rawWaktu) {
                 let strWaktu = String(rawWaktu);
-                if(strWaktu.includes('T')) {
-                   formatWaktu = strWaktu.split('T')[1].substring(0, 5);
+                if (strWaktu.includes('T')) {
+                    formatWaktu = strWaktu.split('T')[1].substring(0, 5);
                 } else {
-                   formatWaktu = strWaktu.substring(0, 5);
+                    formatWaktu = strWaktu.substring(0, 5);
                 }
             }
             document.getElementById('v_edit_waktu').value = formatWaktu;
-            
+
             document.getElementById('v_edit_durasi').value = order.Durasi_Request || '';
             document.getElementById('v_edit_desk').value = order.Deskripsi || '';
-            
-            if(order.Unit_CT) $('#v_unit').val(order.Unit_CT); else $('#v_unit').val(null);
-            if(order.GL) $('#v_gl').val(order.GL); else $('#v_gl').val(null);
-            if(order.Operator) $('#v_operator').val(order.Operator); else $('#v_operator').val(null);
-            if(order.Rigger) $('#v_rigger').val(order.Rigger); else $('#v_rigger').val(null);
-            
+
+            if (order.Unit_CT) $('#v_unit').val(order.Unit_CT); else $('#v_unit').val(null);
+            if (order.GL) $('#v_gl').val(order.GL); else $('#v_gl').val(null);
+            if (order.Operator) $('#v_operator').val(order.Operator); else $('#v_operator').val(null);
+            if (order.Rigger) $('#v_rigger').val(order.Rigger); else $('#v_rigger').val(null);
+
             $('#v_unit, #v_gl, #v_operator, #v_rigger').trigger('change');
-            
+
             const btnSubmit = document.getElementById('btn-save-validasi');
             if (order.Status === 'Pending') {
                 btnSubmit.innerHTML = 'Simpan & Buat Job Baru <i class="fa-solid fa-paper-plane ml-1"></i>';
             } else {
                 btnSubmit.innerHTML = 'Simpan & Tugaskan <i class="fa-solid fa-paper-plane ml-1"></i>';
             }
-            
+
             document.getElementById('modal-validasi').classList.remove('hidden');
             document.getElementById('modal-validasi').classList.add('flex');
         }
@@ -1937,7 +2205,7 @@
             const op = $('#v_operator').val();
             const rig = $('#v_rigger').val();
 
-            if(!unit || !gl) {
+            if (!unit || !gl) {
                 Swal.fire('Error', 'Unit CT dan GL wajib diisi!', 'error'); return;
             }
 
@@ -1959,7 +2227,7 @@
                 const reqDate = new Date(`${tgl}T${waktu}:00`);
                 const diffHours = (reqDate - new Date()) / (1000 * 60 * 60);
                 status = diffHours > 6 ? "Scheduled" : "Unscheduled";
-                if(diffHours < 2) status = "On Progress";
+                if (diffHours < 2) status = "On Progress";
             }
 
             const payload = {
@@ -1980,19 +2248,19 @@
             try {
                 const res = await fetchAPI('updateJobRecord', payload);
                 closeModal('modal-validasi');
-                if(res.success) {
-                    Swal.fire({icon: 'success', title: 'Berhasil', text:'Perubahan tervalidasi & ditugaskan.', timer: 1500, showConfirmButton:false});
+                if (res.success) {
+                    Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Perubahan tervalidasi & ditugaskan.', timer: 1500, showConfirmButton: false });
                     loadAppData(false);
                 } else {
                     Swal.fire('Error', res.message, 'error');
                 }
             } catch (err) {
                 const orderIndex = mockOrdersData.findIndex(o => o.ID_Order === id);
-                if(orderIndex > -1) {
+                if (orderIndex > -1) {
                     if (isResuming) {
                         let o = mockOrdersData[orderIndex];
-                        o.Status = 'Completed'; 
-                        
+                        o.Status = 'Completed';
+
                         let baseId = id.split('_')[0];
                         let maxSplit = 0;
                         mockOrdersData.forEach(job => {
@@ -2016,7 +2284,7 @@
                     }
                 }
                 closeModal('modal-validasi');
-                Swal.fire({icon: 'success', title: 'Preview (Offline): Validasi Berhasil', timer: 1500, showConfirmButton:false});
+                Swal.fire({ icon: 'success', title: 'Preview (Offline): Validasi Berhasil', timer: 1500, showConfirmButton: false });
                 loadAppData(false, renderAdminTable);
             }
         }
@@ -2024,13 +2292,13 @@
         async function savePasswords() {
             let adminP = document.getElementById('edit_pass_admin').value;
             let ctP = document.getElementById('edit_pass_ct').value;
-            
+
             Swal.fire({ title: 'Menyimpan Password...', didOpen: () => Swal.showLoading() });
             try {
                 const payload = { adminPass: adminP, ctPass: ctP };
                 await fetchAPI('updatePasswords', payload);
                 Swal.hideLoading();
-                Swal.fire({icon: 'success', title: 'Berhasil', text: 'Password Akses telah diupdate', confirmButtonColor: '#0ea5e9'}).then(() => {
+                Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Password Akses telah diupdate', confirmButtonColor: '#0ea5e9' }).then(() => {
                     loadAppData(false, () => renderMasterData('Password'));
                 });
             } catch (err) {
@@ -2038,7 +2306,7 @@
                 mockMasterData.push(['Password', 'Admin|' + adminP]);
                 mockMasterData.push(['Password', 'CT|' + ctP]);
                 Swal.hideLoading();
-                Swal.fire({icon: 'success', title: 'Berhasil (Lokal)', text: 'Password diupdate (Mode Offline)', confirmButtonColor: '#0ea5e9'}).then(() => {
+                Swal.fire({ icon: 'success', title: 'Berhasil (Lokal)', text: 'Password diupdate (Mode Offline)', confirmButtonColor: '#0ea5e9' }).then(() => {
                     loadAppData(false, () => renderMasterData('Password'));
                 });
             }
@@ -2047,18 +2315,18 @@
         function renderMasterData(category) {
             currentMasterCategory = category;
             document.getElementById('master-title').innerText = `Data: ${category}`;
-            
+
             const categories = ['Perusahaan', 'Departemen', 'Section', 'Unit CT', 'GL', 'Operator', 'Rigger', 'Password'];
             categories.forEach(cat => {
                 const btnId = 'btn-cat-' + cat.replace(/\s+/g, '');
                 const btn = document.getElementById(btnId);
-                if(btn) {
-                    if(cat === category) {
+                if (btn) {
+                    if (cat === category) {
                         btn.className = "w-full text-left px-4 py-2 rounded bg-blue-50 text-blue-700 font-semibold text-sm outline-none focus:outline-none select-none";
-                        if(category==='Password') btn.classList.add('font-bold');
+                        if (category === 'Password') btn.classList.add('font-bold');
                     } else {
                         btn.className = "w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none";
-                        if(category==='Password') btn.classList.add('font-bold');
+                        if (category === 'Password') btn.classList.add('font-bold');
                     }
                 }
             });
@@ -2067,16 +2335,16 @@
             const thead = document.getElementById('master-thead');
             const btnAdd = document.getElementById('btn-add-master');
             tbody.innerHTML = '';
-            
+
             if (category === 'Password') {
                 thead.innerHTML = `<tr class="border-b"><th class="p-3">Akses Aplikasi</th><th class="p-3 w-1/2">Set Password</th></tr>`;
                 btnAdd.classList.add('hidden');
 
                 let adminPass = '101010', ctPass = '191919';
                 let aRec = appData.master.find(m => m[0] === 'Password' && String(m[1]).startsWith('Admin|'));
-                if(aRec) adminPass = String(aRec[1]).split('|')[1];
+                if (aRec) adminPass = String(aRec[1]).split('|')[1];
                 let cRec = appData.master.find(m => m[0] === 'Password' && String(m[1]).startsWith('CT|'));
-                if(cRec) ctPass = String(cRec[1]).split('|')[1];
+                if (cRec) ctPass = String(cRec[1]).split('|')[1];
 
                 tbody.innerHTML = `
                     <tr><td class="p-3 font-semibold text-slate-700">Administrator</td><td class="p-3"><input type="text" id="edit_pass_admin" value="${adminPass}" class="border border-slate-300 px-3 py-1.5 rounded-lg w-full text-sm outline-none focus:border-blue-500"></td></tr>
@@ -2102,9 +2370,9 @@
                 title: `Tambah ${currentMasterCategory}`,
                 input: 'text', inputAttributes: { autocapitalize: 'off', required: 'true' },
                 showCancelButton: true, confirmButtonText: 'Simpan',
-                preConfirm: (val) => { if(!val) Swal.showValidationMessage('Tidak boleh kosong'); return val; }
+                preConfirm: (val) => { if (!val) Swal.showValidationMessage('Tidak boleh kosong'); return val; }
             }).then(async (res) => {
-                if(res.isConfirmed) {
+                if (res.isConfirmed) {
                     try {
                         const payload = { category: currentMasterCategory, value: res.value };
                         await fetchAPI('addMasterItem', payload);
@@ -2124,7 +2392,7 @@
                 loadAppData(false, () => renderMasterData(currentMasterCategory));
             } catch (err) {
                 const idx = mockMasterData.findIndex(m => m[0] === currentMasterCategory && m[1] === val);
-                if(idx > -1) mockMasterData.splice(idx, 1);
+                if (idx > -1) mockMasterData.splice(idx, 1);
                 loadAppData(false, () => renderMasterData(currentMasterCategory));
             }
         }
@@ -2146,7 +2414,7 @@
                         loadAppData(false);
                     } catch (err) {
                         const idx = mockOrdersData.findIndex(o => o.ID_Order === id);
-                        if(idx > -1) mockOrdersData.splice(idx, 1);
+                        if (idx > -1) mockOrdersData.splice(idx, 1);
                         Swal.fire('Terhapus (Lokal)!', 'Data job telah dihapus di memori lokal.', 'success');
                         loadAppData(false);
                     }
@@ -2154,11 +2422,12 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', () => { 
-            navigate('home'); 
+        document.addEventListener('DOMContentLoaded', () => {
+            navigate('home');
             loadAppData(false);
-            startAutoSync(); 
+            startAutoSync();
         });
     </script>
 </body>
+
 </html>
