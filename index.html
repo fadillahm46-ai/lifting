@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Crane Truck PPA</title>
     
-    <!-- Embed Logo SVG sebagai Favicon dan Ikon Web App -->
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMGUhNWU5IiBkPSJNMzY4IDQ4bC00MCAwaC0xMjhjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2aC04Yy0yMi4xIDAtNDAgMTcuOS00MCA0MHYxMTJjMCAyMi4xIDE3LjkgNDAgNDAgNDBoOHY0OGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OHYtNDhoNjR2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDhWMzM2YzAgLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+" type="image/svg+xml">
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMGUhNWU5IiBkPSJNMzY4IDQ4bC00MCAwaC0xMjhjLTM1LjMgMC02NCAyOC43LTY0IDY0djE2aC04Yy0yMi4xIDAtNDAgMTcuOS00MCA0MHYxMTJjMCAyMi4xIDE3LjkgNDAgNDAgNDBoOHY0OGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OHYtNDhoNjR2NDhjMCAyNi41IDIxLjUgNDggNDggNDhoNDhjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQ4aDhWMzM2YzAgLTEzLTMtMjUuMi04LjItMzUuOThMNDY0IDIxMnYtMjhjMC0zNS4zLTI4LjItNjQtNjQtNjRoLTMyem0tMjU2IDI3MmwtMzIgMCAwLTMyIDMyIDAgMCAzMnpNMzUyIDI4OGg0OG0wLTY0aC00OG0wLTY0aDQ4bTAtNjRoLTQ4bS0xMjggMjU2aC0zMnYtMzJoMzJ2MzJ6Ii8+PC9zdmc+">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -145,7 +144,6 @@
         </div>
 
         <div id="view-user-form" class="hide max-w-3xl mx-auto">
-            <!-- Isi Halaman Buat Order Baru -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-200">
                 <div class="bg-[#0ea5e9] p-5 text-white relative flex items-center justify-center">
                     <button type="button" onclick="navigate('home')" class="absolute left-5 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition outline-none focus:outline-none select-none">
@@ -236,7 +234,6 @@
         </div>
 
         <div id="view-user-monitor" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
-            <!-- Halaman Monitor User -->
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
                     <button type="button" onclick="navigate('home')" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center mr-4 transition outline-none focus:outline-none select-none">
@@ -263,7 +260,6 @@
                 </div>
             </div>
 
-            <!-- Tab Header (User) -->
             <div class="flex flex-wrap gap-2 mb-4 border-b border-slate-200 pb-1">
                 <button type="button" onclick="switchUserMonitorTab('masuk')" id="user-tab-masuk" class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-red-50 text-red-700 border-red-600 flex items-center gap-2 outline-none focus:outline-none select-none">
                     <i class="fa-solid fa-inbox"></i> JOB MASUK <span id="user-count-masuk" class="bg-red-200 text-red-800 px-2 py-0.5 rounded text-xs ml-2">0</span>
@@ -281,7 +277,6 @@
         </div>
 
         <div id="view-admin" class="hide max-w-[90rem] mx-auto space-y-6">
-            <!-- Halaman Admin -->
             <div class="flex flex-wrap gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-200">
                 <button type="button" onclick="switchAdminTab('dashboard')" id="tab-dashboard" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-blue-600 text-white shadow-md outline-none focus:outline-none select-none">
                     <i class="fa-solid fa-chart-pie mr-2"></i> Dashboard Analitik
@@ -305,7 +300,6 @@
 
             <!-- Tab: Dashboard -->
             <div id="admin-tab-dashboard" class="space-y-6">
-                <!-- Filter Dashboard -->
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap gap-4 items-end">
                     <div>
                         <label class="block text-xs font-medium text-slate-500 mb-1">TGL START</label>
@@ -328,7 +322,6 @@
                     </button>
                 </div>
 
-                <!-- KPI Cards -->
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                     <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-blue-500">
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">TOTAL ORDER</p>
@@ -352,7 +345,6 @@
                     </div>
                 </div>
 
-                <!-- Charts -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 col-span-1 md:col-span-1">
                         <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-chart-pie text-blue-500 mr-2"></i>Grafik Perusahaan</h4>
@@ -477,7 +469,6 @@
         </div>
 
         <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
-            <!-- Halaman Operator CT -->
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
                     <button type="button" onclick="navigate('home')" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center mr-4 transition outline-none focus:outline-none select-none">
@@ -519,7 +510,6 @@
 
     </main>
 
-    <!-- Modal Validasi -->
     <div id="modal-validasi" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-visible">
             <div class="bg-blue-600 p-4 rounded-t-2xl text-white flex justify-between items-center">
@@ -578,14 +568,11 @@
         </div>
     </div>
 
-    <!-- JS Logic -->
     <script>
         // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4y021i9fSzPYCttY24O2_dPC16gIyWLqNP-D048sQX-Zh95RCFJFm_olnHovJUMI/exec';
         
-        // Mode aplikasi: true = terhubung ke GAS, false = terputus (offline/mock data)
         let isOnlineMode = false;
-
         let appData = { orders: [], master: [] };
         let charts = {};
         let currentMasterCategory = 'Perusahaan';
@@ -596,11 +583,9 @@
         let autoSyncInterval = null;
         let lastDataHash = "";
 
-        // Data Mock untuk Fallback Mode Offline
         let mockMasterData = [];
         let mockOrdersData = [];
 
-        // Inisialisasi Mock Data (Offline)
         function initMockData() {
             if(mockMasterData.length === 0 && mockOrdersData.length === 0) {
                 const mPerusahaan = ["PT. PPA", "PT. BIB", "PT. BOSTON", "PT. KILAN MITRA ENERGI", "PT. TRIATRA SINERGIA PRATAMA"];
@@ -631,26 +616,27 @@
             }
         }
 
-        // --- CORE FETCH API HELPER ---
-        async function fetchAPI(action, payload = null) {
+        async function fetchAPI(action, payload = {}) {
             if(!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
             
+            // Menggunakan POST murni untuk SEMUA request agar AppScript selalu membaca Payload JSON
             const options = {
-                method: payload ? 'POST' : 'GET',
+                method: 'POST', 
                 redirect: "follow",
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: action, payload: payload || {} })
             };
 
-            if (payload) {
-                options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
-                options.body = JSON.stringify({ action: action, payload: payload });
-            }
-
-            const url = payload ? SCRIPT_URL : `${SCRIPT_URL}?action=${action}`;
-            
             try {
-                const response = await fetch(url, options);
+                const response = await fetch(SCRIPT_URL, options);
                 if (!response.ok) throw new Error("Jaringan bermasalah");
                 const data = await response.json();
+
+                // Deteksi apabila Google salah mengembalikan struktur data
+                if (action === 'getAppData' && !data.master) {
+                    throw new Error("Menerima response yang salah dari server");
+                }
+
                 isOnlineMode = true;
                 return data;
             } catch (error) {
@@ -660,7 +646,6 @@
             }
         }
 
-        // --- REFRESH UI ---
         function refreshCurrentView() {
             populateDropdowns();
             if(!document.getElementById('admin-tab-dashboard').classList.contains('hide')) updateDashboard();
@@ -669,7 +654,6 @@
             if(!document.getElementById('view-ct-panel').classList.contains('hide')) renderKanban();
         }
 
-        // --- LOAD DATA ---
         async function loadAppData(isRefresh = false, callback = null) {
             const syncStatus = document.getElementById('sync-status');
             if (isRefresh) {
@@ -688,7 +672,6 @@
                     Swal.fire({icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false});
                 }
             } catch (err) {
-                // Fallback Offline
                 syncStatus.classList.add('hidden');
                 initMockData();
                 appData.master = [...mockMasterData];
@@ -949,10 +932,9 @@
                                </div>`,
                         showConfirmButton: false, showCloseButton: true
                     });
-                    loadAppData(false); // Refresh bg
+                    loadAppData(false);
                 } else { Swal.fire('Error', res.message, 'error'); }
             } catch (err) {
-                // Fallback Simpan Offline
                 const now = new Date();
                 const newOrder = {
                     ID_Order: `LIFT-${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}-${appData.orders.length + 1}`,
@@ -1604,7 +1586,6 @@
                     Swal.fire('Error', res.message, 'error');
                 }
             } catch (err) {
-                // Fallback Offline Update
                 const index = mockOrdersData.findIndex(o => o.ID_Order === order.ID_Order);
                 if (index > -1) {
                     mockOrdersData[index].Status = data.status;
