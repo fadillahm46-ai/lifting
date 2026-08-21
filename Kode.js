@@ -24,29 +24,23 @@ function doPost(e) {
   }
 }
 
-// Gunakan GET khusus untuk menarik tabel data
 function doGet(e) {
   try {
     ensureSheetsExist();
     const action = e.parameter.action;
-
     if (action === 'getAppData') {
       const result = getAppData();
       return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
     }
-
     return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "API Aktif. Sistem Monitoring Berjalan." })).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({ success: false, message: error.toString() })).setMimeType(ContentService.MimeType.JSON);
   }
 }
 
-// ID DATABASE SPREADSHEET ANDA
+// KUNCI UTAMA: ID SPREADSHEET ANDA DITANAM DI SINI
 const SHEET_ID = "1C1Ec3hVGJxGxDpZfmUGXm8lWVvBD5-WxRAKFINakSvo";
 
-// ==========================================
-// FUNGSI AUTO-SETUP
-// ==========================================
 function ensureSheetsExist() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const headers = ["ID_Order", "Timestamp", "Nama_Pemohon", "No_WA", "Perusahaan", "Departemen", "Section", "Tgl_Pelaksanaan", "Shift", "Waktu_Request", "Durasi_Request", "Lokasi", "Tujuan", "Deskripsi", "Foto_Base64", "Status", "Unit_CT", "GL", "Operator", "Rigger", "Waktu_Start_Aktual", "Waktu_End_Aktual", "Durasi_Aktual", "Alasan_Delay"];
@@ -92,15 +86,11 @@ function setupDatabase(ss, headers) {
   if (sheet1) ss.deleteSheet(sheet1);
 }
 
-// ==========================================
-// FUNGSI PENGELOLAAN DATA
-// ==========================================
-
 function getAppData() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
 
   const masterSheet = ss.getSheetByName("Master");
-  // MENGABAIKAN BARIS KOSONG (FILTER ROW[0])
+  // MENGABAIKAN BARIS KOSONG AGAR TIDAK ERROR
   const masterData = masterSheet ? masterSheet.getDataRange().getValues().slice(1).filter(row => row[0]) : [];
 
   const orderSheet = ss.getSheetByName("Orders");
@@ -111,7 +101,7 @@ function getAppData() {
       const headers = data[0];
       for (let i = 1; i < data.length; i++) {
         let row = data[i];
-        if (!row[0]) continue; // MENGABAIKAN BARIS KOSONG AGAR SISTEM TIDAK CRASH
+        if (!row[0]) continue; // MENGABAIKAN BARIS KOSONG ORDER
 
         let obj = {};
         for (let j = 0; j < headers.length; j++) {

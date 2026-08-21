@@ -123,6 +123,54 @@
             background: #94a3b8;
         }
     </style>
+
+    <script>
+        // PENCEGAH KELUAR APLIKASI SAAT GESER BACK (HISTORY TRAP)
+        window.history.pushState(null, null, location.href);
+        window.addEventListener('popstate', function (event) {
+            window.history.pushState(null, null, location.href);
+            Swal.fire({
+                title: 'Keluar Aplikasi?',
+                text: "Apakah Anda yakin ingin keluar dari halaman sistem ini?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Keluar',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.history.back(); // Izinkan keluar jika di-iya-kan
+                }
+            });
+        });
+
+        function installApp() {
+            // GANTI TULISAN DI BAWAH INI DENGAN LINK DOWNLOAD APK ANDA
+            const apkUrl = "MASUKKAN_LINK_DOWNLOAD_APK_ANDA_DISINI";
+
+            if (apkUrl === "MASUKKAN_LINK_DOWNLOAD_APK_ANDA_DISINI") {
+                Swal.fire({
+                    title: 'Link APK Belum Tersedia',
+                    text: 'Silakan masukkan link file APK ke dalam kode terlebih dahulu.',
+                    icon: 'warning',
+                    confirmButtonColor: '#0ea5e9'
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Mengunduh APK...',
+                text: 'File aplikasi LIFTING.apk sedang diunduh. Silakan cek notifikasi HP Anda, lalu buka file tersebut untuk menginstal.',
+                icon: 'info',
+                showConfirmButton: true,
+                confirmButtonText: 'Oke, Mengerti',
+                confirmButtonColor: '#0ea5e9'
+            }).then(() => {
+                window.location.href = apkUrl;
+            });
+        }
+    </script>
 </head>
 
 <body class="text-slate-800 antialiased h-screen flex flex-col">
@@ -229,7 +277,6 @@
             </div>
         </div>
 
-        <!-- FORM ORDER USER -->
         <div id="view-user-form" class="hide max-w-3xl mx-auto">
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-200">
                 <div class="bg-[#0ea5e9] p-5 text-white relative flex items-center justify-center">
@@ -343,7 +390,6 @@
             </div>
         </div>
 
-        <!-- MONITOR USER -->
         <div id="view-user-monitor" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
@@ -395,7 +441,6 @@
             </div>
         </div>
 
-        <!-- VIEW ADMIN -->
         <div id="view-admin" class="hide max-w-[90rem] mx-auto space-y-6">
             <div class="flex flex-wrap gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-200">
                 <button type="button" onclick="switchAdminTab('dashboard')" id="tab-dashboard"
@@ -423,7 +468,6 @@
                 </div>
             </div>
 
-            <!-- Dashboard Content -->
             <div id="admin-tab-dashboard" class="space-y-6">
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                     <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-blue-500">
@@ -451,7 +495,6 @@
                 </div>
             </div>
 
-            <!-- Database Content -->
             <div id="admin-tab-database"
                 class="hide bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col max-h-[75vh]">
                 <div class="overflow-auto w-full flex-grow relative">
@@ -475,7 +518,6 @@
                 </div>
             </div>
 
-            <!-- Master Data Content -->
             <div id="admin-tab-master" class="hide bg-white rounded-xl shadow-sm border border-slate-200 p-5">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <ul class="space-y-2" id="master-category-list">
@@ -513,7 +555,6 @@
             </div>
         </div>
 
-        <!-- VIEW CT PANEL -->
         <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex justify-between items-center">
@@ -579,60 +620,15 @@
         </div>
     </div>
 
-    <!-- JS Logic -->
     <script>
-        // DEKLARASI URL SCRIPT HANYA SATU KALI DI SINI
+        // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4y021i9fSzPYCttY24O2_dPC16gIyWLqNP-D048sQX-Zh95RCFJFm_olnHovJUMI/exec';
 
         let appData = { orders: [], master: [] };
         let currentMasterCategory = 'Perusahaan';
         let currentUserTab = 'masuk';
-        let isOnlineMode = false;
-        let userTimerInterval = null;
 
-        // PENCEGAH KELUAR APLIKASI SAAT GESER BACK (HISTORY TRAP)
-        window.history.pushState(null, null, location.href);
-        window.addEventListener('popstate', function (event) {
-            window.history.pushState(null, null, location.href);
-            Swal.fire({
-                title: 'Keluar Aplikasi?',
-                text: "Apakah Anda yakin ingin keluar dari halaman sistem ini?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Keluar',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.history.back(); // Izinkan keluar jika di-iya-kan
-                }
-            });
-        });
-
-        // PWA INSTALL LOGIC
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
-
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    deferredPrompt = null;
-                });
-            } else {
-                Swal.fire({
-                    title: 'Install LIFTING',
-                    html: 'Di HP Android: Ketuk menu browser (titik 3) lalu pilih <b>Tambahkan ke Layar Utama</b>.<br><br>Di iPhone/iOS: Ketuk icon Share lalu pilih <b>Add to Home Screen</b>.',
-                    icon: 'info',
-                    confirmButtonColor: '#0ea5e9'
-                });
-            }
-        }
-
+        // --- CORE FETCH API HELPER ---
         async function fetchAPI(action, payload = null) {
             if (!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
 
@@ -659,15 +655,14 @@
                     throw new Error(data.message);
                 }
 
-                isOnlineMode = true;
                 return data;
             } catch (error) {
                 console.warn("Fetch Error:", error);
-                isOnlineMode = false;
                 throw error;
             }
         }
 
+        // --- LOAD DATA ---
         async function loadAppData(isRefresh = false, callback = null) {
             if (isRefresh) Swal.fire({ title: 'Menyinkronkan Data...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
@@ -675,7 +670,7 @@
                 const parsed = await fetchAPI('getAppData');
 
                 if (!parsed || !parsed.master || !parsed.orders) {
-                    throw new Error("Format data kosong dari server.");
+                    throw new Error("Format data tidak valid dari server.");
                 }
 
                 appData.master = parsed.master;
@@ -683,13 +678,7 @@
 
                 if (isRefresh) Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
             } catch (err) {
-                if (isRefresh) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Akses Ditolak',
-                        text: 'Gagal menarik data. Pastikan pengaturan Who Has Access di Apps Script adalah "Anyone".'
-                    });
-                }
+                Swal.fire({ icon: 'error', title: 'Gagal Memuat Data', text: 'Periksa koneksi Anda atau pastikan URL Apps Script benar.' });
             } finally {
                 populateDropdowns();
                 if (!document.getElementById('view-user-monitor').classList.contains('hide')) renderUserMonitor();
@@ -773,13 +762,10 @@
         function renderUserMonitor() {
             const container = document.getElementById('user-cards-container');
             container.innerHTML = '';
+            let filtered = appData.orders;
 
             let counts = { masuk: 0, prog: 0, comp: 0 };
-
-            // Urutkan dari terbaru
-            let sorted = [...appData.orders].sort((a, b) => b.ID_Order.localeCompare(a.ID_Order, undefined, { numeric: true }));
-
-            sorted.forEach(order => {
+            filtered.forEach(order => {
                 if (order.Status === 'Menunggu Validasi') counts.masuk++;
                 else if (order.Status === 'Completed') counts.comp++;
                 else counts.prog++;
@@ -801,7 +787,6 @@
                             <div><i class="fa-solid fa-location-dot text-orange-500 w-4"></i> ${order.Lokasi} &rarr; ${order.Tujuan}</div>
                             <div><i class="fa-solid fa-user text-blue-500 w-4"></i> ${order.Nama_Pemohon} (${order.Departemen})</div>
                         </div>
-                        ${order.Status === 'Completed' ? `<div class="mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 p-1.5 rounded text-center">Selesai: ${order.Waktu_End_Aktual || '-'} (Durasi: ${order.Durasi_Aktual || '-'} J)</div>` : ''}
                     `;
                     container.appendChild(card);
                 }
@@ -812,7 +797,7 @@
             document.getElementById('user-count-completed').innerText = counts.comp;
 
             if (container.innerHTML === '') {
-                container.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400">Tidak ada data orderan di tab ini.</div>`;
+                container.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400">Tidak ada data orderan.</div>`;
             }
         }
 
@@ -831,18 +816,14 @@
             const tbody = document.getElementById('table-orders-body');
             tbody.innerHTML = '';
 
-            // Mengurutkan dari terbaru
-            let sorted = [...appData.orders].sort((a, b) => b.ID_Order.localeCompare(a.ID_Order, undefined, { numeric: true }));
-
-            sorted.forEach(o => {
+            appData.orders.forEach(o => {
                 if (o.Status === 'Completed') stats.comp++;
                 else if (o.Status === 'Canceled') stats.canc++;
-                else if (o.Status === 'Menunggu Validasi') stats.sch++; // Termasuk di scheduled box info
+                else if (o.Status === 'Menunggu Validasi') stats.sch++;
                 else if (o.Status === 'Scheduled' || o.Status === 'Unscheduled') stats.sch++;
-                else stats.prog++; // On Progress, Pending
+                else stats.prog++;
 
-                // Tambahkan tabel
-                let btnAction = `<button onclick="openValidasiModal('${o.ID_Order}')" class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold hover:bg-blue-200">Validasi / Edit</button>`;
+                let btnAction = `<button onclick="openValidasiModal('${o.ID_Order}')" class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold hover:bg-blue-200">Validasi</button>`;
 
                 tbody.innerHTML += `
                     <tr class="border-b border-slate-100 hover:bg-slate-50">
@@ -870,13 +851,8 @@
         function renderKanban() {
             const container = document.getElementById('ct-cards-container');
             container.innerHTML = '';
-
-            let sorted = [...appData.orders].sort((a, b) => b.ID_Order.localeCompare(a.ID_Order, undefined, { numeric: true }));
-
-            sorted.forEach(order => {
-                // Di kabin CT hanya tampilkan yang divalidasi dan belum komplit/batal
+            appData.orders.forEach(order => {
                 if (order.Status === 'Menunggu Validasi' || order.Status === 'Completed' || order.Status === 'Canceled') return;
-
                 const card = document.createElement('div');
                 card.className = "bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col";
                 card.innerHTML = `
@@ -890,10 +866,6 @@
                     </div>
                     <h4 class="font-bold text-sm mb-2 text-slate-800">${order.Deskripsi}</h4>
                     <div class="text-xs text-slate-500 mb-3 bg-slate-50 p-2 rounded border border-slate-100">Lokasi: ${order.Lokasi} &rarr; ${order.Tujuan}</div>
-                    
-                    <button onclick="promptCloseJob('${order.ID_Order}')" class="mt-auto w-full bg-blue-600 text-white font-bold py-2 rounded-lg text-xs hover:bg-blue-700 shadow-sm transition">
-                        <i class="fa-solid fa-check mr-1"></i> Selesaikan Job (Close)
-                    </button>
                 `;
                 container.appendChild(card);
             });
@@ -936,7 +908,6 @@
             if (order.GL) $('#v_gl').val(order.GL); else $('#v_gl').val(null);
             if (order.Operator) $('#v_operator').val(order.Operator); else $('#v_operator').val(null);
             if (order.Rigger) $('#v_rigger').val(order.Rigger); else $('#v_rigger').val(null);
-
             $('#v_unit, #v_gl, #v_operator, #v_rigger').trigger('change');
 
             document.getElementById('modal-validasi').classList.remove('hidden');
@@ -980,71 +951,8 @@
                     Swal.fire('Error', res.message, 'error');
                 }
             } catch (err) {
-                Swal.fire('Error', 'Gagal memvalidasi. Coba lagi.', 'error');
+                Swal.fire('Error', 'Gagal memvalidasi.', 'error');
             }
-        }
-
-        function promptCloseJob(id) {
-            Swal.fire({
-                title: 'Konfirmasi Job Selesai',
-                html: `
-                    <div class="grid grid-cols-2 gap-2 text-left mt-2">
-                        <div>
-                            <label class="block font-medium mb-1 text-xs">Jam Start Aktual</label>
-                            <input type="time" id="swal-start" class="w-full px-2 py-1.5 border rounded" required>
-                        </div>
-                        <div>
-                            <label class="block font-medium mb-1 text-xs">Jam End Aktual</label>
-                            <input type="time" id="swal-end" class="w-full px-2 py-1.5 border rounded" required>
-                        </div>
-                        <div class="col-span-2">
-                            <label class="block font-medium mb-1 text-xs">Total Durasi Bersih (Jam)</label>
-                            <input type="number" id="swal-durasi" step="0.5" class="w-full px-2 py-1.5 border rounded" required>
-                        </div>
-                        <div class="col-span-2 mt-2">
-                            <label class="block font-medium mb-1 text-xs text-red-600">Catatan/Kendala (Opsional)</label>
-                            <textarea id="swal-catatan" class="w-full px-2 py-1.5 border border-red-200 rounded" rows="2"></textarea>
-                        </div>
-                    </div>
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Tutup Job',
-                preConfirm: () => {
-                    const start = document.getElementById('swal-start').value;
-                    const end = document.getElementById('swal-end').value;
-                    const durasi = document.getElementById('swal-durasi').value;
-                    const catatan = document.getElementById('swal-catatan').value;
-
-                    if (!start || !end || !durasi) {
-                        Swal.showValidationMessage('Start, End, dan Durasi wajib diisi!');
-                        return false;
-                    }
-                    return { start, end, durasi, catatan };
-                }
-            }).then(async (res) => {
-                if (res.isConfirmed) {
-                    Swal.fire({ title: 'Menyimpan...', didOpen: () => Swal.showLoading() });
-                    const payload = {
-                        id: id,
-                        status: 'Completed',
-                        startAktual: res.value.start,
-                        endAktual: res.value.end,
-                        durasiAktual: res.value.durasi,
-                        alasanDelay: res.value.catatan
-                    };
-                    try {
-                        const result = await fetchAPI('updateJobRecord', payload);
-                        if (result.success) {
-                            Swal.fire('Berhasil!', 'Job telah ditutup.', 'success');
-                            loadAppData(false);
-                        } else {
-                            Swal.fire('Error', result.message, 'error');
-                        }
-                    } catch (e) {
-                        Swal.fire('Error', 'Gagal menutup job.', 'error');
-                    }
-                }
-            });
         }
 
         async function submitFormOrder(e) {
@@ -1089,7 +997,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             navigate('home');
-            loadAppData(false);
+            loadAppData(true);
         });
     </script>
 </body>
