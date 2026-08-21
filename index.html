@@ -157,7 +157,7 @@
 
         // PENCEGAH KELUAR APLIKASI SAAT GESER BACK (HISTORY TRAP)
         window.history.pushState(null, null, location.href);
-        window.onpopstate = function (event) {
+        window.addEventListener('popstate', function (event) {
             window.history.pushState(null, null, location.href);
             Swal.fire({
                 title: 'Keluar Aplikasi?',
@@ -170,11 +170,10 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.onpopstate = null; // Matikan trap
                     window.history.back(); // Izinkan keluar
                 }
             });
-        };
+        });
 
         // PWA INSTALL LOGIC
         let deferredPrompt;
@@ -238,7 +237,7 @@
                     <div onclick="navigate('user-form')"
                         class="card-hover bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-2 border-blue-400 cursor-pointer text-center group select-none outline-none focus:outline-none relative overflow-hidden">
                         <div
-                            class="absolute -right-10 -top-10 w-32 h-32 bg-blue-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 ease-out">
+                            class="absolute -right-10 -top-10 w-32 h-32 bg-blue-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 ease-out pointer-events-none">
                         </div>
                         <div class="relative z-10 pointer-events-none">
                             <div
@@ -262,7 +261,7 @@
                     <div onclick="navigate('user-monitor')"
                         class="card-hover bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-2 border-emerald-400 cursor-pointer text-center group select-none outline-none focus:outline-none relative overflow-hidden">
                         <div
-                            class="absolute -left-10 -bottom-10 w-32 h-32 bg-emerald-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 ease-out">
+                            class="absolute -left-10 -bottom-10 w-32 h-32 bg-emerald-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 ease-out pointer-events-none">
                         </div>
                         <div class="relative z-10 pointer-events-none">
                             <div
@@ -322,7 +321,6 @@
         </div>
 
         <div id="view-user-form" class="hide max-w-3xl mx-auto">
-            <!-- Isi Halaman Buat Order Baru -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-200">
                 <div class="bg-[#0ea5e9] p-5 text-white relative flex items-center justify-center">
                     <button type="button" onclick="navigate('home')"
@@ -439,7 +437,6 @@
         </div>
 
         <div id="view-user-monitor" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
-            <!-- Halaman Monitor User -->
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
@@ -472,7 +469,6 @@
                 </div>
             </div>
 
-            <!-- Tab Header (User) -->
             <div class="flex flex-wrap gap-2 mb-4 border-b border-slate-200 pb-1">
                 <button type="button" onclick="switchUserMonitorTab('masuk')" id="user-tab-masuk"
                     class="px-6 py-3 rounded-t-lg font-bold text-sm transition-colors border-b-4 bg-red-50 text-red-700 border-red-600 flex items-center gap-2 outline-none focus:outline-none select-none">
@@ -497,7 +493,6 @@
         </div>
 
         <div id="view-admin" class="hide max-w-[90rem] mx-auto space-y-6">
-            <!-- Halaman Admin -->
             <div class="flex flex-wrap gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-200">
                 <button type="button" onclick="switchAdminTab('dashboard')" id="tab-dashboard"
                     class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors bg-blue-600 text-white shadow-md outline-none focus:outline-none select-none">
@@ -526,7 +521,6 @@
 
             <!-- Tab: Dashboard -->
             <div id="admin-tab-dashboard" class="space-y-6">
-                <!-- Filter Dashboard -->
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap gap-4 items-end">
                     <div>
                         <label class="block text-xs font-medium text-slate-500 mb-1">TGL START</label>
@@ -553,7 +547,6 @@
                     </button>
                 </div>
 
-                <!-- KPI Cards -->
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                     <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-blue-500">
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">TOTAL ORDER</p>
@@ -579,7 +572,6 @@
                     </div>
                 </div>
 
-                <!-- Charts -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 col-span-1 md:col-span-1">
                         <h4 class="text-center text-sm font-bold text-slate-700 mb-2"><i
@@ -895,7 +887,6 @@
         </div>
     </div>
 
-    <!-- JS Logic -->
     <script>
         let isOnlineMode = false;
         let appData = { orders: [], master: [] };
@@ -907,19 +898,19 @@
         let userTimerInterval = null;
         let lastDataHash = "";
 
-        // Mock Data Fallback jika offline / blank pertama kali
+        // Mock Data Fallback
         let mockMasterData = [];
         let mockOrdersData = [];
 
         function initMockData() {
             if (mockMasterData.length === 0 && mockOrdersData.length === 0) {
-                const mPerusahaan = ["PT. PPA", "PT. BIB", "PT. BOSTON"];
+                const mPerusahaan = ["PT. PPA", "PT. BIB"];
                 const mDept = ["PLANT", "PROD", "HCGA"];
                 const mSec = ["Mechanic", "Warehouse", "Hauling"];
-                const mUnit = ["MC7001", "GR501", "CT2514", "CT2515"];
-                const mGL = ["M. IQBAL H.", "ACHMAD HARIYANTO", "LUKMANNUL HAKIM"];
-                const mOp = ["ISKANDAR", "ABDURAHMAN", "AMIR MAHMUD"];
-                const mRig = ["KHOLIK SYAIFUDIN", "GUSTI M.SYAHRUL RAMADHAN", "M.ADAM"];
+                const mUnit = ["MC7001", "GR501", "CT2514"];
+                const mGL = ["M. IQBAL H.", "ACHMAD HARIYANTO"];
+                const mOp = ["ISKANDAR", "ABDURAHMAN"];
+                const mRig = ["KHOLIK SYAIFUDIN", "M.ADAM"];
 
                 mPerusahaan.forEach(v => mockMasterData.push(["Perusahaan", v]));
                 mDept.forEach(v => mockMasterData.push(["Departemen", v]));
@@ -939,7 +930,6 @@
             let url = SCRIPT_URL;
             let options = { redirect: "follow" };
 
-            // Tarik data WAJIB pakai GET, Simpan data WAJIB pakai POST
             if (action === 'getAppData') {
                 url = `${SCRIPT_URL}?action=${action}`;
                 options.method = 'GET';
@@ -953,11 +943,6 @@
                 const response = await fetch(url, options);
                 if (!response.ok) throw new Error("Jaringan bermasalah");
                 const data = await response.json();
-
-                // Cek jika server membalas dengan format salah atau kosong
-                if (data.status === 'success' && !data.master && !data.orders && action === 'getAppData') {
-                    throw new Error("Respon data kosong dari server. Memaksa fallback.");
-                }
 
                 if (data.success === false) {
                     console.error("Backend Error:", data.message);
@@ -981,7 +966,7 @@
             if (!document.getElementById('view-ct-panel').classList.contains('hide')) renderKanban();
         }
 
-        // --- LOAD DATA ---
+        // --- LOAD DATA FULL ---
         async function loadAppData(isRefresh = false, callback = null) {
             if (isRefresh) {
                 Swal.fire({ title: 'Menyinkronkan Data...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
@@ -990,7 +975,6 @@
             try {
                 const parsed = await fetchAPI('getAppData');
 
-                // Validasi Ketat
                 if (!parsed || !parsed.master || !parsed.orders) {
                     throw new Error("Format data tidak valid dari server.");
                 }
@@ -999,20 +983,14 @@
                 appData.master = parsed.master;
                 appData.orders = parsed.orders;
 
-                if (isRefresh) {
-                    Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
-                }
+                if (isRefresh) Swal.fire({ icon: 'success', title: 'Tersinkronisasi', timer: 1000, showConfirmButton: false });
             } catch (err) {
-                // Menahan data agar tidak blank saat sinyal jelek
                 if (appData.orders.length === 0) {
                     initMockData();
                     appData.master = [...mockMasterData];
                     appData.orders = [...mockOrdersData];
                 }
-
-                if (isRefresh) {
-                    Swal.fire({ icon: 'warning', title: 'Gangguan Jaringan', text: 'Gagal memuat data terbaru dari cloud.', timer: 2000, showConfirmButton: false });
-                }
+                if (isRefresh) Swal.fire({ icon: 'warning', title: 'Gangguan Jaringan', text: 'Gagal memuat data terbaru dari cloud.', timer: 2000, showConfirmButton: false });
             } finally {
                 refreshCurrentView();
                 if (callback) callback();
@@ -2169,114 +2147,6 @@
             });
         }
 
-        function renderMasterData(category) {
-            currentMasterCategory = category;
-            document.getElementById('master-title').innerText = `Data: ${category}`;
-
-            const categories = ['Perusahaan', 'Departemen', 'Section', 'Unit CT', 'GL', 'Operator', 'Rigger', 'Password'];
-            categories.forEach(cat => {
-                const btnId = 'btn-cat-' + cat.replace(/\s+/g, '');
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    if (cat === category) {
-                        btn.className = "w-full text-left px-4 py-2 rounded bg-blue-50 text-blue-700 font-semibold text-sm outline-none focus:outline-none select-none";
-                        if (category === 'Password') btn.classList.add('font-bold');
-                    } else {
-                        btn.className = "w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none";
-                        if (category === 'Password') btn.classList.add('font-bold');
-                    }
-                }
-            });
-
-            const tbody = document.getElementById('master-table-body');
-            const thead = document.getElementById('master-thead');
-            const btnAdd = document.getElementById('btn-add-master');
-            tbody.innerHTML = '';
-
-            if (category === 'Password') {
-                thead.innerHTML = `<tr class="border-b"><th class="p-3">Akses Aplikasi</th><th class="p-3 w-1/2">Set Password</th></tr>`;
-                btnAdd.classList.add('hidden');
-
-                let adminPass = '101010', ctPass = '191919';
-                let aRec = appData.master.find(m => m[0] === 'Password' && String(m[1]).startsWith('Admin|'));
-                if (aRec) adminPass = String(aRec[1]).split('|')[1];
-                let cRec = appData.master.find(m => m[0] === 'Password' && String(m[1]).startsWith('CT|'));
-                if (cRec) ctPass = String(cRec[1]).split('|')[1];
-
-                tbody.innerHTML = `
-                    <tr><td class="p-3 font-semibold text-slate-700">Administrator</td><td class="p-3"><input type="text" id="edit_pass_admin" value="${adminPass}" class="border border-slate-300 px-3 py-1.5 rounded-lg w-full text-sm outline-none focus:border-blue-500"></td></tr>
-                    <tr><td class="p-3 font-semibold text-slate-700">Tim Crane Truck</td><td class="p-3"><input type="text" id="edit_pass_ct" value="${ctPass}" class="border border-slate-300 px-3 py-1.5 rounded-lg w-full text-sm outline-none focus:border-blue-500"></td></tr>
-                    <tr><td colspan="2" class="p-3 text-right"><button onclick="savePasswords()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg text-sm font-bold shadow-sm transition outline-none focus:outline-none select-none"><i class="fa-solid fa-save mr-1"></i> Simpan Password</button></td></tr>
-                `;
-            } else {
-                thead.innerHTML = `<tr class="border-b"><th class="p-3">Nama Data</th><th class="p-3 w-20 text-center">Aksi</th></tr>`;
-                btnAdd.classList.remove('hidden');
-
-                const items = appData.master.filter(m => m[0] === category);
-                items.forEach((m) => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `<td class="p-3">${m[1]}</td>
-                                    <td class="p-3 text-center"><button type="button" onclick="deleteMaster('${m[1]}')" class="text-red-500 hover:text-red-700 bg-red-50 px-2 py-1 rounded outline-none focus:outline-none select-none"><i class="fa-solid fa-trash"></i></button></td>`;
-                    tbody.appendChild(tr);
-                });
-            }
-        }
-
-        function addMasterData() {
-            Swal.fire({
-                title: `Tambah ${currentMasterCategory}`,
-                input: 'text', inputAttributes: { autocapitalize: 'off', required: 'true' },
-                showCancelButton: true, confirmButtonText: 'Simpan',
-                preConfirm: (val) => { if (!val) Swal.showValidationMessage('Tidak boleh kosong'); return val; }
-            }).then(async (res) => {
-                if (res.isConfirmed) {
-                    try {
-                        const payload = { category: currentMasterCategory, value: res.value };
-                        await fetchAPI('addMasterItem', payload);
-                        loadAppData(false, () => renderMasterData(currentMasterCategory));
-                    } catch (err) {
-                        mockMasterData.push([currentMasterCategory, res.value]);
-                        loadAppData(false, () => renderMasterData(currentMasterCategory));
-                    }
-                }
-            });
-        }
-
-        async function deleteMaster(val) {
-            try {
-                const payload = { category: currentMasterCategory, value: val };
-                await fetchAPI('deleteMasterItem', payload);
-                loadAppData(false, () => renderMasterData(currentMasterCategory));
-            } catch (err) {
-                const idx = mockMasterData.findIndex(m => m[0] === currentMasterCategory && m[1] === val);
-                if (idx > -1) mockMasterData.splice(idx, 1);
-                loadAppData(false, () => renderMasterData(currentMasterCategory));
-            }
-        }
-
-        async function savePasswords() {
-            let adminP = document.getElementById('edit_pass_admin').value;
-            let ctP = document.getElementById('edit_pass_ct').value;
-
-            Swal.fire({ title: 'Menyimpan Password...', didOpen: () => Swal.showLoading() });
-            try {
-                const payload = { adminPass: adminP, ctPass: ctP };
-                await fetchAPI('updatePasswords', payload);
-                Swal.hideLoading();
-                Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Password Akses telah diupdate', confirmButtonColor: '#0ea5e9' }).then(() => {
-                    loadAppData(false, () => renderMasterData('Password'));
-                });
-            } catch (err) {
-                mockMasterData = mockMasterData.filter(m => m[0] !== 'Password');
-                mockMasterData.push(['Password', 'Admin|' + adminP]);
-                mockMasterData.push(['Password', 'CT|' + ctP]);
-                Swal.hideLoading();
-                Swal.fire({ icon: 'success', title: 'Berhasil (Lokal)', text: 'Password diupdate (Mode Offline)', confirmButtonColor: '#0ea5e9' }).then(() => {
-                    loadAppData(false, () => renderMasterData('Password'));
-                });
-            }
-        }
-
         function openValidasiModal(id) {
             const order = appData.orders.find(o => o.ID_Order === id);
             if (!order) return;
@@ -2410,6 +2280,114 @@
                 closeModal('modal-validasi');
                 Swal.fire({ icon: 'success', title: 'Preview (Offline): Validasi Berhasil', timer: 1500, showConfirmButton: false });
                 loadAppData(false, renderAdminTable);
+            }
+        }
+
+        async function savePasswords() {
+            let adminP = document.getElementById('edit_pass_admin').value;
+            let ctP = document.getElementById('edit_pass_ct').value;
+
+            Swal.fire({ title: 'Menyimpan Password...', didOpen: () => Swal.showLoading() });
+            try {
+                const payload = { adminPass: adminP, ctPass: ctP };
+                await fetchAPI('updatePasswords', payload);
+                Swal.hideLoading();
+                Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Password Akses telah diupdate', confirmButtonColor: '#0ea5e9' }).then(() => {
+                    loadAppData(false, () => renderMasterData('Password'));
+                });
+            } catch (err) {
+                mockMasterData = mockMasterData.filter(m => m[0] !== 'Password');
+                mockMasterData.push(['Password', 'Admin|' + adminP]);
+                mockMasterData.push(['Password', 'CT|' + ctP]);
+                Swal.hideLoading();
+                Swal.fire({ icon: 'success', title: 'Berhasil (Lokal)', text: 'Password diupdate (Mode Offline)', confirmButtonColor: '#0ea5e9' }).then(() => {
+                    loadAppData(false, () => renderMasterData('Password'));
+                });
+            }
+        }
+
+        function renderMasterData(category) {
+            currentMasterCategory = category;
+            document.getElementById('master-title').innerText = `Data: ${category}`;
+
+            const categories = ['Perusahaan', 'Departemen', 'Section', 'Unit CT', 'GL', 'Operator', 'Rigger', 'Password'];
+            categories.forEach(cat => {
+                const btnId = 'btn-cat-' + cat.replace(/\s+/g, '');
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    if (cat === category) {
+                        btn.className = "w-full text-left px-4 py-2 rounded bg-blue-50 text-blue-700 font-semibold text-sm outline-none focus:outline-none select-none";
+                        if (category === 'Password') btn.classList.add('font-bold');
+                    } else {
+                        btn.className = "w-full text-left px-4 py-2 rounded hover:bg-slate-50 text-slate-600 text-sm outline-none focus:outline-none select-none";
+                        if (category === 'Password') btn.classList.add('font-bold');
+                    }
+                }
+            });
+
+            const tbody = document.getElementById('master-table-body');
+            const thead = document.getElementById('master-thead');
+            const btnAdd = document.getElementById('btn-add-master');
+            tbody.innerHTML = '';
+
+            if (category === 'Password') {
+                thead.innerHTML = `<tr class="border-b"><th class="p-3">Akses Aplikasi</th><th class="p-3 w-1/2">Set Password</th></tr>`;
+                btnAdd.classList.add('hidden');
+
+                let adminPass = '101010', ctPass = '191919';
+                let aRec = appData.master.find(m => m[0] === 'Password' && String(m[1]).startsWith('Admin|'));
+                if (aRec) adminPass = String(aRec[1]).split('|')[1];
+                let cRec = appData.master.find(m => m[0] === 'Password' && String(m[1]).startsWith('CT|'));
+                if (cRec) ctPass = String(cRec[1]).split('|')[1];
+
+                tbody.innerHTML = `
+                    <tr><td class="p-3 font-semibold text-slate-700">Administrator</td><td class="p-3"><input type="text" id="edit_pass_admin" value="${adminPass}" class="border border-slate-300 px-3 py-1.5 rounded-lg w-full text-sm outline-none focus:border-blue-500"></td></tr>
+                    <tr><td class="p-3 font-semibold text-slate-700">Tim Crane Truck</td><td class="p-3"><input type="text" id="edit_pass_ct" value="${ctPass}" class="border border-slate-300 px-3 py-1.5 rounded-lg w-full text-sm outline-none focus:border-blue-500"></td></tr>
+                    <tr><td colspan="2" class="p-3 text-right"><button onclick="savePasswords()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg text-sm font-bold shadow-sm transition outline-none focus:outline-none select-none"><i class="fa-solid fa-save mr-1"></i> Simpan Password</button></td></tr>
+                `;
+            } else {
+                thead.innerHTML = `<tr class="border-b"><th class="p-3">Nama Data</th><th class="p-3 w-20 text-center">Aksi</th></tr>`;
+                btnAdd.classList.remove('hidden');
+
+                const items = appData.master.filter(m => m[0] === category);
+                items.forEach((m) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td class="p-3">${m[1]}</td>
+                                    <td class="p-3 text-center"><button type="button" onclick="deleteMaster('${m[1]}')" class="text-red-500 hover:text-red-700 bg-red-50 px-2 py-1 rounded outline-none focus:outline-none select-none"><i class="fa-solid fa-trash"></i></button></td>`;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        function addMasterData() {
+            Swal.fire({
+                title: `Tambah ${currentMasterCategory}`,
+                input: 'text', inputAttributes: { autocapitalize: 'off', required: 'true' },
+                showCancelButton: true, confirmButtonText: 'Simpan',
+                preConfirm: (val) => { if (!val) Swal.showValidationMessage('Tidak boleh kosong'); return val; }
+            }).then(async (res) => {
+                if (res.isConfirmed) {
+                    try {
+                        const payload = { category: currentMasterCategory, value: res.value };
+                        await fetchAPI('addMasterItem', payload);
+                        loadAppData(false, () => renderMasterData(currentMasterCategory));
+                    } catch (err) {
+                        mockMasterData.push([currentMasterCategory, res.value]);
+                        loadAppData(false, () => renderMasterData(currentMasterCategory));
+                    }
+                }
+            });
+        }
+
+        async function deleteMaster(val) {
+            try {
+                const payload = { category: currentMasterCategory, value: val };
+                await fetchAPI('deleteMasterItem', payload);
+                loadAppData(false, () => renderMasterData(currentMasterCategory));
+            } catch (err) {
+                const idx = mockMasterData.findIndex(m => m[0] === currentMasterCategory && m[1] === val);
+                if (idx > -1) mockMasterData.splice(idx, 1);
+                loadAppData(false, () => renderMasterData(currentMasterCategory));
             }
         }
 
