@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Crane Truck PPA</title>
 
-    <!-- PWA Setup & Logo Icon (Truk Orange, Background Biru) -->
+    <!-- PWA Setup & Logo Icon -->
     <link rel="icon" href="https://drive.google.com/thumbnail?id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg&sz=w256"
         type="image/png">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg&sz=w256">
@@ -155,7 +155,6 @@
         // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4y021i9fSzPYCttY24O2_dPC16gIyWLqNP-D048sQX-Zh95RCFJFm_olnHovJUMI/exec';
 
-        // PENCEGAH KELUAR APLIKASI SAAT GESER BACK (HISTORY TRAP)
         window.history.pushState(null, null, location.href);
         window.addEventListener('popstate', function (event) {
             window.history.pushState(null, null, location.href);
@@ -170,32 +169,27 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.history.back(); // Izinkan keluar
+                    window.history.back();
                 }
             });
         });
 
-        // PWA INSTALL LOGIC
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
-
+        // Fitur Download APK Langsung
         function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    deferredPrompt = null;
-                });
-            } else {
-                Swal.fire({
-                    title: 'Install LIFTING',
-                    html: 'Di HP Android: Ketuk menu browser (titik 3) lalu pilih <b>Tambahkan ke Layar Utama / Install App</b>.<br><br>Di iPhone/iOS: Ketuk icon Share lalu pilih <b>Add to Home Screen</b>.',
-                    icon: 'info',
-                    confirmButtonColor: '#0ea5e9'
-                });
-            }
+            Swal.fire({
+                title: 'Download APK',
+                text: 'Anda akan mengunduh file aplikasi LIFTING (.apk) ke perangkat Anda.',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#0ea5e9',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: '<i class="fa-solid fa-download"></i> Mulai Download'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // SILAKAN GANTI URL INI DENGAN LINK GOOGLE DRIVE FILE APK ANDA
+                    window.location.href = "MASUKKAN_LINK_DOWNLOAD_APK_ANDA_DISINI";
+                }
+            });
         }
     </script>
 </head>
@@ -232,7 +226,6 @@
 
         <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10 relative pb-10">
             <div class="space-y-8">
-                <!-- MENU 1 & 2: User/Pemohon -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
                     <div onclick="navigate('user-form')"
                         class="card-hover bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-2 border-blue-400 cursor-pointer text-center group select-none outline-none focus:outline-none relative overflow-hidden">
@@ -313,7 +306,6 @@
                     </div>
                 </div>
 
-                <!-- Watermark -->
                 <div class="text-center mt-12">
                     <span class="text-slate-400 italic text-xs select-none cursor-default">created by FadillahM</span>
                 </div>
@@ -621,7 +613,6 @@
                 </div>
             </div>
 
-            <!-- Tab: Database -->
             <div id="admin-tab-database"
                 class="hide bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col max-h-[75vh]">
                 <div
@@ -695,7 +686,6 @@
                 </div>
             </div>
 
-            <!-- Tab: Data Master -->
             <div id="admin-tab-master"
                 class="hide bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-5 border-b border-slate-200 bg-slate-50">
@@ -757,7 +747,6 @@
         </div>
 
         <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
-            <!-- Halaman Operator CT -->
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
@@ -812,7 +801,6 @@
 
     </main>
 
-    <!-- Modal Validasi -->
     <div id="modal-validasi"
         class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-visible">
@@ -930,6 +918,7 @@
             let url = SCRIPT_URL;
             let options = { redirect: "follow" };
 
+            // Tarik data WAJIB pakai GET, Simpan data WAJIB pakai POST
             if (action === 'getAppData') {
                 url = `${SCRIPT_URL}?action=${action}`;
                 options.method = 'GET';
@@ -943,6 +932,10 @@
                 const response = await fetch(url, options);
                 if (!response.ok) throw new Error("Jaringan bermasalah");
                 const data = await response.json();
+
+                if (data.status === 'success' && !data.master && !data.orders && action === 'getAppData') {
+                    throw new Error("Respon data kosong dari server. Memaksa fallback.");
+                }
 
                 if (data.success === false) {
                     console.error("Backend Error:", data.message);
