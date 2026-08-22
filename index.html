@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Crane Truck PPA</title>
 
-    <!-- PWA Setup & Logo Icon (Cache v=3) -->
-    <link rel="icon" href="images/Gemini_Gen.jpg?v=3" type="image/jpeg">
-    <link rel="apple-touch-icon" href="images/Gemini_Gen.jpg?v=3">
+    <!-- PWA Setup & Logo Icon (Cache v=4) -->
+    <link rel="icon" href="images/Gemini_Gen.jpg?v=4" type="image/jpeg">
+    <link rel="apple-touch-icon" href="images/Gemini_Gen.jpg?v=4">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -194,11 +194,11 @@
             "short_name": "LIFTING",
             "start_url": window.location.pathname,
             "display": "standalone",
-            "background_color": "#ffffff",
+            "background_color": "#f6f6f6", /* Disamakan dengan warna off-white logo */
             "theme_color": "#0b4c7c",
             "icons": [
-                { "src": "images/Gemini_Gen.jpg?v=3", "sizes": "192x192", "type": "image/jpeg" },
-                { "src": "images/Gemini_Gen.jpg?v=3", "sizes": "512x512", "type": "image/jpeg" }
+                { "src": "images/Gemini_Gen.jpg?v=4", "sizes": "192x192", "type": "image/jpeg" },
+                { "src": "images/Gemini_Gen.jpg?v=4", "sizes": "512x512", "type": "image/jpeg" }
             ]
         };
         const manifestLink = document.createElement('link');
@@ -264,7 +264,7 @@
         <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10 relative pb-10">
             <!-- Logo Perusahaan PPA (Diletakkan di tengah & proporsional) -->
             <div class="flex justify-center mb-8 sm:mb-12 select-none pointer-events-none">
-                <img src="https://drive.google.com/thumbnail?id=1QqQuTjnna_JYjquHrhGbcvLB_l0_8jCg&sz=w600"
+                <img src="https://drive.google.com/thumbnail?id=1rzLgXF87HlNnaF-ndtxIvaHyHhbzl-xX&sz=w600"
                     alt="Logo PPA"
                     class="w-full max-w-[380px] h-auto object-contain drop-shadow-md transition-all hover:scale-105 duration-300"
                     onerror="this.style.display='none'">
@@ -796,6 +796,7 @@
         </div>
 
         <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
+            <!-- Halaman Operator CT -->
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
