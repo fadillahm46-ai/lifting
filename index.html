@@ -6,10 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Crane Truck PPA</title>
 
-    <!-- PWA Setup & Logo Icon (Truk Orange, Background Biru) -->
-    <link rel="icon" href="https://drive.google.com/thumbnail?id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg&sz=w256"
-        type="image/png">
-    <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1YDQiU7MFoWaQwlXnS6n-IP709Cqxo6Fg&sz=w256">
+    <link rel="icon" href="images/Gemini_Gen.jpg?v=2" type="image/jpeg">
+    <link rel="apple-touch-icon" href="images/Gemini_Gen.jpg?v=2">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -198,8 +196,8 @@
             "background_color": "#0b4c7c",
             "theme_color": "#0b4c7c",
             "icons": [
-                { "src": "https://placehold.co/192x192/0b4c7c/ffffff.png?text=LIFT", "sizes": "192x192", "type": "image/png" },
-                { "src": "https://placehold.co/512x512/0b4c7c/ffffff.png?text=LIFT", "sizes": "512x512", "type": "image/png" }
+                { "src": "images/Gemini_Gen.jpg?v=2", "sizes": "192x192", "type": "image/jpeg" },
+                { "src": "images/Gemini_Gen.jpg?v=2", "sizes": "512x512", "type": "image/jpeg" }
             ]
         };
         const manifestLink = document.createElement('link');
@@ -264,11 +262,11 @@
 
         <div id="view-home" class="max-w-5xl mx-auto mt-6 sm:mt-10 relative pb-10">
 
-            <!-- Logo Perusahaan PPA (Diletakkan di tengah) -->
+            <!-- Logo Perusahaan PPA (Diletakkan di tengah & proporsional) -->
             <div class="flex justify-center mb-8 sm:mb-12 select-none pointer-events-none">
                 <img src="https://drive.google.com/thumbnail?id=1toe4OxYujidVXmKIYkQ8rAmSpf7LVtWb&sz=w600"
                     alt="Logo PPA"
-                    class="h-20 sm:h-28 md:h-32 object-contain drop-shadow-md transition-all hover:scale-105 duration-300"
+                    class="w-full max-w-[380px] h-auto object-contain drop-shadow-md transition-all hover:scale-105 duration-300"
                     onerror="this.style.display='none'">
             </div>
 
@@ -798,7 +796,6 @@
         </div>
 
         <div id="view-ct-panel" class="hide max-w-[90rem] mx-auto flex flex-col h-full">
-            <!-- Halaman Operator CT -->
             <div
                 class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                 <div class="flex items-center">
@@ -853,7 +850,6 @@
 
     </main>
 
-    <!-- Modal Validasi -->
     <div id="modal-validasi"
         class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-visible">
@@ -939,7 +935,6 @@
         let userTimerInterval = null;
         let lastDataHash = "";
 
-        // Mock Data Fallback
         let mockMasterData = [];
         let mockOrdersData = [];
 
@@ -964,14 +959,12 @@
             }
         }
 
-        // --- CORE FETCH API HELPER ---
         async function fetchAPI(action, payload = null) {
             if (!SCRIPT_URL.startsWith('http')) throw new Error("URL Script belum dikonfigurasi");
 
             let url = SCRIPT_URL;
             let options = { redirect: "follow" };
 
-            // Menggunakan POST penuh agar data tidak terpotong oleh sistem keamanan browser
             options.method = 'POST';
             options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
             options.body = JSON.stringify({ action: action, payload: payload || {} });
@@ -1007,7 +1000,6 @@
             if (document.getElementById('view-ct-panel') && !document.getElementById('view-ct-panel').classList.contains('hide')) renderKanban();
         }
 
-        // --- LOAD DATA FULL ---
         async function loadAppData(isRefresh = false, callback = null) {
             if (isRefresh) {
                 Swal.fire({ title: 'Menyinkronkan Data...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
@@ -1986,7 +1978,6 @@
                     Swal.fire('Error', res.message, 'error');
                 }
             } catch (err) {
-                // Fallback Offline Update
                 const index = mockOrdersData.findIndex(o => o.ID_Order === order.ID_Order);
                 if (index > -1) {
                     mockOrdersData[index].Status = data.status;
