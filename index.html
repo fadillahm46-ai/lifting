@@ -153,24 +153,42 @@
         // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4y021i9fSzPYCttY24O2_dPC16gIyWLqNP-D048sQX-Zh95RCFJFm_olnHovJUMI/exec';
 
-        // PENCEGAH KELUAR APLIKASI SAAT GESER BACK (HISTORY TRAP)
+        // PENCEGAH KELUAR APLIKASI SAAT GESER BACK (HISTORY TRAP YANG SUDAH DIPERBAIKI)
         window.history.pushState(null, null, location.href);
         window.addEventListener('popstate', function (event) {
-            window.history.pushState(null, null, location.href);
-            Swal.fire({
-                title: 'Keluar Aplikasi?',
-                text: "Apakah Anda yakin ingin keluar dari halaman sistem ini?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Keluar',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.history.back(); // Izinkan keluar
-                }
-            });
+
+            // Cek apakah user sedang berada di menu Beranda (Home)
+            const viewHome = document.getElementById('view-home');
+            const isAtHome = viewHome && !viewHome.classList.contains('hide');
+
+            if (!isAtHome) {
+                // Jika sedang di dalam menu (Form/Dashboard/CT Panel), usap layar akan mengembalikan ke Beranda
+                navigate('home');
+                window.history.pushState(null, null, location.href); // Pasang jebakan lagi untuk Beranda
+            } else {
+                // Jika sudah di Beranda, usap layar akan memunculkan konfirmasi keluar
+                Swal.fire({
+                    title: 'Keluar Aplikasi?',
+                    text: "Apakah Anda yakin ingin keluar dari aplikasi ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, Keluar',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Jika ya, tutup aplikasi PWA (tanpa bikin looping)
+                        window.close();
+                        setTimeout(() => {
+                            window.location.href = "about:blank"; // Fallback untuk browser HP biasa
+                        }, 100);
+                    } else {
+                        // Jika batal, pasang jebakan back-button kembali
+                        window.history.pushState(null, null, location.href);
+                    }
+                });
+            }
         });
 
         // --- MANIFEST INJECTION UNTUK PWA ---
@@ -1717,8 +1735,8 @@
                     <div class="flex"><i class="fa-solid fa-paper-plane text-blue-400 w-5 mt-0.5"></i> <span class="text-slate-600 truncate">Dari: ${order.Lokasi || '-'}</span></div>
                     <div class="flex"><i class="fa-solid fa-flag-checkered text-emerald-500 w-5 mt-0.5"></i> <span class="text-slate-600 truncate">Ke: ${order.Tujuan || '-'}</span></div>
                 </div>
-                <div class="text-[11px] text-slate-600">
-                    <div class="grid grid-cols-2 gap-2 mb-2">
+                <div class="text-[11px] text-slate-600 mb-2">
+                    <div class="grid grid-cols-2 gap-2 mb-1">
                         <div><span class="text-slate-400">Pemohon:</span><br>${order.Nama_Pemohon || '-'} (${order.Perusahaan || '-'})</div>
                         <div><span class="text-slate-400">GL:</span><br>${order.GL || '-'}</div>
                     </div>
